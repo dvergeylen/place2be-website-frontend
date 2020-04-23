@@ -7,6 +7,7 @@ const configureClient = async () => {
   auth0 = await createAuth0Client({
     domain: config.auth0.domain,
     client_id: config.auth0.clientId,
+    audience: config.auth0.audience,
   });
 
   // Already authenticated
@@ -47,6 +48,7 @@ const logout = () => {
 
 const isAuthenticated = () => auth0.isAuthenticated();
 const getUserInfo = () => auth0.getUserInfo();
+const getToken = () => auth0.getTokenSilently();
 
 export {
   configureClient,
@@ -54,4 +56,5 @@ export {
   logout,
   isAuthenticated,
   getUserInfo,
+  getToken,
 };

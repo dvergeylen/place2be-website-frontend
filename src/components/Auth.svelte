@@ -3,16 +3,19 @@
   import {
     configureClient,
     isAuthenticated,
+    getToken,
     login,
     logout,
   } from '../javascripts/utils/auth0';
   import { path2url } from '../javascripts/utils/helpers';
 
   let authenticated = false;
+  export let token;
 
   onMount(async () => {
     await configureClient();
     authenticated = await isAuthenticated();
+    token = await getToken();
   });
 </script>
 
