@@ -56,12 +56,12 @@ export default [
     },
   },
   {
-    input: 'src/javascripts/apps/users.js',
+    input: 'src/javascripts/apps/dashboard.js',
     output: {
       sourcemap: true,
       format: 'iife',
       name: 'app',
-      file: 'public/build/users.js',
+      file: 'public/build/dashboard.js',
     },
     plugins: [
       svelte({
@@ -70,8 +70,9 @@ export default [
         // we'll extract any component CSS out into
         // a separate file - better for performance
         css: (css) => {
-          css.write('public/build/users.css');
+          css.write('public/build/dashboard.css');
         },
+        generate: 'dom',
         preprocess: sveltePreprocess(),
       }),
 
@@ -114,6 +115,7 @@ export default [
         css: (css) => {
           css.write('public/build/static.css');
         },
+        generate: 'dom',
         preprocess: sveltePreprocess(),
       }),
 
