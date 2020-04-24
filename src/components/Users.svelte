@@ -1,7 +1,6 @@
 <script>
-  import Auth from './Auth.svelte';
+  export let token;
   let usersPromise;
-  let token;
 
   async function getUserSettings(token) {
     const res = await fetch("http://localhost:3000/users", {
@@ -12,11 +11,10 @@
     const text = await res.text();
     return text;
   };
-  $: usersPromise = getUserSettings(token);
+  $: usersPromise = token ? getUserSettings(token) : undefined;
 </script>
 
 <main>
-  <Auth bind:token={token}/>
   {#if token}
     <p>Token is {token}</p>
     {#await usersPromise}

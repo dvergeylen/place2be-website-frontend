@@ -1,27 +1,23 @@
 <script>
   import { onMount } from 'svelte';
+  import { path2url } from '../javascripts/utils/helpers';
   import {
-    configureClient,
     isAuthenticated,
-    getToken,
     login,
     logout,
   } from '../javascripts/utils/auth0';
-  import { path2url } from '../javascripts/utils/helpers';
 
   let authenticated = false;
-  export let token;
+  const callbackUrl = path2url('dashboard.html');
 
   onMount(async () => {
-    await configureClient();
     authenticated = await isAuthenticated();
-    token = await getToken();
   });
 </script>
 
 <div class="buttons">
   <button id="sign-in" class="button is-link" class:is-hidden="{authenticated}"
-    on:click={async () => await login(path2url('users.html'))}>
+    on:click={async () => await login(callbackUrl)}>
     <span class="icon is-small">
       <i class="fas fa-sign-in"></i>
     </span>
@@ -38,7 +34,7 @@
     </span>
   </button>
   <button class="button is-link is-outlined" class:is-hidden="{authenticated}"
-    on:click={async () => await login(path2url('users.html'))}>
+    on:click={async () => await login(callbackUrl)}>
     <span class="icon is-small">
       <i class="fas fa-sign-in-alt"></i>
     </span>
