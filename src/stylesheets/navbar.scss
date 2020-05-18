@@ -1,0 +1,32 @@
+/* ********* */
+/* NAVBAR    */
+/* ********* */
+.navbar {
+  margin-left: auto;
+  margin-right: auto;
+
+  /* Desktop */
+  @media screen and (min-width: 768px) {
+    min-height: 6em;
+    max-width: 65%;
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 769px) {
+    min-height: 3em;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  #brand {
+    /* Desktop */
+    @media screen and (min-width: 768px) {
+      max-width: 8em;
+    }
+
+    /* Mobile */
+    @media screen and (max-width: 769px) {
+      max-width: 5em;
+    }
+  }
+}

@@ -1,3 +1,8 @@
+@import './variables.scss';
+
+/* ********* */
+/* CENTERING */
+/* ********* */
 /* Div containing vcentered div(s) (+ text) */
 .has-vcentered-content {
   display: flex;
@@ -29,4 +34,30 @@
 .is-hcentered {
   margin-left:auto;
   margin-right:auto;
+}
+
+
+/* *************** */
+/* CONTAINER       */
+/* *************** */
+.section {
+  margin:auto;
+
+  /* Desktop */
+  @media screen and (min-width: 768px) {
+    max-width: 65%;
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 769px) {
+    padding-top: 1.5rem;
+  }
+}
+
+.left-spaced {
+  margin-left: 1em;
+}
+
+.right-spaced {
+  margin-right: 1em;
 }

@@ -8,25 +8,61 @@
 
   <link rel='icon' type='image/png' href='/favicon.png'>
 
+  <!-- Always included: Fontawesome, Bulma, Utils -->
   <script defer src="/build/bundle.js"></script>
   <link rel='stylesheet' href='/build/bundle.css'>
 
+  <!-- JS and components needed in static pages (auth, ...) -->
   <script defer src="/build/static.js"></script>
   <link rel='stylesheet' href='/build/static.css'>
 </head>
 
 <body>
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://place2be.io">
+        <img id="logo" src='images/logo.svg' alt='logo'/>
+        <img id="brand" src='images/brand.svg' alt='Place2Be.io' class="left-spaced"/>
+      </a>
+
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+        data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item">
+          How it works
+        </a>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Documentation
+          </a>
+        </div>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div id="signin-container">
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
   <main>
     <section class="section">
       <div class='columns is-5'>
-        <div class='column is-6 has-hvcentered-content'>
+        <div class='column is-6 has-vcentered-content'>
           <div class='has-text-centered-mobile'>
-            <h1 class='title is-1'>Gamified<br />Loyalty Programs</h1>
-            <h1 class='subtitle is-3 is-italic'>for fun & profit 😊</h1>
-            <div class='columns'>
-              <div id="signin-container" class="column">
-              </div>
-            </div>
+            <h1 id="landing-title" class='title is-1'>Gamified<br />Loyalty Programs</h1>
+            <h1 id="landing-subtitle" class='is-3 is-italic'>for fun & profit 😎</h1>
           </div>
         </div>
         <div class='column is-6 is-hidden-mobile has-hvcentered-content'>

@@ -1,4 +1,8 @@
 @charset 'utf-8';
+
+$blue: #0096df;
+$primary: $blue;
+
 @import './node_modules/bulma/sass/utilities/_all.sass'; /* → contains variables */
 @import './node_modules/bulma/sass/base/_all.sass';
 @import './node_modules/bulma/sass/components/_all.sass';

@@ -1,0 +1,23 @@
+#landing-title {
+  /* Desktop */
+  @media screen and (min-width: 768px) {
+    font-size: 4em;
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 769px) {
+    font-size: 3em;
+  }
+}
+
+#landing-subtitle {
+  /* Desktop */
+  @media screen and (min-width: 768px) {
+    font-size: 3em;
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 769px) {
+    font-size: 2em;
+  }
+}
