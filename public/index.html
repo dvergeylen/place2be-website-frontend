@@ -22,8 +22,12 @@
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://place2be.io">
-        <img id="logo" src='images/logo.svg' alt='logo'/>
-        <img id="brand" src='images/brand.svg' alt='Place2Be.io' class="left-spaced"/>
+        <svg id="logo">
+          <use href='images/sprite.svg#logo' />
+        </svg>
+        <svg id="brand" class="left-spaced">
+          <use href='images/sprite.svg#brand' />
+        </svg>
       </a>
 
       <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
