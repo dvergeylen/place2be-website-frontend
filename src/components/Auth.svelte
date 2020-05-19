@@ -27,6 +27,16 @@
       Sign In
     </span>
   </button>
+  <button class="button is-link is-outlined fill-primary" class:is-hidden="{!authenticated}">
+    <span class="icon is-small">
+      <svg class="credentials">
+        <use href="../images/fontawesome-solid-sprite.svg#cog" />
+      </svg>
+    </span>
+    <span>
+      Settings
+    </span>
+  </button>
   <button id="sign-out" class="button is-link fill-secondary" class:is-hidden="{!authenticated}" on:click={logout}>
     <span class="icon is-small">
       <svg class="credentials">

@@ -24,7 +24,7 @@ const app = (async () => {
 
   // eslint-disable-next-line no-unused-vars
   const users = new Users({
-    target: document.body,
+    target: document.getElementById('main'),
     props: {
       token,
     },
