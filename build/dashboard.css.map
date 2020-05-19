@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "dashboard.css",
+  "sources": [
+    "../../Auth.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\n  import { onMount } from 'svelte';\n  import { path2url } from '../javascripts/utils/helpers';\n  import {\n    isAuthenticated,\n    login,\n    logout,\n  } from '../javascripts/utils/auth0';\n\n  let authenticated = false;\n  const callbackUrl = path2url('dashboard.html');\n\n  onMount(async () => {\n    authenticated = await isAuthenticated();\n  });\n</script>\n\n<div class=\"buttons\">\n  <button id=\"sign-in\" class=\"button is-link fill-secondary\" class:is-hidden=\"{authenticated}\"\n    on:click={async () => await login(callbackUrl)}>\n    <span class=\"icon is-small\">\n      <svg class=\"credentials\">\n        <use href=\"../images/fontawesome-solid-sprite.svg#sign-in\" />\n      </svg>\n    </span>\n    <span>\n      Sign In\n    </span>\n  </button>\n  <button id=\"sign-out\" class=\"button is-link fill-secondary\" class:is-hidden=\"{!authenticated}\" on:click={logout}>\n    <span class=\"icon is-small\">\n      <svg class=\"credentials\">\n        <use href=\"../images/fontawesome-solid-sprite.svg#sign-out\" />\n      </svg>\n    </span>\n    <span>\n      Sign Out\n    </span>\n  </button>\n  <button class=\"button is-link is-outlined fill-primary\" class:is-hidden=\"{authenticated}\"\n    on:click={async () => await login(callbackUrl)}>\n    <span class=\"icon is-small\">\n      <svg class=\"credentials\">\n        <use href=\"../images/fontawesome-solid-sprite.svg#sign-in-alt\" />\n      </svg>\n    </span>\n    <span>\n      Sign Up\n    </span>\n  </button>\n</div>\n\n<style lang='scss'>.credentials {\n  width: 1em; }\n\n.fill-primary {\n  fill: #0096df; }\n  .fill-primary:hover {\n    fill: white; }\n\n.fill-secondary {\n  fill: white; }\n\n/*# sourceMappingURL=Auth.svelte.css.map */</style>"
+  ],
+  "names": [],
+  "mappings": "AAoDmB,YAAY,cAAC,CAAC,AAC/B,KAAK,CAAE,GAAG,AAAE,CAAC,AAEf,aAAa,cAAC,CAAC,AACb,IAAI,CAAE,OAAO,AAAE,CAAC,AAChB,2BAAa,MAAM,AAAC,CAAC,AACnB,IAAI,CAAE,KAAK,AAAE,CAAC,AAElB,eAAe,cAAC,CAAC,AACf,IAAI,CAAE,KAAK,AAAE,CAAC"
+}

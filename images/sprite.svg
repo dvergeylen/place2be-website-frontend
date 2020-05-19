@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- To add a new symbol to this sprite:
+   - Create a new symbol markup
+   - Paste the content of the svg
+   - Paste the viewBox content of the svg in the symbol markup
+   - assign an id to symbol
+   - call this svg via:
+    <svg id="logo">
+      <use href='images/sprite.svg#mynewid' />
+    </svg>
+  
+  -->
+
+  <symbol id="logo" viewBox="0 0 132.29 132.29">
+    <g transform="translate(-39.622 -45.321)">
+      <rect x="39.622" y="45.321" width="132.29" height="132.29" rx="15.779" ry="15.779" stroke-dashoffset="5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".97698"/>
+     </g>
+  </symbol>
+
+  <symbol id="brand" viewBox="0 0 92.604 16.136">
+    <g transform="translate(-32.725 -20.272)">
+    <text x="32.138683" y="36.198257" font-family="sans-serif" font-size="20.956px" letter-spacing="0px" stroke-width=".62868px" word-spacing="0px" style="line-height:791.3%" xml:space="preserve"><tspan x="32.138683" y="36.198257" font-family="'Noto Serif'" font-weight="bold" stroke-width=".62868px">Place2Be</tspan></text>
+   </g>
+  </symbol>
+</svg>
