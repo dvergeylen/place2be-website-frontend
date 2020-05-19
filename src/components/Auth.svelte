@@ -16,27 +16,33 @@
 </script>
 
 <div class="buttons">
-  <button id="sign-in" class="button is-link" class:is-hidden="{authenticated}"
+  <button id="sign-in" class="button is-link fill-secondary" class:is-hidden="{authenticated}"
     on:click={async () => await login(callbackUrl)}>
     <span class="icon is-small">
-      <i class="fas fa-sign-in"></i>
+      <svg class="credentials">
+        <use href="../images/fontawesome-solid-sprite.svg#sign-in" />
+      </svg>
     </span>
     <span>
       Sign In
     </span>
   </button>
-  <button id="sign-out" class="button is-link" class:is-hidden="{!authenticated}" on:click={logout}>
+  <button id="sign-out" class="button is-link fill-secondary" class:is-hidden="{!authenticated}" on:click={logout}>
     <span class="icon is-small">
-      <i class="fas fa-sign-out"></i>
+      <svg class="credentials">
+        <use href="../images/fontawesome-solid-sprite.svg#sign-out" />
+      </svg>
     </span>
     <span>
       Sign Out
     </span>
   </button>
-  <button class="button is-link is-outlined" class:is-hidden="{authenticated}"
+  <button class="button is-link is-outlined fill-primary" class:is-hidden="{authenticated}"
     on:click={async () => await login(callbackUrl)}>
     <span class="icon is-small">
-      <i class="fas fa-sign-in-alt"></i>
+      <svg class="credentials">
+        <use href="../images/fontawesome-solid-sprite.svg#sign-in-alt" />
+      </svg>
     </span>
     <span>
       Sign Up
@@ -45,4 +51,16 @@
 </div>
 
 <style lang='scss'>
+  .credentials {
+    width: 1em;
+  }
+  .fill-primary {
+    fill: #0096df;
+    &:hover {
+      fill: white;
+    }
+  }
+  .fill-secondary {
+    fill: white;
+  }
 </style>

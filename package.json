@@ -2,8 +2,7 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "scripts": {
-    "copy-fontawesome": "cp -r node_modules/@fortawesome/fontawesome-pro/webfonts/* public/fonts/fontawesome-webfonts",
-    "build": "npm run copy-fontawesome && rollup -c",
+    "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public",
     "deploy": "npm run build && ./node_modules/gh-pages/bin/gh-pages.js -d public/"
