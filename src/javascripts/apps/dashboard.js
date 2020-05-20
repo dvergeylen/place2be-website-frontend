@@ -2,6 +2,10 @@
  * Users APP
  */
 
+/* Stylesheets */
+import '../../stylesheets/navbar.scss';
+import '../../stylesheets/dashboard.scss';
+
 /* Login */
 import {
   configureClient,

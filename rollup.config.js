@@ -64,13 +64,18 @@ export default [
       file: 'public/build/dashboard.js',
     },
     plugins: [
+      scss({
+        output: 'public/build/dashboard.css',
+        failOnError: true,
+      }),
+
       svelte({
         // enable run-time checks when not in production
         dev: !production,
         // we'll extract any component CSS out into
         // a separate file - better for performance
         css: (css) => {
-          css.write('public/build/dashboard.css');
+          css.write('public/build/dashboard-components.css');
         },
         generate: 'dom',
         preprocess: sveltePreprocess(),
@@ -107,13 +112,18 @@ export default [
       file: 'public/build/static.js',
     },
     plugins: [
+      scss({
+        output: 'public/build/static.css',
+        failOnError: true,
+      }),
+
       svelte({
         // enable run-time checks when not in production
         dev: !production,
         // we'll extract any component CSS out into
         // a separate file - better for performance
         css: (css) => {
-          css.write('public/build/static.css');
+          css.write('public/build/static-components.css');
         },
         generate: 'dom',
         preprocess: sveltePreprocess(),
