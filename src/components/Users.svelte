@@ -1,13 +1,10 @@
 <script>
+  import { fetchData } from '../javascripts/utils/helpers';
   export let token;
   let usersPromise;
 
   async function getUserSettings(token) {
-    const res = await fetch("http://localhost:3000/users", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    const res = await fetchData(token, "http://localhost:3000/api/v1/users");
     const text = await res.text();
     return text;
   };
