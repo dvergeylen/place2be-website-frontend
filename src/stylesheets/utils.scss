@@ -40,6 +40,11 @@
 /* *************** */
 /* CONTAINER       */
 /* *************** */
+#main {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
 .section {
   margin:auto;
 
@@ -67,6 +72,6 @@
 /* FONTAWESOME ROTATION */
 /* ******************** */
 .rotating {
-    //animation:spin 3s linear infinite;
+  animation:spin 3s linear infinite;
 }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
