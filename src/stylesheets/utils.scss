@@ -62,3 +62,11 @@
 .right-spaced {
   margin-right: 1em;
 }
+
+/* ******************** */
+/* FONTAWESOME ROTATION */
+/* ******************** */
+.rotating {
+    //animation:spin 3s linear infinite;
+}
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }

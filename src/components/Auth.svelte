@@ -19,8 +19,8 @@
   <button id="sign-in" class="button is-link fill-secondary" class:is-hidden="{authenticated}"
     on:click={async () => await login(callbackUrl)}>
     <span class="icon is-small">
-      <svg class="credentials">
-        <use href="../images/fontawesome-solid-sprite.svg#sign-in" />
+      <svg class="fa">
+        <use href="../images/fontawesome-sprite.svg#solid-sign-in" />
       </svg>
     </span>
     <span>
@@ -29,8 +29,8 @@
   </button>
   <button class="button is-link is-outlined fill-primary" class:is-hidden="{!authenticated}">
     <span class="icon is-small">
-      <svg class="credentials">
-        <use href="../images/fontawesome-solid-sprite.svg#cog" />
+      <svg class="fa">
+        <use href="../images/fontawesome-sprite.svg#solid-cog" />
       </svg>
     </span>
     <span>
@@ -39,8 +39,8 @@
   </button>
   <button id="sign-out" class="button is-link fill-secondary" class:is-hidden="{!authenticated}" on:click={logout}>
     <span class="icon is-small">
-      <svg class="credentials">
-        <use href="../images/fontawesome-solid-sprite.svg#sign-out" />
+      <svg class="fa">
+        <use href="../images/fontawesome-sprite.svg#solid-sign-out" />
       </svg>
     </span>
     <span>
@@ -50,8 +50,8 @@
   <button class="button is-link is-outlined fill-primary" class:is-hidden="{authenticated}"
     on:click={async () => await login(callbackUrl)}>
     <span class="icon is-small">
-      <svg class="credentials">
-        <use href="../images/fontawesome-solid-sprite.svg#sign-in-alt" />
+      <svg class="fa">
+        <use href="../images/fontawesome-sprite.svg#solid-sign-in-alt" />
       </svg>
     </span>
     <span>
@@ -61,7 +61,7 @@
 </div>
 
 <style lang='scss'>
-  .credentials {
+  .fa {
     width: 1em;
   }
   .fill-primary {
