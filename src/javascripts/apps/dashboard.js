@@ -10,15 +10,17 @@ import '../../stylesheets/dashboard.scss';
 import {
   configureClient,
   getToken,
+  getIdTokenClaims,
 } from '../utils/auth0';
 
 /* Components */
-import Users from '../../components/Users.svelte';
+import Dashboard from '../../components/Dashboard/Dashboard.svelte';
 import Auth from '../../components/Auth.svelte';
 
 const app = (async () => {
   await configureClient();
   const token = await getToken();
+  const claims = await getIdTokenClaims();
 
   // eslint-disable-next-line no-unused-vars
   const auth = new Auth({
@@ -27,10 +29,11 @@ const app = (async () => {
   });
 
   // eslint-disable-next-line no-unused-vars
-  const users = new Users({
+  const dashboard = new Dashboard({
     target: document.getElementById('main'),
     props: {
       token,
+      claims,
     },
   });
 })();

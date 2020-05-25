@@ -47,14 +47,16 @@ const logout = () => {
 };
 
 const isAuthenticated = () => auth0.isAuthenticated();
-const getUserInfo = () => auth0.getUserInfo();
+const getUser = () => auth0.getUser();
 const getToken = () => auth0.getTokenSilently();
+const getIdTokenClaims = () => auth0.getIdTokenClaims();
 
 export {
   configureClient,
   login,
   logout,
   isAuthenticated,
-  getUserInfo,
+  getUser,
   getToken,
+  getIdTokenClaims,
 };
