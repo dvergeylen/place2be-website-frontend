@@ -1,23 +1,27 @@
 <script>
   import { onMount } from 'svelte';
-  import { path2url } from '../javascripts/utils/helpers';
-  import {
-    isAuthenticated,
-    login,
-    logout,
-  } from '../javascripts/utils/auth0';
+  import { path2url, getCookie } from '../../javascripts/utils/helpers';
+  import { postFormData } from '../../javascripts/utils/helpers';
+  export let frontend_api_url;
 
   let authenticated = false;
-  const callbackUrl = path2url('dashboard.html');
 
   onMount(async () => {
-    authenticated = await isAuthenticated();
+    console.log(document.cookie);
+    authenticated = getCookie(document.cookie, 'is_authenticated');
   });
+
+  async function signout() {
+    const url = `${frontend_api_url}/signout`;
+    const res = await postFormData(url, undefined);
+
+    /* Redirect to landing page */
+    window.location.replace(path2url('index.html'));
+  }
 </script>
 
 <div class="buttons">
-  <button id="sign-in" class="button is-link fill-secondary" class:is-hidden="{authenticated}"
-    on:click={async () => await login(callbackUrl)}>
+  <a href={path2url('credentials.html')} class="button is-link is-outlined fill-primary" class:is-hidden="{authenticated}">
     <span class="icon is-small">
       <svg class="fa">
         <use href="../images/fontawesome-sprite.svg#solid-sign-in" />
@@ -26,8 +30,8 @@
     <span>
       Sign In
     </span>
-  </button>
-  <button class="button is-link is-outlined fill-primary" class:is-hidden="{!authenticated}">
+  </a>
+  <a href='javascript:void(0)' class="button is-link is-outlined fill-primary"  class:is-hidden="{!authenticated}">
     <span class="icon is-small">
       <svg class="fa">
         <use href="../images/fontawesome-sprite.svg#solid-cog" />
@@ -36,8 +40,8 @@
     <span>
       Settings
     </span>
-  </button>
-  <button id="sign-out" class="button is-link fill-secondary" class:is-hidden="{!authenticated}" on:click={logout}>
+  </a>
+  <button id="sign-out" class="button is-link fill-secondary" class:is-hidden="{!authenticated}" on:click={signout}>
     <span class="icon is-small">
       <svg class="fa">
         <use href="../images/fontawesome-sprite.svg#solid-sign-out" />
@@ -47,8 +51,7 @@
       Sign Out
     </span>
   </button>
-  <button class="button is-link is-outlined fill-primary" class:is-hidden="{authenticated}"
-    on:click={async () => await login(callbackUrl)}>
+  <a href={path2url('credentials.html?signup=true')} class="button is-link is-outlined fill-primary" class:is-hidden="{authenticated}">
     <span class="icon is-small">
       <svg class="fa">
         <use href="../images/fontawesome-sprite.svg#solid-sign-in-alt" />
@@ -57,7 +60,7 @@
     <span>
       Sign Up
     </span>
-  </button>
+  </a>
 </div>
 
 <style lang='scss'>

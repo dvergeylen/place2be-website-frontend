@@ -151,6 +151,49 @@ export default [
       clearScreen: false,
     },
   },
+  {
+    input: 'src/javascripts/apps/credentials.js',
+    output: {
+      sourcemap: true,
+      format: 'iife',
+      name: 'app',
+      file: 'public/build/credentials.js',
+    },
+    plugins: [
+      scss({
+        output: 'public/build/credentials.css',
+        failOnError: true,
+      }),
+
+      svelte({
+        // enable run-time checks when not in production
+        dev: !production,
+        // we'll extract any component CSS out into
+        // a separate file - better for performance
+        css: (css) => {
+          css.write('public/build/credentials-components.css');
+        },
+        generate: 'dom',
+        preprocess: sveltePreprocess(),
+      }),
+
+      // Import json files in javascripts/ and components/ files
+      json(),
+
+      resolve({
+        browser: true,
+        dedupe: ['svelte'],
+      }),
+      commonjs(),
+
+      // If we're building for production (npm run build
+      // instead of npm run dev), minify
+      production && terser(),
+    ],
+    watch: {
+      clearScreen: false,
+    },
+  },
 ];
 
 function serve() {

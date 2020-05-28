@@ -2,38 +2,31 @@
  * Users APP
  */
 
+/* config */
+import config from '../../../local-config.json'; // ⚠️ Not commited config
+
 /* Stylesheets */
 import '../../stylesheets/navbar.scss';
 import '../../stylesheets/dashboard.scss';
 
-/* Login */
-import {
-  configureClient,
-  getToken,
-  getIdTokenClaims,
-} from '../utils/auth0';
-
 /* Components */
 import Dashboard from '../../components/Dashboard/Dashboard.svelte';
-import Auth from '../../components/Auth.svelte';
+import CredentialsButtons from '../../components/Credentials/CredentialsButtons.svelte';
 
 const app = (async () => {
-  await configureClient();
-  const token = await getToken();
-  const claims = await getIdTokenClaims();
-
   // eslint-disable-next-line no-unused-vars
-  const auth = new Auth({
-    target: document.getElementById('signin-container'),
-    props: {},
+  const auth = new CredentialsButtons({
+    target: document.getElementById('credentials-buttons'),
+    props: {
+      frontend_api_url: config.frontend_api_url,
+    },
   });
 
   // eslint-disable-next-line no-unused-vars
   const dashboard = new Dashboard({
     target: document.getElementById('main'),
     props: {
-      token,
-      claims,
+      frontend_api_url: config.frontend_api_url,
     },
   });
 })();
