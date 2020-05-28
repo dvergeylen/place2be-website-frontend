@@ -1,0 +1,12 @@
+/* This file extends bulma classes.
+ * This adds some styling to existing bulma classes
+ */
+@import './variables.scss';
+
+.is-danger {
+  border: solid 2px $darkred;
+}
+
+.is-warning {
+  border: solid 2px $gold;
+}
