@@ -17,7 +17,6 @@ import Dashboard from '../../components/Dashboard/Dashboard.svelte';
 import CredentialsButtons from '../../components/Credentials/CredentialsButtons.svelte';
 
 const app = (async () => {
-
   // Figure out: are we asking our own dashboard
   // or a distinct user's one?
   const params = new URLSearchParams(window.location.search);

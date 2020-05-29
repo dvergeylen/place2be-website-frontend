@@ -6,7 +6,7 @@ function createUrl(protocol, host, ...path) {
 }
 
 function getCookie(cookies, key) {
-  const res = cookies.split(';').map((c) => c.split('=')).find(([k,]) => k.trim() === key);
+  const res = cookies.split(';').map((c) => c.split('=')).find(([k]) => k.trim() === key);
   return res ? res[1] : undefined;
 }
 
@@ -58,29 +58,6 @@ function postJsonData(token, url, data, method) {
     body: JSON.stringify(data),
   });
 }
-
-// function postFormData(token, url, data, method) {
-//   return fetch(url, {
-//     method: method || 'POST',
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//       Accept: 'application/json',
-//     },
-//     body: data,
-//   });
-// }
-
-// function postJsonData(token, url, data, method) {
-//   return fetch(url, {
-//     method: method || 'POST',
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//       Accept: 'application/json',
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(data),
-//   });
-// }
 
 export {
   createUrl,
