@@ -1,5 +1,6 @@
 <script>
   import NewGame from './NewGame.svelte';
+  import GameDetails from './GameDetails.svelte';
   export let gameUrl = undefined;
 </script>
 
@@ -9,7 +10,7 @@
   {:else if gameUrl === 'new'}
     <NewGame on:message/>
   {:else}
-    <p>We should load {gameUrl} content!</p>
+    <GameDetails {gameUrl} />
   {/if}
 </div>
 
