@@ -16,6 +16,6 @@
 
 <style lang='scss'>
   div#game-content {
-    max-width:80%;
+    max-width:1152px;
   }
 </style>

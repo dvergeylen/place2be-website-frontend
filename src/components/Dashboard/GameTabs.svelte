@@ -2,7 +2,7 @@
   <ul>
     <li class="is-active">
       <a href="javascript:void(0)">
-        <svg class="fa">
+        <svg class="fa tab-item">
           <use href="../images/fontawesome-sprite.svg#solid-sitemap" />
         </svg>
         <span class="left-spaced">Overview</span>
@@ -10,7 +10,7 @@
     </li>
     <li>
       <a href="javascript:void(0)">
-        <svg class="fa">
+        <svg class="fa tab-item">
           <use href="../images/fontawesome-sprite.svg#solid-running" />
         </svg>
         <span class="left-spaced">Actions</span>
@@ -18,7 +18,7 @@
     </li>
     <li>
       <a href="javascript:void(0)">
-        <svg class="fa">
+        <svg class="fa tab-item">
           <use href="../images/fontawesome-sprite.svg#solid-trophy" />
         </svg>
         <span class="left-spaced">Achievements</span>
@@ -26,7 +26,7 @@
     </li>
     <li>
       <a href="javascript:void(0)">
-        <svg class="fa">
+        <svg class="fa tab-item">
           <use href="../images/fontawesome-sprite.svg#solid-gifts" />
         </svg>
         <span class="left-spaced">Rewards</span>
@@ -34,7 +34,7 @@
     </li>
     <li>
       <a href="javascript:void(0)">
-        <svg class="fa">
+        <svg class="fa tab-item">
           <use href="../images/fontawesome-sprite.svg#solid-chart-bar" />
         </svg>
         <span class="left-spaced">Stats</span>
@@ -42,7 +42,7 @@
     </li>
     <li>
       <a href="javascript:void(0)">
-        <svg class="fa">
+        <svg class="fa tab-item">
           <use href="../images/fontawesome-sprite.svg#solid-code" />
         </svg>
         <span class="left-spaced">Dev. / Integration</span>
@@ -50,7 +50,7 @@
     </li>
     <li>
       <a href="javascript:void(0)">
-        <svg class="fa">
+        <svg class="fa tab-item">
           <use href="../images/fontawesome-sprite.svg#solid-cogs" />
         </svg>
         <span class="left-spaced">Settings</span>
@@ -62,6 +62,7 @@
 <style lang='scss'>
   #game-tabs-container {
     margin-top: 1em;
+    font-size: 1.1em;
   }
   .fa {
     width: 1em;
@@ -69,5 +70,8 @@
   }
   .left-spaced {
     margin-left: 0.5em;
+  }
+  svg.tab-item {
+    fill: grey;
   }
 </style>

@@ -66,16 +66,4 @@
 </div>
 
 <style lang='scss'>
-  .fa {
-    width: 1em;
-  }
-  .fill-primary {
-    fill: #0096df;
-    &:hover {
-      fill: white;
-    }
-  }
-  .fill-secondary {
-    fill: white;
-  }
 </style>
