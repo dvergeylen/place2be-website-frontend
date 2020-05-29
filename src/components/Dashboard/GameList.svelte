@@ -1,5 +1,14 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
   export let gameList;
+
+  const dispatch = createEventDispatcher();
+
+  function updateGameUrl(gameUrl) {
+    dispatch('message', {
+      gameUrl,
+    });
+  }
 </script>
 
 <div class="content">
@@ -14,7 +23,15 @@
     {#if games.length == 0}
       <p><em>You don't have games yet.</em></p>
     {:else}
-      <p>Game List comes here</p>
+      <ul>
+        {#each games as game}
+          <li>
+            <a href={game.links.self} on:click|preventDefault={() => updateGameUrl(game.links.self)}>
+              {game.attributes.name}
+            </a>
+          </li>
+        {/each}
+      </ul>
     {/if}
   {:catch error}
     <p style="color: red">{error.message}</p>

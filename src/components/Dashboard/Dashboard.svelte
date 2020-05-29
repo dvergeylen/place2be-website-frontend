@@ -1,25 +1,36 @@
 <script>
-  import { fetchData } from '../../javascripts/utils/helpers';
+  import { setContext } from 'svelte';
+  import { createUrl, fetchData } from '../../javascripts/utils/helpers';
   import GameList from './GameList.svelte';
   import GameContent from './GameContent.svelte';
-  export let token;
-  export let claims;
+  export let apiProtocol;
+  export let apiHost;
+  export let userId = undefined;
   let gameList;
-  let gameId;
+  let gameUrl;
 
-  async function getContent(token, uid) {
-    const res = await fetchData(token, `http://localhost:3000/api/v1/users/${uid}/games`);
+  async function getContent(id) {
+    const url = createUrl(apiProtocol, apiHost, 'users', id, 'games');
+    const res = await fetchData(url);
     const resJson = await res.json();
     return resJson.data;
   };
 
-  function setGameId(id) {
-    gameId = id;
+  function setGameUrl(url) {
+    gameUrl = url;
   }
 
-  $: if (token && claims) {
-    gameList = getContent(token, claims.sub);
+  async function handleNewGameUrl(event) {
+    if (event.detail.updateGameList) {
+      gameList = await getContent(userId);
+    }
+    setGameUrl(event.detail.gameUrl);
   }
+
+  $: gameList = getContent(userId);
+  $: setContext('apiProtocol', apiProtocol);
+  $: setContext('apiHost', apiHost);
+  $: setContext('userId', userId);
 </script>
 
 
@@ -29,7 +40,7 @@
       Games :
     </h1>
     <button class="button is-link is-outlined fill-primary"
-      on:click={async () => setGameId('new')}>
+      on:click={async () => setGameUrl('new')}>
       <span class="icon is-small">
         <svg class="fa">
           <use href="../images/fontawesome-sprite.svg#light-sparkles" />
@@ -39,10 +50,10 @@
         New Game
       </span>
     </button>
-    <GameList {gameList} />
+    <GameList {gameList} on:message={handleNewGameUrl} />
   </div>
   <div class="column">
-    <GameContent {gameId} />
+    <GameContent {gameUrl} on:message={handleNewGameUrl} />
   </div>
 </div>
 
