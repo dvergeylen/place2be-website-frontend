@@ -18,7 +18,8 @@ const app = (async () => {
   const auth = new CredentialsForm({
     target: document.getElementById('credentials'),
     props: {
-      frontend_api_url: config.frontend_api_url,
+      apiProtocol: config.api.protocol,
+      apiHost: config.api.host,
     },
   });
 })();

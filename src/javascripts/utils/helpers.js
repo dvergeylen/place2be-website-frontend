@@ -1,8 +1,8 @@
-function path2url(path) {
+function createUrl(protocol, host, ...path) {
   const sanitized = (Array.isArray(path)
-    ? path : [path]).map((s) => s.replace(/^\/+/, ''));
+    ? path : [path]).map((s) => s.replace(/^\/+|\/+$/, ''));
 
-  return `${window.location.protocol}//${window.location.host}/${sanitized.join('/')}`;
+  return `${protocol}//${host}/${sanitized.join('/')}`;
 }
 
 function getCookie(cookies, key) {
@@ -83,7 +83,7 @@ function postJsonData(token, url, data, method) {
 // }
 
 export {
-  path2url,
+  createUrl,
   fetchData,
   postFormData,
   postJsonData,

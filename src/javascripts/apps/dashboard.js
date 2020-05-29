@@ -18,7 +18,8 @@ const app = (async () => {
   const auth = new CredentialsButtons({
     target: document.getElementById('credentials-buttons'),
     props: {
-      frontend_api_url: config.frontend_api_url,
+      apiProtocol: config.api.protocol,
+      apiHost: config.api.host,
     },
   });
 
@@ -26,7 +27,8 @@ const app = (async () => {
   const dashboard = new Dashboard({
     target: document.getElementById('main'),
     props: {
-      frontend_api_url: config.frontend_api_url,
+      apiProtocol: config.api.protocol,
+      apiHost: config.api.host,
     },
   });
 })();

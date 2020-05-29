@@ -1,8 +1,9 @@
 <script>
   import { onMount } from 'svelte';
-  import { path2url, getCookie } from '../../javascripts/utils/helpers';
+  import { createUrl, getCookie } from '../../javascripts/utils/helpers';
   import { postFormData } from '../../javascripts/utils/helpers';
-  export let frontend_api_url;
+  export let apiProtocol;
+  export let apiHost;
 
   let authenticated = false;
 
@@ -12,16 +13,17 @@
   });
 
   async function signout() {
-    const url = `${frontend_api_url}/signout`;
+    const url = createUrl(apiProtocol, apiHost, 'signout');
     const res = await postFormData(url, undefined);
 
     /* Redirect to landing page */
-    window.location.replace(path2url('index.html'));
+    window.location.replace(createUrl(window.location.protocol,
+      window.location.host, 'index.html'));
   }
 </script>
 
 <div class="buttons">
-  <a href={path2url('credentials.html')} class="button is-link is-outlined fill-primary" class:is-hidden="{authenticated}">
+  <a href="/credentials.html" class="button is-link is-outlined fill-primary" class:is-hidden="{authenticated}">
     <span class="icon is-small">
       <svg class="fa">
         <use href="../images/fontawesome-sprite.svg#solid-sign-in" />
@@ -31,7 +33,7 @@
       Sign In
     </span>
   </a>
-  <a href='javascript:void(0)' class="button is-link is-outlined fill-primary"  class:is-hidden="{!authenticated}">
+  <a href='/settings.html' class="button is-link is-outlined fill-primary"  class:is-hidden="{!authenticated}">
     <span class="icon is-small">
       <svg class="fa">
         <use href="../images/fontawesome-sprite.svg#solid-cog" />
@@ -51,7 +53,7 @@
       Sign Out
     </span>
   </button>
-  <a href={path2url('credentials.html?signup=true')} class="button is-link is-outlined fill-primary" class:is-hidden="{authenticated}">
+  <a href="/credentials.html?signup=true" class="button is-link is-outlined fill-primary" class:is-hidden="{authenticated}">
     <span class="icon is-small">
       <svg class="fa">
         <use href="../images/fontawesome-sprite.svg#solid-sign-in-alt" />

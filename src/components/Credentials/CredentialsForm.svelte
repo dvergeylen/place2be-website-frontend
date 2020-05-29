@@ -1,7 +1,8 @@
 <script>
-  import { path2url } from '../../javascripts/utils/helpers';
+  import { createUrl } from '../../javascripts/utils/helpers';
   import { postFormData } from '../../javascripts/utils/helpers';
-  export let frontend_api_url;
+  export let apiProtocol;
+  export let apiHost;
 
   const params = new URLSearchParams(window.location.search);
   let showSignIn = !params.has('signup');
@@ -12,7 +13,7 @@
   };
 
   async function handleSubmit(path, formId) {
-    const url = `${frontend_api_url}/${path}`;
+    const url = createUrl(apiProtocol, apiHost, path);
     const formData = new FormData(document.getElementById(formId));
     const res = await postFormData(url, formData);
 
@@ -21,7 +22,9 @@
       error[path] = JSON.parse(t);
     } else {
       /* Redirect to dashboard */
-      window.location.replace(path2url('dashboard.html'));
+      const url = createUrl(window.location.protocol,
+      window.location.host, 'dashboard.html');
+      window.location.replace(url);
     }
   }
 
@@ -84,7 +87,7 @@
         <a href='javascript:void(0)' class="button is-link is-outlined" on:click={toggleShowSignIn}>Sign Up</a>
       </div>
       <div class="control">
-        <a href={path2url('index.html')} class="button is-link is-light">Cancel</a>
+        <a href="/index.html" class="button is-link is-light">Cancel</a>
       </div>
     </div>
   </form>
@@ -161,7 +164,7 @@
         <a href='javascript:void(0)' class="button is-link is-outlined" on:click={toggleShowSignIn}>Sign In</a>
       </div>
       <div class="control">
-        <a href={path2url('index.html')} class="button is-link is-light">Cancel</a>
+        <a href="/index.html" class="button is-link is-light">Cancel</a>
       </div>
     </div>
   </form>
