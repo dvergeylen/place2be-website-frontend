@@ -9,7 +9,7 @@
 
   onMount(async () => {
     console.log(document.cookie);
-    authenticated = getCookie(document.cookie, 'is_authenticated');
+    authenticated = getCookie(document.cookie, 'user_id');
   });
 
   async function signout() {
