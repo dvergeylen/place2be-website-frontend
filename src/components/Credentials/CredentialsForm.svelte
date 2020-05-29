@@ -51,7 +51,7 @@
   </h1>
 
   <form id="signin-form" on:submit|preventDefault={handleSignIn}>
-    <div class="notification is-warning" class:is-hidden="{!(error['signin'])}">
+    <div class="notification is-warning" class:is-hidden={!error['signin']}>
       <button class="delete" on:click|preventDefault={() => flushError('signin')} ></button>
       <h1 class='title is-5'>
         Unable to Sign in
@@ -108,7 +108,7 @@
   </h1>
 
   <form id="signup-form" on:submit|preventDefault={handleSignUp}>
-    <div class="notification is-danger" class:is-hidden="{!(error['signup'])}">
+    <div class="notification is-danger" class:is-hidden={!error['signup']}>
       <button class="delete" on:click|preventDefault={() => flushError('signup')}></button>
       <h1 class='title is-5'>
         Unable to Sign up
