@@ -29,12 +29,12 @@
     game.set(resJson.data);
   }
 
+  function handleNewSelectedTab(event) {
+    selectedTab = event.detail.selectedTab;
+  }
+
   // Update game Store when gameUrl is updated
   $: setGame(gameUrl);
-
-  // TEMP
-  const gameUnsubscription = game.subscribe(val => console.log(JSON.stringify(val, null, 4)));
-  onDestroy(gameUnsubscription);
 </script>
 
 <h1 class="title is-4 has-vcentered-content">
@@ -50,8 +50,8 @@
   </span>
 </h1>
 
-<GameTabs game={$game} {selectedTab} />
-<svelte:component this={tabs[selectedTab]}/>
+<GameTabs game={$game} {selectedTab} on:message={handleNewSelectedTab} />
+<svelte:component this={tabs[selectedTab]} game={$game} />
 
 <style>
   .fa {

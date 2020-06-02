@@ -1,6 +1,15 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
   export let game;
-  export let selectedTab;
+  export let selectedTab = 'overview';
+
+  const dispatch = createEventDispatcher();
+
+  function updateSelectedTab(selectedTab) {
+    dispatch('message', {
+      selectedTab,
+    });
+  }
 </script>
 
 
@@ -10,7 +19,8 @@
   <div id="game-tabs-container" class="tabs">
     <ul>
       <li class:is-active={selectedTab === 'overview'}>
-        <a href="javascript:void(0)">
+        <a href="javascript:void(0)"
+          on:click|preventDefault={async () => updateSelectedTab('overview')}>
           <svg class="fa tab-item">
             <use href="../images/fontawesome-sprite.svg#solid-sitemap" />
           </svg>
@@ -18,7 +28,8 @@
         </a>
       </li>
       <li class:is-active={selectedTab === 'actions'}>
-        <a href="javascript:void(0)">
+        <a href="javascript:void(0)"
+          on:click|preventDefault={async () => updateSelectedTab('actions')}>
           <svg class="fa tab-item">
             <use href="../images/fontawesome-sprite.svg#solid-running" />
           </svg>
@@ -26,7 +37,8 @@
         </a>
       </li>
       <li class:is-active={selectedTab === 'achievements'}>
-        <a href="javascript:void(0)">
+        <a href="javascript:void(0)"
+          on:click|preventDefault={async () => updateSelectedTab('achievements')}>
           <svg class="fa tab-item">
             <use href="../images/fontawesome-sprite.svg#solid-trophy" />
           </svg>
@@ -34,7 +46,8 @@
         </a>
       </li>
       <li class:is-active={selectedTab === 'rewards'}>
-        <a href="javascript:void(0)">
+        <a href="javascript:void(0)"
+          on:click|preventDefault={async () => updateSelectedTab('rewards')}>
           <svg class="fa tab-item">
             <use href="../images/fontawesome-sprite.svg#solid-gifts" />
           </svg>
@@ -42,7 +55,8 @@
         </a>
       </li>
       <li class:is-active={selectedTab === 'stats'}>
-        <a href="javascript:void(0)">
+        <a href="javascript:void(0)"
+          on:click|preventDefault={async () => updateSelectedTab('stats')}>
           <svg class="fa tab-item">
             <use href="../images/fontawesome-sprite.svg#solid-chart-bar" />
           </svg>
@@ -50,7 +64,8 @@
         </a>
       </li>
       <li class:is-active={selectedTab === 'dev'}>
-        <a href="javascript:void(0)">
+        <a href="javascript:void(0)"
+          on:click|preventDefault={async () => updateSelectedTab('dev')}>
           <svg class="fa tab-item">
             <use href="../images/fontawesome-sprite.svg#solid-code" />
           </svg>
@@ -58,7 +73,8 @@
         </a>
       </li>
       <li class:is-active={selectedTab === 'settings'}>
-        <a href="javascript:void(0)">
+        <a href="javascript:void(0)"
+          on:click|preventDefault={async () => updateSelectedTab('settings')}>
           <svg class="fa tab-item">
             <use href="../images/fontawesome-sprite.svg#solid-cogs" />
           </svg>
