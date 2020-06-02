@@ -8,7 +8,6 @@
   let authenticated = false;
 
   onMount(async () => {
-    console.log(document.cookie);
     authenticated = getCookie(document.cookie, 'user_id');
   });
 
