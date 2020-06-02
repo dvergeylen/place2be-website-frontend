@@ -1,6 +1,40 @@
 <script>
+  import { onDestroy } from 'svelte';
+  import { fetchData } from '../../javascripts/utils/helpers';
+	import { game } from '../../javascripts/stores/gameStore';
   import GameTabs from './GameTabs.svelte';
+  import Overview from './Tabs/Overview.svelte';
+  import Actions from './Tabs/Actions.svelte';
+  import Achievements from './Tabs/Achievements.svelte';
+  import Rewards from './Tabs/Rewards.svelte';
+  import Stats from './Tabs/Stats.svelte';
+  import Dev from './Tabs/Dev.svelte';
+  import Settings from './Tabs/Settings.svelte';
+
   export let gameUrl;
+  let selectedTab = 'actions';
+  const tabs = {
+    'overview': Overview,
+    'actions': Actions,
+    'achievements': Achievements,
+    'rewards': Rewards,
+    'stats': Stats,
+    'dev': Dev,
+    'settings': Settings,
+  }
+
+  async function setGame(url) {
+    const res = await fetchData(url);
+    const resJson = await res.json();
+    game.set(resJson.data);
+  }
+
+  // Update game Store when gameUrl is updated
+  $: setGame(gameUrl);
+
+  // TEMP
+  const gameUnsubscription = game.subscribe(val => console.log(JSON.stringify(val, null, 4)));
+  onDestroy(gameUnsubscription);
 </script>
 
 <h1 class="title is-4 has-vcentered-content">
@@ -8,11 +42,16 @@
     <use href="../images/fontawesome-sprite.svg#solid-trophy" />
   </svg>
   <span class="left-spaced">
-    Game Title
+    {#if !$game}
+      Loading Game...
+    {:else}
+      {$game['attributes']['name']}
+    {/if}
   </span>
 </h1>
-<GameTabs/>
-<p>We are here {gameUrl} content!</p>
+
+<GameTabs game={$game} {selectedTab} />
+<svelte:component this={tabs[selectedTab]}/>
 
 <style>
   .fa {
