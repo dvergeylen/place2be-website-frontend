@@ -23,15 +23,33 @@
     {#if games.length == 0}
       <p><em>You don't have games yet.</em></p>
     {:else}
-      <ul>
+      <article class="panel is-primary">
+        <p class="panel-heading">
+          Your Games :
+        </p>
+        <a href="javascript:void(0)" class="panel-block fill-primary"
+          on:click|preventDefault={async () => updateGameUrl('new')}>
+          <span class="panel-icon">
+            <svg class="fa">
+              <use href="../images/fontawesome-sprite.svg#light-sparkles" />
+            </svg>
+          </span>
+          <span>
+            New Game
+          </span>
+        </a>
         {#each games as game}
-          <li>
-            <a href={game.links.self} on:click|preventDefault={() => updateGameUrl(game.links.self)}>
-              {game.attributes.name}
-            </a>
-          </li>
+          <a href={game.links.self} on:click|preventDefault={() => updateGameUrl(game.links.self)}
+            class="panel-block">
+            <span class="panel-icon">
+              <svg class="fa">
+                <use href="../images/fontawesome-sprite.svg#light-sparkles" />
+              </svg>
+            </span>
+            {game.attributes.name}
+          </a>
         {/each}
-      </ul>
+      </article>
     {/if}
   {:catch error}
     <p style="color: red">{error.message}</p>
@@ -41,5 +59,6 @@
 <style lang='scss'>
   .fa {
     width: 1em;
+    height: 1em;
   }
 </style>
