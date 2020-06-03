@@ -1,5 +1,4 @@
 <script>
-  import { onDestroy } from 'svelte';
   import { fetchData } from '../../javascripts/utils/helpers';
 	import { game } from '../../javascripts/stores/gameStore';
   import GameTabs from './GameTabs.svelte';
@@ -15,16 +14,16 @@
   let error;
   let selectedTab = 'actions';
   const tabs = {
-    'overview': Overview,
-    'actions': Actions,
-    'achievements': Achievements,
-    'rewards': Rewards,
-    'stats': Stats,
-    'dev': Dev,
-    'settings': Settings,
+    overview: Overview,
+    actions: Actions,
+    achievements: Achievements,
+    rewards: Rewards,
+    stats: Stats,
+    dev: Dev,
+    settings: Settings,
   }
 
-  async function setGame(url) {
+  async function getGame(url) {
     const res = await fetchData(url);
     if (res.ok) {
       const resJson = await res.json();
@@ -39,7 +38,7 @@
   }
 
   // Update game Store when gameUrl is updated
-  $: setGame(gameUrl);
+  $: getGame(gameUrl);
 </script>
 
 {#if !error}
