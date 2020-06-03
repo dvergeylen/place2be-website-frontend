@@ -40,7 +40,7 @@
       {#if !gameUrl}
         <p>← Create a new game</p>
       {:else if gameUrl === 'new'}
-        <NewGame on:message{handleNewGameUrl} />
+        <NewGame on:message={handleNewGameUrl} />
       {:else}
         <GameDetails {gameUrl} />
       {/if}
