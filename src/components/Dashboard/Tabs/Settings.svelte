@@ -35,6 +35,30 @@
     handleSubmit(['users', userId, 'games', $game.id], 'settings-form');
   }
 
+  function handleDanger() {
+    handleSubmit(['users', userId, 'games', $game.id], 'danger-form');
+  }
+
+  async function handleDestroy() {
+    const path = ['users', userId, 'games', $game.id];
+    const url = createUrl(apiProtocol, apiHost, ...path);
+    const res = await postFormData(url, {}, 'DELETE');
+
+    if (!res.ok) {
+      const t = await res.text();
+      error = JSON.parse(t);
+    } else {
+      /* Reset Game Store content */
+      game.set(null);
+
+      /* Update Dashboard's game List */
+      dispatch('message', {
+        gameUrl: undefined,
+        updateGameList: true,
+      });
+    }
+  }
+
   function flushError() {
     error = null;
   }
@@ -66,7 +90,6 @@
     <div class="field">
       <label class="label">
         Game Name
-        <span class="mandatory">*</span>
       </label>
       <div class="control">
         <input name="game[name]" class="input reasonable-width" type="text"
@@ -77,7 +100,6 @@
     <div class="field">
       <label class="label">
         Description
-        <span class="note">(optional)</span>
       </label>
       <div class="control">
         <input name="game[description]" class="input" type="text"
@@ -88,4 +110,34 @@
 
     <button class="button is-link">Update Settings</button>
   </form>
+
+  <hr>
+
+  <h1 class="title is-4">Danger Zone :</h1>
+  <form id="danger-form" on:submit|preventDefault={handleDanger}>
+    <div class="field">
+      <input name="game[archived]" class="input" type="hidden"
+          value={!$game['attributes']['archived']}>
+      <button class="button is-danger is-outlined"
+        class:is-hidden={$game.attributes.archived}>Archive this Game</button>
+      <button class="button is-danger is-outlined"
+        class:is-hidden={!$game.attributes.archived}>Reactivate this Game</button>
+      <p class="help">Once you archive a game, no player will be able to access it anymore. Please be certain!</p>
+    </div>
+  </form>
+
+  <div class="field">
+    <button class="button is-danger is-outlined" on:click|preventDefault={handleDestroy}>
+      Delete this Game
+    </button>
+    <p class="help">Once you delete a game, there is no going back. Please be certain!</p>
+  </div>
 {/if}
+
+<style lang=scss>
+  button.is-danger {
+    color: red !important;
+    background: white !important;
+    border: 1px solid red !important;
+  }
+</style>
