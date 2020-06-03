@@ -42,7 +42,7 @@
       {:else if gameUrl === 'new'}
         <NewGame on:message={handleNewGameUrl} />
       {:else}
-        <GameDetails {gameUrl} />
+        <GameDetails {gameUrl} on:message={handleNewGameUrl} />
       {/if}
     </div>
   </div>

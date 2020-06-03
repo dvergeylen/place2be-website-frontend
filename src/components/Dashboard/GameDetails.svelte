@@ -1,6 +1,6 @@
 <script>
   import { fetchData } from '../../javascripts/utils/helpers';
-	import { game } from '../../javascripts/stores/gameStore';
+  import { game } from '../../javascripts/stores/gameStore';
   import GameTabs from './GameTabs.svelte';
   import Overview from './Tabs/Overview.svelte';
   import Actions from './Tabs/Actions.svelte';
@@ -57,7 +57,7 @@
   <p>Game description</p>
 
   <GameTabs game={$game} {selectedTab} on:message={handleNewSelectedTab} />
-  <svelte:component this={tabs[selectedTab]} game={$game} />
+  <svelte:component this={tabs[selectedTab]} on:message/>
 {:else}
   <div class="notification is-warning" class:is-hidden={!error}>
     <p>Could not load the game you are looking for...</p>
