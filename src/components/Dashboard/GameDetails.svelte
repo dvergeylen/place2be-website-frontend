@@ -12,6 +12,7 @@
   import Settings from './Tabs/Settings.svelte';
 
   export let gameUrl;
+  let error;
   let selectedTab = 'actions';
   const tabs = {
     'overview': Overview,
@@ -25,8 +26,12 @@
 
   async function setGame(url) {
     const res = await fetchData(url);
-    const resJson = await res.json();
-    game.set(resJson.data);
+    if (res.ok) {
+      const resJson = await res.json();
+      game.set(resJson.data);
+    } else {
+      error = 'Could not find the game you are looking for...';
+    }
   }
 
   function handleNewSelectedTab(event) {
@@ -37,21 +42,28 @@
   $: setGame(gameUrl);
 </script>
 
-<h1 class="title is-4 has-vcentered-content">
-  <svg class="fa">
-    <use href="../images/fontawesome-sprite.svg#solid-trophy" />
-  </svg>
-  <span class="left-spaced">
-    {#if !$game}
-      Loading Game...
-    {:else}
-      {$game['attributes']['name']}
-    {/if}
-  </span>
-</h1>
+{#if !error}
+  <h1 class="title is-4 has-vcentered-content">
+    <svg class="fa">
+      <use href="../images/fontawesome-sprite.svg#solid-trophy" />
+    </svg>
+    <span class="left-spaced">
+      {#if !$game}
+        Loading Game...
+      {:else}
+        {$game['attributes']['name']}
+      {/if}
+    </span>
+  </h1>
+  <p>Game description</p>
 
-<GameTabs game={$game} {selectedTab} on:message={handleNewSelectedTab} />
-<svelte:component this={tabs[selectedTab]} game={$game} />
+  <GameTabs game={$game} {selectedTab} on:message={handleNewSelectedTab} />
+  <svelte:component this={tabs[selectedTab]} game={$game} />
+{:else}
+  <div class="notification is-warning" class:is-hidden={!error}>
+    <p>Could not load the game you are looking for...</p>
+  </div>
+{/if}
 
 <style>
   .fa {
