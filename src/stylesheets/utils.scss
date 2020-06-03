@@ -104,3 +104,11 @@ input.reasonable-width {
 .fill-secondary {
   fill: $secondary;
 }
+.unselected {
+  fill: $anthracite;
+}
+.is-active {
+  svg {
+    fill: $primary;
+  }
+}

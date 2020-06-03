@@ -33,7 +33,7 @@
 
  <div class="columns">
   <div class="column is-2">
-    <GameList {gameList} on:message={handleNewGameUrl} />
+    <GameList {gameList} {gameUrl} on:message={handleNewGameUrl} />
   </div>
   <div class="column">
     <div id="game-content">

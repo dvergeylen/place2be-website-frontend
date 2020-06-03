@@ -21,63 +21,105 @@
       <li class:is-active={selectedTab === 'overview'}>
         <a href="javascript:void(0)"
           on:click|preventDefault={async () => updateSelectedTab('overview')}>
-          <svg class="fa tab-item">
-            <use href="../images/fontawesome-sprite.svg#solid-sitemap" />
-          </svg>
+          {#if selectedTab === 'overview'}
+            <svg class="fa">
+              <use href="../images/fontawesome-sprite.svg#solid-sitemap" />
+            </svg>
+          {:else}
+            <svg class="fa unselected">
+              <use href="../images/fontawesome-sprite.svg#light-sitemap" />
+            </svg>
+          {/if}
           <span class="left-spaced">Overview</span>
         </a>
       </li>
       <li class:is-active={selectedTab === 'actions'}>
         <a href="javascript:void(0)"
           on:click|preventDefault={async () => updateSelectedTab('actions')}>
-          <svg class="fa tab-item">
-            <use href="../images/fontawesome-sprite.svg#solid-running" />
-          </svg>
+          {#if selectedTab === 'actions'}
+            <svg class="fa">
+              <use href="../images/fontawesome-sprite.svg#solid-running" />
+            </svg>
+          {:else}
+            <svg class="fa unselected">
+              <use href="../images/fontawesome-sprite.svg#light-running" />
+            </svg>
+          {/if}
           <span class="left-spaced">Actions</span>
         </a>
       </li>
       <li class:is-active={selectedTab === 'achievements'}>
         <a href="javascript:void(0)"
           on:click|preventDefault={async () => updateSelectedTab('achievements')}>
-          <svg class="fa tab-item">
-            <use href="../images/fontawesome-sprite.svg#solid-trophy" />
-          </svg>
+          {#if selectedTab === 'achievements'}
+            <svg class="fa">
+              <use href="../images/fontawesome-sprite.svg#solid-trophy" />
+            </svg>
+          {:else}
+            <svg class="fa unselected">
+              <use href="../images/fontawesome-sprite.svg#light-trophy" />
+            </svg>
+          {/if}
           <span class="left-spaced">Achievements</span>
         </a>
       </li>
       <li class:is-active={selectedTab === 'rewards'}>
         <a href="javascript:void(0)"
           on:click|preventDefault={async () => updateSelectedTab('rewards')}>
-          <svg class="fa tab-item">
-            <use href="../images/fontawesome-sprite.svg#solid-gifts" />
-          </svg>
+          {#if selectedTab === 'rewards'}
+            <svg class="fa">
+              <use href="../images/fontawesome-sprite.svg#solid-gifts" />
+            </svg>
+          {:else}
+            <svg class="fa unselected">
+              <use href="../images/fontawesome-sprite.svg#light-gifts" />
+            </svg>
+          {/if}
           <span class="left-spaced">Rewards</span>
         </a>
       </li>
       <li class:is-active={selectedTab === 'stats'}>
         <a href="javascript:void(0)"
           on:click|preventDefault={async () => updateSelectedTab('stats')}>
-          <svg class="fa tab-item">
-            <use href="../images/fontawesome-sprite.svg#solid-chart-bar" />
-          </svg>
+          {#if selectedTab === 'stats'}
+            <svg class="fa">
+              <use href="../images/fontawesome-sprite.svg#solid-chart-bar" />
+            </svg>
+          {:else}
+            <svg class="fa unselected">
+              <use href="../images/fontawesome-sprite.svg#light-chart-bar" />
+            </svg>
+          {/if}
           <span class="left-spaced">Stats</span>
         </a>
       </li>
       <li class:is-active={selectedTab === 'dev'}>
         <a href="javascript:void(0)"
           on:click|preventDefault={async () => updateSelectedTab('dev')}>
-          <svg class="fa tab-item">
-            <use href="../images/fontawesome-sprite.svg#solid-code" />
-          </svg>
+          {#if selectedTab === 'dev'}
+            <svg class="fa">
+              <use href="../images/fontawesome-sprite.svg#solid-code" />
+            </svg>
+          {:else}
+            <svg class="fa unselected">
+              <use href="../images/fontawesome-sprite.svg#light-code" />
+            </svg>
+          {/if}
           <span class="left-spaced">Dev. / Integration</span>
         </a>
       </li>
       <li class:is-active={selectedTab === 'settings'}>
         <a href="javascript:void(0)"
           on:click|preventDefault={async () => updateSelectedTab('settings')}>
-          <svg class="fa tab-item">
-            <use href="../images/fontawesome-sprite.svg#solid-cogs" />
-          </svg>
+          {#if selectedTab === 'settings'}
+            <svg class="fa">
+              <use href="../images/fontawesome-sprite.svg#solid-cogs" />
+            </svg>
+          {:else}
+            <svg class="fa unselected">
+              <use href="../images/fontawesome-sprite.svg#light-cogs" />
+            </svg>
+          {/if}
           <span class="left-spaced">Settings</span>
         </a>
       </li>
@@ -97,8 +139,5 @@
   }
   .left-spaced {
     margin-left: 0.5em;
-  }
-  svg.tab-item {
-    fill: grey;
   }
 </style>
