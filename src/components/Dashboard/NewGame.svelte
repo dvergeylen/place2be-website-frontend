@@ -43,7 +43,7 @@
 
 <div id="new-game">
   <h1 class="title is-4">
-    Create a new Game :
+    Create new Game :
   </h1>
   <p>A game contains all actions, achievements, rewards and assets your players can interact with.</p>
 
@@ -56,9 +56,11 @@
         Unable to Create new Game :
       </h1>
       <ul>
-        {#each Object.entries(error) as [ key, ar ]}
-          <li>{key} : {ar}</li>
-        {/each}
+        {#if error}
+          {#each Object.entries(error) as [ key, ar ]}
+            <li>{key} : {ar}</li>
+          {/each}
+        {/if}
       </ul>
     </div>
 
