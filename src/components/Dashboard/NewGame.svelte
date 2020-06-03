@@ -7,7 +7,7 @@
   const apiHost = getContext('apiHost');
   const userId = getContext('userId');
 
-  let error = false;
+  let error = null;
 
   async function handleSubmit() {
     const url = createUrl(apiProtocol, apiHost, 'users', userId, 'games');
@@ -36,7 +36,7 @@
   }
 
   function flushError() {
-    error = false;
+    error = null;
   }
 </script>
 

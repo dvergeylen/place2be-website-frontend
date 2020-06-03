@@ -8,8 +8,8 @@
   let showSignIn = !params.has('signup');
 
   let error = {
-    signin: '',
-    signup: '',
+    signin: null,
+    signup: null,
   };
 
   async function handleSubmit(path, formId) {
@@ -41,7 +41,7 @@
   }
 
   function flushError(key) {
-    error[key] = '';
+    error[key] = null;
   }
 </script>
 

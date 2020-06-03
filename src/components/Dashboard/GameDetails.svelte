@@ -11,7 +11,7 @@
   import Settings from './Tabs/Settings.svelte';
 
   export let gameUrl;
-  let error;
+  let error = null;
   let selectedTab = 'actions';
   const tabs = {
     overview: Overview,
