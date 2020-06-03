@@ -36,9 +36,9 @@
     <GameList {gameList} {gameUrl} on:message={handleNewGameUrl} />
   </div>
   <div class="column">
-    <div id="game-content">
+    <div id="game-content" class="box">
       {#if !gameUrl}
-        <p>← Create a new game</p>
+        <p>← Start by hitting the 'New Game' button !</p>
       {:else if gameUrl === 'new'}
         <NewGame on:message={handleNewGameUrl} />
       {:else}
