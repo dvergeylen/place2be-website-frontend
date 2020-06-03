@@ -57,9 +57,11 @@
         Unable to Sign in
       </h1>
       <ul>
-        {#each Object.entries(error['signin']) as [ key, ar ]}
-          <li>{key} : {ar}</li>
-        {/each}
+        {#if error['signin']}
+          {#each Object.entries(error['signin']) as [ key, ar ]}
+            <li>{key} : {ar}</li>
+          {/each}
+        {/if}
       </ul>
     </div>
 
@@ -114,9 +116,11 @@
         Unable to Sign up
       </h1>
       <ul>
-        {#each Object.entries(error['signup']) as [ key, ar ]}
-          <li>{key} : {ar.join(', ')}</li>
-        {/each}
+        {#if error['signup']}
+          {#each Object.entries(error['signup']) as [ key, ar ]}
+            <li>{key} : {ar.join(', ')}</li>
+          {/each}
+        {/if}
       </ul>
     </div>
 
