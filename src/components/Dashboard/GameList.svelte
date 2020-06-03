@@ -52,7 +52,7 @@
       </article>
     {/if}
   {:catch error}
-    <p style="color: red">{error.message}</p>
+    <p class="error">{error.message}</p>
   {/await}
 </div>
 
