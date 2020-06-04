@@ -45,7 +45,23 @@
   <h1 class="title is-4">
     Create new Game :
   </h1>
-  <p>A game contains all actions, achievements, rewards and assets your players can interact with.</p>
+  <p>A Game contains all actions
+    <svg class="twemoji">
+      <use href="../images/twemoji-sprite.svg#high_voltage_sign" />
+    </svg>,
+    achievements
+    <svg class="twemoji">
+      <use href="../images/twemoji-sprite.svg#trophy" />
+    </svg>,
+    rewards
+    <svg class="twemoji">
+      <use href="../images/twemoji-sprite.svg#wrapped_present" />
+    </svg>
+    and assets
+    <svg class="twemoji">
+      <use href="../images/twemoji-sprite.svg#package" />
+    </svg>
+    your players can interact with.</p>
 
   <hr>
 

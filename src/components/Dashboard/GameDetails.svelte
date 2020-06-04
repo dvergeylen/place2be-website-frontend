@@ -43,16 +43,11 @@
 
 {#if !error}
   <h1 class="title is-4 has-vcentered-content">
-    <svg class="fa">
-      <use href="../images/fontawesome-sprite.svg#solid-trophy" />
-    </svg>
-    <span class="left-spaced">
-      {#if !$game}
-        Loading Game...
-      {:else}
-        {$game['attributes']['name']}
-      {/if}
-    </span>
+    {#if !$game}
+      Loading Game...
+    {:else}
+      {$game['attributes']['name']}
+    {/if}
   </h1>
   <p>Game description</p>
 
@@ -63,13 +58,3 @@
     <p>Could not load the game you are looking for...</p>
   </div>
 {/if}
-
-<style>
-  .fa {
-    width: 1.2em;
-    height: 1.2em;
-  }
-  .left-spaced {
-    margin-left: 0.5em;
-  }
-</style>

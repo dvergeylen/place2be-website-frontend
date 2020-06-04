@@ -38,7 +38,11 @@
   <div class="column">
     <div id="game-content" class="box">
       {#if !gameUrl}
-        <p>← Start by hitting the 'New Game' button !</p>
+        <p>← Start by hitting the 'New Game' button !
+          <svg class="twemoji">
+            <use href="../images/twemoji-sprite.svg#party_popper" />
+          </svg>
+        </p>
       {:else if gameUrl === 'new'}
         <NewGame on:message={handleNewGameUrl} />
       {:else}

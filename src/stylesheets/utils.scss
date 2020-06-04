@@ -92,7 +92,13 @@ input.reasonable-width {
 /* ******************** */
 .fa {
   width: 1em;
+  height: 1em;
 }
+.twemoji {
+  width: 1em;
+  height: 1em;
+}
+
 /* Rotation */
 .rotating {
   animation:spin 3s linear infinite;
@@ -111,12 +117,4 @@ input.reasonable-width {
 }
 .fill-secondary {
   fill: $secondary;
-}
-.unselected {
-  fill: $anthracite;
-}
-.is-active {
-  svg {
-    fill: $primary;
-  }
 }

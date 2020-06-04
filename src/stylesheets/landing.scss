@@ -22,6 +22,10 @@
   @media screen and (max-width: 769px) {
     font-size: 2em;
   }
+
+  i,svg {
+    vertical-align: middle;
+  }
 }
 
 #motivation {
@@ -32,5 +36,9 @@
   p.citation {
     margin-bottom: 2em;
     margin-top: 2em;
+  }
+
+  svg {
+    vertical-align: middle;
   }
 }

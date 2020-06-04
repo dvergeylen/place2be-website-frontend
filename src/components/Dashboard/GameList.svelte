@@ -5,19 +5,6 @@
 
   const dispatch = createEventDispatcher();
 
-  // Icons needs to be prefixed by either
-  // light- or solid- (when game is selected)
-  const gameIcons = [
-    'dice',
-    'alien-monster',
-    'puzzle-piece',
-    'chess',
-    'joystick',
-    'ghost',
-    'gamepad-alt',
-    'dragon',
-  ];
-
   function updateGameUrl(url) {
     dispatch('message', {
       gameUrl: url,
@@ -41,24 +28,20 @@
       <a href="javascript:void(0)" class="panel-block fill-primary"
         on:click|preventDefault={async () => updateGameUrl('new')}>
         <span class="panel-icon">
-          <svg class="fa">
-            <use href="../images/fontawesome-sprite.svg#solid-sparkles" />
+          <svg class="twemoji">
+            <use href="../images/twemoji-sprite.svg#rocket" />
           </svg>
         </span>
         <span>
           New Game
         </span>
       </a>
-      {#each games as game, i}
+      {#each games as game}
         <a href={game.links.self} on:click|preventDefault={() => updateGameUrl(game.links.self)}
           class="panel-block">
           <span class="panel-icon" class:fill-primary={gameUrl === game.links.self}>
-            <svg class="fa">
-              {#if gameUrl === game.links.self}
-                <use href="../images/fontawesome-sprite.svg#solid-{gameIcons[i % gameIcons.length]}" />
-              {:else}
-                <use href="../images/fontawesome-sprite.svg#light-{gameIcons[i % gameIcons.length]}" />
-              {/if}
+            <svg class="twemoji">
+              <use href="../images/twemoji-sprite.svg#trophy" />
             </svg>
           </span>
           {game.attributes.name}
@@ -71,7 +54,7 @@
 </div>
 
 <style lang='scss'>
-  .fa {
+  .twemoji {
     width: 1.2em;
     height: 1em;
   }
