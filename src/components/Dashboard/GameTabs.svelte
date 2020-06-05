@@ -20,16 +20,16 @@
     <ul>
       <li class:is-active={selectedTab === 'overview'}>
         <a href="javascript:void(0)"
-          on:click|preventDefault={async () => updateSelectedTab('overview')}>
+          on:click|preventDefault={() => updateSelectedTab('overview')}>
           <svg class="twemoji">
-            <use href="../images/twemoji-sprite.svg#world_map" />
+            <use href="../images/twemoji-sprite.svg#compass" />
           </svg>
           <span class="left-spaced">Overview</span>
         </a>
       </li>
       <li class:is-active={selectedTab === 'actions'}>
         <a href="javascript:void(0)"
-          on:click|preventDefault={async () => updateSelectedTab('actions')}>
+          on:click|preventDefault={() => updateSelectedTab('actions')}>
           <svg class="twemoji">
             <use href="../images/twemoji-sprite.svg#high_voltage_sign" />
           </svg>
@@ -38,7 +38,7 @@
       </li>
       <li class:is-active={selectedTab === 'achievements'}>
         <a href="javascript:void(0)"
-          on:click|preventDefault={async () => updateSelectedTab('achievements')}>
+          on:click|preventDefault={() => updateSelectedTab('achievements')}>
           <svg class="twemoji">
             <use href="../images/twemoji-sprite.svg#trophy" />
           </svg>
@@ -47,7 +47,7 @@
       </li>
       <li class:is-active={selectedTab === 'rewards'}>
         <a href="javascript:void(0)"
-          on:click|preventDefault={async () => updateSelectedTab('rewards')}>
+          on:click|preventDefault={() => updateSelectedTab('rewards')}>
           <svg class="twemoji">
             <use href="../images/twemoji-sprite.svg#wrapped_present" />
           </svg>
@@ -56,7 +56,7 @@
       </li>
       <li class:is-active={selectedTab === 'stats'}>
         <a href="javascript:void(0)"
-          on:click|preventDefault={async () => updateSelectedTab('stats')}>
+          on:click|preventDefault={() => updateSelectedTab('stats')}>
           <svg class="twemoji">
             <use href="../images/twemoji-sprite.svg#bar_chart" />
           </svg>
@@ -65,16 +65,16 @@
       </li>
       <li class:is-active={selectedTab === 'dev'}>
         <a href="javascript:void(0)"
-          on:click|preventDefault={async () => updateSelectedTab('dev')}>
+          on:click|preventDefault={() => updateSelectedTab('dev')}>
           <svg class="twemoji">
             <use href="../images/twemoji-sprite.svg#woman_technologist" />
           </svg>
-          <span class="left-spaced">Dev. / Integration</span>
+          <span class="left-spaced">Integration</span>
         </a>
       </li>
       <li class:is-active={selectedTab === 'settings'}>
         <a href="javascript:void(0)"
-          on:click|preventDefault={async () => updateSelectedTab('settings')}>
+          on:click|preventDefault={() => updateSelectedTab('settings')}>
           <svg class="twemoji">
             <use href="../images/twemoji-sprite.svg#gear" />
           </svg>
@@ -91,6 +91,7 @@
     margin-bottom: 1em;
     font-size: 1.1em;
   }
+
   .left-spaced {
     margin-left: 0.5em;
   }
