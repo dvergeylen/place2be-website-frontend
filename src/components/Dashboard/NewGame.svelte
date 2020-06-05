@@ -45,19 +45,19 @@
   <h1 class="title is-4">
     Create new Game :
   </h1>
-  <p>A Game contains all actions
+  <p>A Game contains all Actions
     <svg class="twemoji">
       <use href="../images/twemoji-sprite.svg#high_voltage_sign" />
     </svg>,
-    achievements
+    Achievements
     <svg class="twemoji">
       <use href="../images/twemoji-sprite.svg#trophy" />
     </svg>,
-    rewards
+    Rewards
     <svg class="twemoji">
       <use href="../images/twemoji-sprite.svg#wrapped_present" />
     </svg>
-    and assets
+    and Assets
     <svg class="twemoji">
       <use href="../images/twemoji-sprite.svg#package" />
     </svg>

@@ -142,8 +142,8 @@
 
 <style lang=scss>
   button.is-danger {
-    color: red !important;
+    color: #cb2431 !important;
     background: white !important;
-    border: 1px solid red !important;
+    border: 1px solid #cb2431 !important;
   }
 </style>
