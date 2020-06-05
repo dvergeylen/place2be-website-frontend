@@ -1,5 +1,27 @@
 <script>
+  import Action from './Action/Action.svelte';
+  import { fetchData } from '../../../javascripts/utils/helpers';
   import { game } from '../../../javascripts/stores/gameStore';
+
+  let actions = [];
+
+  async function fetchActions(game) {
+    const url = game.relationships.actions.links.related;
+    const res = await fetchData(url);
+
+    if (res.ok) {
+      const resJson = await res.json();
+      actions = resJson.data;
+    } else {
+      error = 'Could not fetch Actions for this game';
+    }
+  };
+
+  function updateActions(event) {
+    actions = event.detail.actions;
+  }
+
+  $: if ($game) fetchActions($game);
 </script>
 
 {#if !$game}
@@ -10,7 +32,19 @@
     <p class="left-spaced">Loading Game Actions</p>
   </div>
 {:else}
-  <pre>
-    {JSON.stringify($game, null, 4)}
-  </pre>
+  {#if actions.length}
+    {#each actions as action (action.id)}
+      <Action {action} on:message={updateActions}/>
+    {/each}
+  {:else}
+    <p>You don't have Actions  yet! Start by creating one below ↓</p>
+  {/if}
+
+
+
+  <hr>
+  <h1 class="title is-4">
+    Create new Action :
+  </h1>
+  <Action on:message={updateActions}/>
 {/if}

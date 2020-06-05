@@ -87,6 +87,14 @@ input.reasonable-width {
   max-width: 400px;
 }
 
+.item-box {
+  border: 1px solid $primary;
+  border-radius: 0.1em;
+  padding: 0.5em;
+  max-width: 50%;
+  margin: 1em;
+}
+
 /* ******************** */
 /* FONTAWESOME          */
 /* ******************** */
@@ -111,9 +119,6 @@ input.reasonable-width {
 /* ******************** */
 .fill-primary {
   fill: $primary;
-  &:hover {
-    fill: $secondary;
-  }
 }
 .fill-secondary {
   fill: $secondary;
