@@ -43,10 +43,12 @@
 </script>
 
 {#if !error}
-  <h1 class="title is-4 has-vcentered-content">
-    {#if !$game}
+  {#if !$game}
+    <h1 class="title is-4 has-vcentered-content">
       Loading Game...
-    {:else}
+    </h1>
+  {:else}
+    <h1 class="title is-4 has-vcentered-content">
       <span id="saving-status">
         <abbr title="Last save : {$lastSaveDate.toLocaleString()}">
           <svg class="fa saved" class:is-hidden={$savingStatus != 'saved'}>
@@ -61,9 +63,9 @@
         </abbr>
       </span>
       {$game['attributes']['name']}
-    {/if}
-  </h1>
-  <p>Game description</p>
+    </h1>
+    <h1 id="game-description" class="subtitle is-6">{$game['attributes']['description']}</h1>
+  {/if}
 
   <GameTabs game={$game} {selectedTab} on:message={handleNewSelectedTab} />
   <svelte:component this={tabs[selectedTab]} on:message/>
@@ -92,5 +94,9 @@
     .failed{
       fill: darkred;
     }
+  }
+
+  #game-description {
+    margin-left: 2.3em;
   }
 </style>
