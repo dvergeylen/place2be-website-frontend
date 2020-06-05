@@ -3,6 +3,7 @@
   import { createUrl } from '../../../javascripts/utils/helpers';
   import { postFormData } from '../../../javascripts/utils/helpers';
   import { game } from '../../../javascripts/stores/gameStore';
+  import { savingStatus } from '../../../javascripts/stores/savingStore';
   let error = null;
 
   const dispatch = createEventDispatcher();
@@ -13,12 +14,17 @@
   async function handleSubmit(path, formId) {
     const url = createUrl(apiProtocol, apiHost, ...path);
     const formData = new FormData(document.getElementById(formId));
+
+    savingStatus.set('saving');
     const res = await postFormData(url, formData, 'PUT');
 
     if (!res.ok) {
       const t = await res.text();
       error = JSON.parse(t);
+      savingStatus.set('failed');
     } else {
+      savingStatus.set('saved');
+
       /* Update Game Store with new content */
       const newGame = await res.json();
       game.set(newGame.data);

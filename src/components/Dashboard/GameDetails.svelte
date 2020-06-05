@@ -1,6 +1,7 @@
 <script>
   import { fetchData } from '../../javascripts/utils/helpers';
   import { game } from '../../javascripts/stores/gameStore';
+  import { savingStatus, lastSaveDate } from '../../javascripts/stores/savingStore';
   import GameTabs from './GameTabs.svelte';
   import Overview from './Tabs/Overview.svelte';
   import Actions from './Tabs/Actions.svelte';
@@ -46,6 +47,19 @@
     {#if !$game}
       Loading Game...
     {:else}
+      <span id="saving-status">
+        <abbr title="Last save : {$lastSaveDate.toLocaleString()}">
+          <svg class="fa saved" class:is-hidden={$savingStatus != 'saved'}>
+            <use href="../images/fontawesome-sprite.svg#solid-check-circle" />
+          </svg>
+          <svg class="fa saving rotating" class:is-hidden={$savingStatus != 'saving'}>
+            <use href="../images/fontawesome-sprite.svg#solid-spinner-third" />
+          </svg>
+          <svg class="fa failed" class:is-hidden={$savingStatus != 'failed'}>
+            <use href="../images/fontawesome-sprite.svg#solid-times-circle" />
+          </svg>
+        </abbr>
+      </span>
       {$game['attributes']['name']}
     {/if}
   </h1>
@@ -58,3 +72,25 @@
     <p>Could not load the game you are looking for...</p>
   </div>
 {/if}
+
+<style lang="scss">
+  #saving-status {
+    border-bottom-style: none;
+    padding: 0.5em 0;
+    margin-right: 0.5em;
+
+    svg {
+      vertical-align: middle;
+    }
+
+    .saved {
+      fill: #73c90a;
+    }
+    .saving{
+      fill: rgb(177, 177, 177);
+    }
+    .failed{
+      fill: darkred;
+    }
+  }
+</style>
