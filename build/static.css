@@ -1,3 +1,69 @@
-.credentials.svelte-6z5v9t{width:1em}.fill-primary.svelte-6z5v9t{fill:#0096df}.fill-primary.svelte-6z5v9t:hover{fill:white}.fill-secondary.svelte-6z5v9t{fill:white}
+/* Bulma variables are defined in bulma.scss directly */
+/* Other variables come here */
+/* ********* */
+/* NAVBAR    */
+/* ********* */
+.navbar {
+  margin-left: auto;
+  margin-right: auto;
+  /* Desktop */
+  /* Mobile */ }
+  @media screen and (min-width: 768px) {
+    .navbar {
+      height: 6em;
+      max-width: 65%; } }
+  @media screen and (max-width: 769px) {
+    .navbar {
+      height: 3em;
+      padding-left: 5%;
+      padding-right: 5%; } }
+  .navbar #brand {
+    fill: #0096df;
+    /* Desktop */
+    /* Mobile */ }
+    @media screen and (min-width: 768px) {
+      .navbar #brand {
+        width: 128px;
+        height: 100%; } }
+    @media screen and (max-width: 769px) {
+      .navbar #brand {
+        width: 80px;
+        height: 14px; } }
+  .navbar #logo {
+    fill: #0096df;
+    width: 30px;
+    height: 30px; }
 
-/*# sourceMappingURL=static.css.map */
+/* Bulma variables are defined in bulma.scss directly */
+/* Other variables come here */
+#landing-title {
+  /* Desktop */
+  /* Mobile */ }
+  @media screen and (min-width: 768px) {
+    #landing-title {
+      font-size: 4em; } }
+  @media screen and (max-width: 769px) {
+    #landing-title {
+      font-size: 3em; } }
+
+#landing-subtitle {
+  /* Desktop */
+  /* Mobile */ }
+  @media screen and (min-width: 768px) {
+    #landing-subtitle {
+      font-size: 2.5em; } }
+  @media screen and (max-width: 769px) {
+    #landing-subtitle {
+      font-size: 2em; } }
+  #landing-subtitle i, #landing-subtitle svg {
+    vertical-align: middle; }
+
+#motivation {
+  background: #f6f8fa;
+  border-radius: 0.5em;
+  margin-bottom: 1em; }
+  #motivation p.citation {
+    margin-bottom: 2em;
+    margin-top: 2em; }
+  #motivation svg {
+    vertical-align: middle; }
