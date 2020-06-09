@@ -125,6 +125,14 @@ input.reasonable-width {
 /* ******************** */
 .fill-primary {
   fill: $primary;
+    &:hover {
+      fill: $secondary;
+    }
+}
+.no-hover {
+  &:hover {
+    fill:inherit;
+  }
 }
 .fill-secondary {
   fill: $secondary;

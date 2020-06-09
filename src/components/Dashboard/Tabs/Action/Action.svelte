@@ -190,7 +190,7 @@
               Need help? See 
               <a href="https://doc.place2be.io" target="_blank">
                 <span>Doc</span>
-                <svg class="fa fill-primary">
+                <svg class="fa fill-primary no-hover">
                   <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
                 </svg>
               </a>
