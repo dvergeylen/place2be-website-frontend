@@ -7,6 +7,12 @@ html#dashboard {
   height: 100%;
   background: $smoke;
 }
+html body {
+  font-family: OpenSans;
+  h1 {
+    font-family: RobotoSlab;
+  }
+}
 
 /* ********* */
 /* CENTERING */

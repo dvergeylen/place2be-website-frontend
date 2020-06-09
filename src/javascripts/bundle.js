@@ -8,3 +8,4 @@
 import '../stylesheets/bulma.scss';
 import '../stylesheets/bulma-enhancements.scss';
 import '../stylesheets/utils.scss';
+import '../stylesheets/fonts.scss';
