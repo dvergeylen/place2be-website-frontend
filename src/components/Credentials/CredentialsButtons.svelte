@@ -52,9 +52,9 @@
       Sign Out
     </span>
   </button>
-  <a href="/credentials.html?signup=true" class="button is-link is-outlined fill-primary" class:is-hidden="{authenticated}">
+  <a href="/credentials.html?signup=true" class="button is-link fill-primary" class:is-hidden="{authenticated}">
     <span class="icon is-small">
-      <svg class="fa">
+      <svg class="fa fill-secondary">
         <use href="../images/fontawesome-sprite.svg#solid-sign-in-alt" />
       </svg>
     </span>
