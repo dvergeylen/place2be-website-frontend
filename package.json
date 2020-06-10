@@ -5,7 +5,7 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --host 0.0.0.0",
-    "deploy": "npm run build && ./node_modules/gh-pages/bin/gh-pages.js -d public/"
+    "deploy": "cp production-config.json public-config.json && npm run build && ./node_modules/gh-pages/bin/gh-pages.js -d public/"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-pro": "^5.13.0",
