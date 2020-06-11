@@ -3,7 +3,7 @@
  */
 
 /* config */
-import config from '../../../local-config.json'; // ⚠️ Not commited config
+import config from '../../../public-config.json'; // ⚠️ Not commited config
 
 /* Javascripts */
 import { getCookie } from '../utils/helpers';
