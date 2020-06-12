@@ -165,11 +165,15 @@
             Tags :
           </td>
           <td class="is-value">
-            <div class="tags">
-              {#each action.attributes.tags.split(',') as tag}
-                <span class="tag is-link">{tag}</span>
-              {/each}
-            </div>
+            {#if !action.attributes.tags.length}
+              --
+            {:else}
+              <div class="tags">
+                {#each action.attributes.tags as tag}
+                  <span class="tag is-link">{tag}</span>
+                {/each}
+              </div>
+            {/if}
           </td>
         </tr>
         <tr>
