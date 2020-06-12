@@ -59,10 +59,29 @@ function postJsonData(token, url, data, method) {
   });
 }
 
+/* Navbar toggle */
+function setNavbarToggle() {
+  document.addEventListener('DOMContentLoaded', () => {
+    const navbarBurger = document.querySelector('.navbar-burger');
+    const navBarMenu = document.querySelector('.navbar-menu');
+
+    navbarBurger.addEventListener('click', () => {
+      if (navbarBurger.classList.contains('is-active')) {
+        navbarBurger.classList.remove('is-active');
+        navBarMenu.classList.remove('is-active');
+      } else {
+        navbarBurger.classList.add('is-active');
+        navBarMenu.classList.add('is-active');
+      }
+    });
+  });
+}
+
 export {
   createUrl,
   fetchData,
   postFormData,
   postJsonData,
   getCookie,
+  setNavbarToggle,
 };

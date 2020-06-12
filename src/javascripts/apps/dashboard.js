@@ -3,10 +3,10 @@
  */
 
 /* config */
-import config from '../../../public-config.json'; // ⚠️ Not commited config
+import config from '../../../public-config.json';
 
 /* Javascripts */
-import { getCookie } from '../utils/helpers';
+import { getCookie, setNavbarToggle } from '../utils/helpers';
 
 /* Stylesheets */
 import '../../stylesheets/navbar.scss';
@@ -15,6 +15,9 @@ import '../../stylesheets/dashboard.scss';
 /* Components */
 import Dashboard from '../../components/Dashboard/Dashboard.svelte';
 import CredentialsButtons from '../../components/Credentials/CredentialsButtons.svelte';
+
+/* Navbar toggle */
+setNavbarToggle();
 
 const app = (async () => {
   // Figure out: are we asking our own dashboard

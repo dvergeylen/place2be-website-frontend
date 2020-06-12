@@ -1,17 +1,21 @@
 /*
- * Static APP → When user isn't connected
+ * Credential APP
  */
 
 /* config */
-import config from '../../../public-config.json'; // ⚠️ Not commited config
+import config from '../../../public-config.json';
+
+/* Javascripts */
+import { setNavbarToggle } from '../utils/helpers';
 
 /* Stylesheets */
 import '../../stylesheets/navbar.scss';
 
-/* Login */
-
 /* Components */
 import CredentialsForm from '../../components/Credentials/CredentialsForm.svelte';
+
+/* Navbar toggle */
+setNavbarToggle();
 
 const app = (async () => {
   // eslint-disable-next-line no-unused-vars
