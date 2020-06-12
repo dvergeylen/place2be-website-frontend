@@ -38,7 +38,7 @@
   <div class="column">
     <div id="game-content" class="box">
       {#if !gameUrl}
-        <p>← Start by hitting the 'New Game' button !
+        <p><span class="is-hidden-touch">←</span><span class="is-hidden-desktop">↑</span> Start by hitting the 'New Game' button !
           <svg class="twemoji">
             <use href="../images/twemoji-sprite.svg#party_popper" />
           </svg>
