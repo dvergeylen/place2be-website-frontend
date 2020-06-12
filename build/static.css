@@ -1,5 +1,41 @@
 /* Bulma variables are defined in bulma.scss directly */
 /* Other variables come here */
+/* ********* */
+/* NAVBAR    */
+/* ********* */
+.navbar {
+  margin-left: auto;
+  margin-right: auto;
+  /* Desktop */
+  /* Mobile */ }
+  @media screen and (min-width: 768px) {
+    .navbar {
+      height: 6em;
+      max-width: 65%; } }
+  @media screen and (max-width: 769px) {
+    .navbar {
+      height: 3em;
+      padding-left: 5%;
+      padding-right: 5%; } }
+  .navbar #brand {
+    fill: #0096df;
+    /* Desktop */
+    /* Mobile */ }
+    @media screen and (min-width: 1024px) {
+      .navbar #brand {
+        width: 128px;
+        height: 100%; } }
+    @media screen and (max-width: 1024px) {
+      .navbar #brand {
+        width: 80px;
+        height: 14px; } }
+  .navbar #logo {
+    fill: #0096df;
+    width: 30px;
+    height: 30px; }
+
+/* Bulma variables are defined in bulma.scss directly */
+/* Other variables come here */
 #landing-title {
   /* Desktop */
   /* Mobile */ }
@@ -31,39 +67,3 @@
     margin-top: 2em; }
   #motivation svg {
     vertical-align: middle; }
-
-/* Bulma variables are defined in bulma.scss directly */
-/* Other variables come here */
-/* ********* */
-/* NAVBAR    */
-/* ********* */
-.navbar {
-  margin-left: auto;
-  margin-right: auto;
-  /* Desktop */
-  /* Mobile */ }
-  @media screen and (min-width: 768px) {
-    .navbar {
-      height: 6em;
-      max-width: 65%; } }
-  @media screen and (max-width: 769px) {
-    .navbar {
-      height: 3em;
-      padding-left: 5%;
-      padding-right: 5%; } }
-  .navbar #brand {
-    fill: #0096df;
-    /* Desktop */
-    /* Mobile */ }
-    @media screen and (min-width: 768px) {
-      .navbar #brand {
-        width: 128px;
-        height: 100%; } }
-    @media screen and (max-width: 769px) {
-      .navbar #brand {
-        width: 80px;
-        height: 14px; } }
-  .navbar #logo {
-    fill: #0096df;
-    width: 30px;
-    height: 30px; }

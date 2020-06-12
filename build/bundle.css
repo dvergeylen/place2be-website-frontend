@@ -1,4 +1,27 @@
 @charset "UTF-8";
+/* This file extends bulma classes.
+ * This adds some styling to existing bulma classes
+ */
+/* Bulma variables are defined in bulma.scss directly */
+/* Other variables come here */
+.is-danger {
+  border: solid 2px #df0000; }
+
+.is-warning {
+  border: solid 2px #ffbd00; }
+
+.panel {
+  background: white; }
+
+.navbar {
+  background-color: transparent !important; }
+
+@media screen and (max-width: 768px) {
+  .tabs ul {
+    flex-direction: column; }
+    .tabs ul li {
+      width: 100%; } }
+
 @keyframes spinAround {
   from {
     transform: rotate(0deg); }
@@ -5522,10 +5545,10 @@ html body {
   margin: auto;
   /* Desktop */
   /* Mobile */ }
-  @media screen and (min-width: 1152px) {
+  @media screen and (min-width: 768px) {
     .section {
       max-width: 65%; } }
-  @media screen and (max-width: 1153px) {
+  @media screen and (max-width: 768px) {
     .section {
       max-width: 95%;
       padding-top: 1.5rem; } }
@@ -5549,8 +5572,11 @@ input.reasonable-width {
   border: 1px solid #0096df;
   border-radius: 0.1em;
   padding: 0.5em;
-  max-width: 50%;
-  margin: 1em; }
+  /* Desktop */ }
+  @media screen and (min-width: 768px) {
+    .item-box {
+      max-width: 50%;
+      margin: 1em; } }
 
 /* ******************** */
 /* FONTAWESOME          */
@@ -5581,27 +5607,13 @@ input.reasonable-width {
     fill: white; }
 
 .no-hover:hover {
-  fill: inherit; }
+  fill: #4a4a4a; }
 
 .fill-secondary {
   fill: white; }
 
-/* This file extends bulma classes.
- * This adds some styling to existing bulma classes
- */
-/* Bulma variables are defined in bulma.scss directly */
-/* Other variables come here */
-.is-danger {
-  border: solid 2px #df0000; }
-
-.is-warning {
-  border: solid 2px #ffbd00; }
-
-.panel {
-  background: white; }
-
-.navbar {
-  background-color: transparent !important; }
+.fill-anthracite {
+  fill: #4a4a4a; }
 
 @font-face {
   font-family: OpenSans;

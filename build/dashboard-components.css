@@ -4,6 +4,7 @@ div#game-content.svelte-18ayl8q{max-width:1152px}
 #game-tabs-container.svelte-ywoo4f{margin-top:1em;margin-bottom:1em;font-size:1.1em}.left-spaced.svelte-ywoo4f{margin-left:0.5em}
 #new-game.svelte-178zv2a{max-width:1000px}.mandatory.svelte-178zv2a{color:red}.note.svelte-178zv2a{min-height:17px;margin:4px 0 2px;font-size:12px;color:#586069}
 #action-name.svelte-1jr5y39{margin-top:0.5em;margin-left:0.5em}td.svelte-1jr5y39{vertical-align:middle}td.right.svelte-1jr5y39{text-align:right}.name-edit.svelte-1jr5y39{height:0.7em;margin-left:0.2em}.fa.svelte-1jr5y39{cursor:pointer}
+#reward-name.svelte-1pgo0mv{margin-top:0.5em;margin-left:0.5em}td.svelte-1pgo0mv{vertical-align:middle}td.right.svelte-1pgo0mv{text-align:right}.name-edit.svelte-1pgo0mv{height:0.7em;margin-left:0.2em}.fa.svelte-1pgo0mv{cursor:pointer}
 button.is-danger.svelte-1xcb6g0{color:#cb2431 !important;background:white !important;border:1px solid #cb2431 !important}
 
 /*# sourceMappingURL=dashboard-components.css.map */
