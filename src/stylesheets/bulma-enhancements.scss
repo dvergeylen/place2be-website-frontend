@@ -18,3 +18,13 @@
 .navbar {
   background-color: transparent !important;
 }
+
+@media screen and (max-width: 768px) {
+  .tabs ul {
+    flex-direction: column;
+
+    li {
+      width: 100%;
+    }
+  }
+}

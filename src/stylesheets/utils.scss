@@ -63,12 +63,12 @@ html body {
   margin:auto;
 
   /* Desktop */
-  @media screen and (min-width: 1152px) {
+  @media screen and (min-width: 768px) {
     max-width: 65%;
   }
 
   /* Mobile */
-  @media screen and (max-width: 1153px) {
+  @media screen and (max-width: 768px) {
     max-width: 95%;
     padding-top: 1.5rem;
   }
@@ -97,8 +97,12 @@ input.reasonable-width {
   border: 1px solid $primary;
   border-radius: 0.1em;
   padding: 0.5em;
-  max-width: 50%;
-  margin: 1em;
+
+  /* Desktop */
+  @media screen and (min-width: 768px) {
+    max-width: 50%;
+    margin: 1em;
+  }
 }
 
 /* ******************** */
@@ -131,9 +135,12 @@ input.reasonable-width {
 }
 .no-hover {
   &:hover {
-    fill:inherit;
+    fill:$anthracite;
   }
 }
 .fill-secondary {
   fill: $secondary;
+}
+.fill-anthracite {
+  fill: $anthracite;
 }

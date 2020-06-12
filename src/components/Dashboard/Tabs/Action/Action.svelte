@@ -103,17 +103,17 @@
               bind:value={action.attributes.name}
             class:is-hidden={!displayNameInput}>
 
-            <svg class="fa name-edit fill-primary" class:is-hidden={displayNameInput}
+            <svg class="fa name-edit fill-primary no-hover" class:is-hidden={displayNameInput}
               on:click={toggleEditName}>
               <use href="../images/fontawesome-sprite.svg#regular-edit" />
             </svg>
-            <svg class="fa name-edit fill-primary" class:is-hidden={!displayNameInput}
+            <svg class="fa name-edit fill-primary no-hover" class:is-hidden={!displayNameInput}
               on:click={toggleEditName}>
               <use href="../images/fontawesome-sprite.svg#regular-check-circle" />
             </svg>
           </h1>
         </div>
-          <div class="column is-1">
+          <div class="column is-narrow">
               <svg class="fa" on:click={destroyAction}>
                 <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
               </svg>
@@ -188,7 +188,7 @@
           <td>
             <p class="help">
               Need help? See 
-              <a href="https://doc.place2be.io" target="_blank">
+              <a href="https://doc/place2be.io/actions" target="_blank">
                 <span>Doc</span>
                 <svg class="fa fill-primary no-hover">
                   <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
