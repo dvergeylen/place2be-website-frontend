@@ -12,6 +12,9 @@ html body {
   h1 {
     font-family: RobotoSlab;
   }
+  button, input, select {
+    font-family: OpenSans;
+  }
 }
 
 /* ********* */
@@ -102,6 +105,11 @@ input.reasonable-width {
   @media screen and (min-width: 768px) {
     max-width: 50%;
     margin: 1em;
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 768px) {
+    margin-bottom: 1em;
   }
 }
 

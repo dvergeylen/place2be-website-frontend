@@ -18,8 +18,7 @@
   const userId = getContext('userId');
 
   let error = null;
-  let tags;
-  let displayNameInput = false;
+  let displayEditForm = false;
 
   async function saveAction() {
     savingStatus.set('saving');
@@ -46,6 +45,7 @@
       if (action.id) {
         const updatedAction = await res.json();
         action = updatedAction.data;
+        resetFormDisplay();
       } else {
         const actions = await res.json();
         dispatch('message', {
@@ -76,12 +76,47 @@
     }
   }
 
-  function updateAction() {
-    if (action.id) saveAction();
+  function valueTypePrettify(val) {
+    let result = 'Unknown';
+
+    switch(val) {
+      case 'boolean':
+        result = 'Boolean (Yes | No)';
+        break;
+      case 'int':
+        result = 'Integer';
+        break;
+      case 'float':
+        result = 'Float';
+        break;
+      case 'string':
+        result = 'String';
+        break;
+      case 'date':
+        result = 'Date';
+    }
+    return result;
   }
 
-  function toggleEditName() {
-    displayNameInput = !displayNameInput;
+  function teamIdPrettify(val) {
+    let result = 'Unknown';
+
+    switch(val) {
+      case false:
+        result = 'No, optional';
+        break;
+      case true:
+        result = 'Yes, required';
+    }
+    return result;
+  }
+
+  function toggleFormDisplay() {
+    displayEditForm = !displayEditForm;
+  }
+
+  function resetFormDisplay() {
+    displayEditForm = false;
   }
 
   function flushError() {
@@ -89,102 +124,57 @@
   }
 </script>
 
-<form id="{action.id || 'new'}-action-form" on:change={updateAction}
-  on:submit|preventDefault={saveAction}>
-  <div class='item-box'>
-    {#if action.id}
-      <div class="columns is-mobile">
-        <div class="column">
-          <h1 id="action-name" class="title is-5 has-vcentered-text">
-            <span class:is-hidden={displayNameInput}>
-              {action.attributes.name}
-            </span>
-            <input class="input reasonable-width" type="text" name="act[name]"
-              bind:value={action.attributes.name}
-            class:is-hidden={!displayNameInput}>
+<div class='item-box'>
 
-            <svg class="fa name-edit fill-primary no-hover" class:is-hidden={displayNameInput}
-              on:click={toggleEditName}>
-              <use href="../images/fontawesome-sprite.svg#regular-edit" />
-            </svg>
-            <svg class="fa name-edit fill-primary no-hover" class:is-hidden={!displayNameInput}
-              on:click={toggleEditName}>
-              <use href="../images/fontawesome-sprite.svg#regular-check-circle" />
-            </svg>
-          </h1>
-        </div>
-          <div class="column is-narrow">
-              <svg class="fa" on:click={destroyAction}>
-                <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
-              </svg>
-          </div>
+  <!-- Show Action -->
+  <div class:is-hidden={displayEditForm || !action.id}>
+    <div class="columns is-mobile">
+      <div class="column">
+        <h1 id="action-name" class="title is-5 has-vcentered-text">
+          <span class:is-hidden={displayEditForm}>
+            {action.attributes.name}
+          </span>
+          <svg class="fa name-edit fill-primary no-hover" class:is-hidden={displayEditForm}
+            on:click={toggleFormDisplay}>
+            <use href="../images/fontawesome-sprite.svg#regular-edit" />
+          </svg>
+        </h1>
       </div>
-    {/if}
-
-    <div class="notification is-danger" class:is-hidden={!error} >
-      <button class="delete" on:click|preventDefault={() => flushError()} ></button>
-      <h1 class='title is-5'>
-        Unable to Update Action :
-      </h1>
-      <ul>
-        {#if error}
-          {#each Object.entries(error) as [ key, ar ]}
-            <li>{key} : {ar}</li>
-          {/each}
-        {/if}
-      </ul>
     </div>
 
     <table class="table">
       <tbody>
-        {#if !action.id}
-          <tr>
-            <td class="right">
-              Name :
-            </td>
-            <td>
-              <input class="input" type="text" name="act[name]">
-            </td>
-          </tr>
-        {/if}
         <tr>
           <td class="right">
             Value Type :
           </td>
-          <td>
-            <div class="select">
-              <select name="act[value_type]" bind:value={action.attributes.value_type}>
-                <option value='boolean'>Boolean (Yes | No)</option>
-                <option value='int'>Integer</option>
-                <option value='float'>Float</option>
-                <option value='string'>String</option>
-                <option value='date'>Date</option>
-              </select>
-            </div>
+          <td class="is-value">
+            {valueTypePrettify(action.attributes.value_type)}
           </td>
         </tr>
         <tr>
           <td class="right">
             Team Id field :
           </td>
-          <td>
-            <div class="select">
-              <select name="act[team_required]" bind:value={action.attributes.team_required}>
-                <option value="false">No, optional</option>
-                <option value="true">Yes, required</option>
-              </select>
-            </div>
+          <td class="is-value">
+            {teamIdPrettify(action.attributes.team_required)}
           </td>
         </tr>
         <tr>
           <td class="right">
             Tags :
           </td>
-          <td>
-            <input class="input" type="text" name="act[tags]" bind:value={tags}>
+          <td class="is-value">
+            <div class="tags">
+              {#each action.attributes.tags.split(',') as tag}
+                <span class="tag is-link">{tag}</span>
+              {/each}
+            </div>
           </td>
         </tr>
         <tr>
+          <td>
+          </td>
           <td>
             <p class="help">
               Need help? See 
@@ -196,18 +186,119 @@
               </a>
             </p>
           </td>
-          <td>
-            {#if !action.id}
-              <button class="button is-primary">
-                Create
-              </button>
-            {/if}
-          </td>
         </tr>
       </tbody>
     </table>
   </div>
-</form>
+
+  <!-- Edit Action -->
+  <div class:is-hidden={!displayEditForm && action.id}>
+    <form id="{action.id || 'new'}-action-form"
+      on:submit|preventDefault={saveAction}>
+
+        <div class="columns is-mobile">
+          <div class="column">
+            <h1 id="reward-name" class="title is-5 has-vcentered-text">
+              <input class="input reasonable-width" type="text" name="act[name]"
+                bind:value={action.attributes.name} placeholder="Action name">
+            </h1>
+          </div>
+          {#if action.id}
+            <div class="column is-narrow">
+                <svg class="fa destroy" on:click={destroyAction}>
+                  <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
+                </svg>
+            </div>
+          {/if}
+        </div>
+
+        <div class="notification is-danger" class:is-hidden={!error} >
+          <button class="delete" on:click|preventDefault={() => flushError()} ></button>
+          <h1 class='title is-5'>
+            Unable to Update Action :
+          </h1>
+          <ul>
+            {#if error}
+              {#each Object.entries(error) as [ key, ar ]}
+                <li>{key} : {ar}</li>
+              {/each}
+            {/if}
+          </ul>
+        </div>
+
+        <table class="table">
+          <tbody>
+            <tr>
+              <td class="right">
+                Value Type :
+              </td>
+              <td>
+                <div class="select">
+                  <select name="act[value_type]" bind:value={action.attributes.value_type}>
+                    <option value='boolean'>Boolean (Yes | No)</option>
+                    <option value='int'>Integer</option>
+                    <option value='float'>Float</option>
+                    <option value='string'>String</option>
+                    <option value='date'>Date</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="right">
+                Team Id field :
+              </td>
+              <td>
+                <div class="select">
+                  <select name="act[team_required]" bind:value={action.attributes.team_required}>
+                    <option value="false">No, optional</option>
+                    <option value="true">Yes, required</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="right">
+                Tags :
+              </td>
+              <td>
+                <input class="input" type="text" name="act[tags]"
+                bind:value={action.attributes.tags} placeholder="comma separated, max. 5">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p class="help">
+                  Need help? See 
+                  <a href="https://doc/place2be.io/actions" target="_blank">
+                    <span>Doc</span>
+                    <svg class="fa fill-primary no-hover">
+                      <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
+                    </svg>
+                  </a>
+                </p>
+              </td>
+              <td>
+                  <button class="button is-primary">
+                  {#if !action.id}
+                    Create
+                  {:else}
+                    Update
+                  {/if}
+                  </button>
+                  {#if action.id}
+                    <button class="button is-primary is-light"
+                     on:click|preventDefault={resetFormDisplay}>
+                      Cancel
+                    </button>
+                  {/if}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </form>
+  </div>
+</div>
 
 
 <style lang='scss'>
@@ -221,11 +312,18 @@
   td.right {
     text-align: right;
   }
+  td.is-value {
+    color: gray;
+    font-style: italic;
+  }
   .name-edit {
     height: 0.7em;
     margin-left: 0.2em;
   }
   .fa {
     cursor: pointer;
+  }
+  svg.destroy {
+    fill: brown;
   }
 </style>
