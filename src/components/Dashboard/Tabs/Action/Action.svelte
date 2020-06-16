@@ -56,6 +56,11 @@
   }
 
   async function destroyAction() {
+    const conf = confirm("Are you sure? \
+    Once you delete an Action, there is no going back. Please be certain!");
+    if (!conf)
+      return;
+
     savingStatus.set('saving');
     const path = ['users', userId, 'games', $game.id, 'actions', action.id];
     const url = createUrl(apiProtocol, apiHost, ...path);
