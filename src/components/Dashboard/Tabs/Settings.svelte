@@ -74,6 +74,30 @@
     }
   }
 
+  function addNamespace() {
+    const ns = document.getElementById('new-namespace');
+    if (!$game['attributes']['namespaces'].includes(ns.value)) {
+      game.update(g => ({
+        ...g,
+        attributes: {
+          ...g['attributes'],
+          namespaces: [...g['attributes']['namespaces'], ns.value],
+        },
+      }));
+    }
+    ns.value = '';
+  }
+
+  function removeNamespace(namespace) {
+    game.update(g => ({
+      ...g,
+      attributes: {
+        ...g['attributes'],
+        namespaces: g['attributes']['namespaces'].filter((e) => e !== namespace),
+      },
+    }));
+  }
+
   function flushError() {
     error = null;
   }
@@ -123,7 +147,40 @@
       <p class="help">Game and description won't be visible to your players.</p>
     </div>
 
-    <button class="button is-link">Update Settings</button>
+    <div class="field">
+      <label class="label">
+        Namespaces
+      </label>
+      <div class="field is-grouped is-grouped-multiline has-vcentered-content">
+        {#each $game['attributes']['namespaces'] as namespace, i (i)}
+          <div class="control">
+            <input name="game[namespaces][]" class="input" type="hidden"
+              value={namespace}>
+            <div class="tags has-addons">
+              {#if namespace == 'default'}
+                <span class="tag is-light">
+                  {namespace}
+                </span>
+              {:else}
+                <span class="tag is-info">
+                  {namespace}
+                </span>
+                <span class="tag is-delete" on:click={removeNamespace(namespace)}>
+                </span>
+              {/if}
+            </div>
+          </div>
+        {/each}
+          <input id="new-namespace" class="input is-small" type="text"
+            placeholder="New">
+          <button class="button is-primary is-outlined is-small"
+            on:click|preventDefault={addNamespace}>
+            Add
+          </button>
+      </div>
+    </div>
+
+    <button class="button is-link save">Update Settings</button>
   </form>
 
   <hr>
@@ -154,5 +211,20 @@
     color: #cb2431 !important;
     background: white !important;
     border: 1px solid #cb2431 !important;
+  }
+  button.save {
+    margin-top: 2em;
+  }
+  input#new-namespace {
+    max-width: 200px;
+    margin-right: 1em;
+  }
+  .is-delete {
+    cursor: pointer;
+  }
+  .control:not(:last-child) {
+    margin-bottom: 0.75rem;
+    margin-top: 0.75rem;
+    margin-right: 0.75rem;
   }
 </style>
