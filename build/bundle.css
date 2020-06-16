@@ -5614,29 +5614,6 @@ a.tag:hover {
     .section.is-large {
       padding: 18rem 1.5rem; } }
 
-/* This file extends bulma classes.
- * This adds some styling to existing bulma classes
- */
-/* Bulma variables are defined in bulma.scss directly */
-/* Other variables come here */
-.is-danger {
-  border: solid 2px #df0000; }
-
-.is-warning {
-  border: solid 2px #ffbd00; }
-
-.panel {
-  background: white; }
-
-.navbar {
-  background-color: transparent !important; }
-
-@media screen and (max-width: 768px) {
-  .tabs ul {
-    flex-direction: column; }
-    .tabs ul li {
-      width: 100%; } }
-
 /* Bulma variables are defined in bulma.scss directly */
 /* Other variables come here */
 /* ******* */
@@ -5725,7 +5702,7 @@ input.reasonable-width {
   /* Mobile */ }
   @media screen and (min-width: 768px) {
     .item-box {
-      max-width: 50%;
+      max-width: 65%;
       margin: 1em; } }
   @media screen and (max-width: 768px) {
     .item-box {
@@ -5767,6 +5744,29 @@ input.reasonable-width {
 
 .fill-anthracite {
   fill: #4a4a4a; }
+
+/* This file extends bulma classes.
+ * This adds some styling to existing bulma classes
+ */
+/* Bulma variables are defined in bulma.scss directly */
+/* Other variables come here */
+.is-danger {
+  border: solid 2px #df0000; }
+
+.is-warning {
+  border: solid 2px #ffbd00; }
+
+.panel {
+  background: white; }
+
+.navbar {
+  background-color: transparent !important; }
+
+@media screen and (max-width: 768px) {
+  .tabs ul {
+    flex-direction: column; }
+    .tabs ul li {
+      width: 100%; } }
 
 @font-face {
   font-family: OpenSans;
