@@ -42,10 +42,19 @@
   }
 
   function handleDanger() {
+    const conf = confirm("Are you sure?");
+    if (!conf)
+      return;
+
     handleSubmit(['users', userId, 'games', $game.id], 'danger-form');
   }
 
   async function handleDestroy() {
+    const conf = confirm("Are you sure? \
+    Once you delete a game, there is no going back. Please be certain!");
+    if (!conf)
+      return;
+
     const path = ['users', userId, 'games', $game.id];
     const url = createUrl(apiProtocol, apiHost, ...path);
     const res = await postFormData(url, {}, 'DELETE');
