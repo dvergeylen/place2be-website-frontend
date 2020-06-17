@@ -207,7 +207,7 @@
 
         <div class="columns is-mobile">
           <div class="column">
-            <h1 id="reward-name" class="title is-5 has-vcentered-text">
+            <h1 id="action-name" class="title is-5 has-vcentered-text">
               <input class="input reasonable-width" type="text" name="act[name]"
                 bind:value={action.attributes.name} placeholder="Action name">
             </h1>

@@ -4,7 +4,7 @@
   import { postFormData } from '../../../../javascripts/utils/helpers';
   import { game } from '../../../../javascripts/stores/gameStore';
   import { savingStatus } from '../../../../javascripts/stores/savingStore';
-  export let reward = {
+  export let resource = {
     attributes: {
       name: '',
       source: 'virtual',
@@ -30,19 +30,19 @@
   let error = null;
   let displayEditForm = false;
 
-  async function saveReward() {
+  async function saveResource() {
     savingStatus.set('saving');
     let path, method;
 
-    if (reward.id) {
-      path = ['users', userId, 'games', $game.id, 'rewards', reward.id];
+    if (resource.id) {
+      path = ['users', userId, 'games', $game.id, 'resources', resource.id];
       method = 'PUT';
     } else {
-      path = ['users', userId, 'games', $game.id, 'rewards'];
+      path = ['users', userId, 'games', $game.id, 'resources'];
       method = 'POST';
     }
     const url = createUrl(apiProtocol, apiHost, ...path);
-    const formData = new FormData(document.getElementById(`${reward.id || 'new'}-reward-form`));
+    const formData = new FormData(document.getElementById(`${resource.id || 'new'}-resource-form`));
     const res = await postFormData(url, formData, method);
 
     if (!res.ok) {
@@ -50,24 +50,24 @@
       error = JSON.parse(t);
       savingStatus.set('failed');
     } else {
-      /* Update reward (update) or Update rewards list (new) */
+      /* Update resource (update) or Update resources list (new) */
       savingStatus.set('saved');
-      if (reward.id) {
-        const updatedReward = await res.json();
-        reward = updatedReward.data;
+      if (resource.id) {
+        const updatedResource = await res.json();
+        resource = updatedResource.data;
         resetFormDisplay();
       } else {
-        const rewards = await res.json();
+        const resources = await res.json();
         dispatch('message', {
-          rewards: rewards.data,
+          resources: resources.data,
         });
       }
     }
   }
 
-  async function destroyReward() {
+  async function destroyResource() {
     savingStatus.set('saving');
-    const path = ['users', userId, 'games', $game.id, 'rewards', reward.id];
+    const path = ['users', userId, 'games', $game.id, 'resources', resource.id];
     const url = createUrl(apiProtocol, apiHost, ...path);
     const res = await postFormData(url, {}, 'DELETE');
 
@@ -78,10 +78,10 @@
     } else {
       savingStatus.set('saved');
 
-      /* Update rewards list */
-      const rewards = await res.json();
+      /* Update resources list */
+      const resources = await res.json();
       dispatch('message', {
-        rewards: rewards.data,
+        resources: resources.data,
       });
     }
   }
@@ -90,7 +90,7 @@
    * default value entry */
   function createCustomEntry(assetIndex, namespace) {
     /* Remove from where it belongs */
-    reward.attributes.assets = reward.attributes.assets.map((asset, index) => {
+    resource.attributes.assets = resource.attributes.assets.map((asset, index) => {
       return index !== assetIndex ? asset : {
         key: asset.key,
         tuples: asset.tuples.map((tuple) => ({
@@ -101,7 +101,7 @@
     });
 
     /* Add a new custom entry */
-    reward.attributes.assets = reward.attributes.assets.map((asset, index) => {
+    resource.attributes.assets = resource.attributes.assets.map((asset, index) => {
       return index !== assetIndex ? asset : {
         key: asset.key,
         tuples: [
@@ -119,7 +119,7 @@
    * a custom entry */
   function removeCustomEntry(assetIndex, namespace) {
     /* Remove Custom Entry */
-    reward.attributes.assets = reward.attributes.assets.map((asset, index) => {
+    resource.attributes.assets = resource.attributes.assets.map((asset, index) => {
       return index !== assetIndex ? asset : {
         key: asset.key,
         tuples: asset.tuples.filter((tuple) => !tuple.namespaces.includes(namespace)),
@@ -127,19 +127,19 @@
     });
 
     /* Add namespace to default Entry */
-    reward.attributes.assets[0].tuples[0].namespaces = [
-      ...reward.attributes.assets[0].tuples[0].namespaces,
+    resource.attributes.assets[0].tuples[0].namespaces = [
+      ...resource.attributes.assets[0].tuples[0].namespaces,
       namespace,
     ]
   }
 
   function removeAsset(assetIndex) {
-    reward.attributes.assets = reward.attributes.assets.filter((asset, index) => index !== assetIndex);
+    resource.attributes.assets = resource.attributes.assets.filter((asset, index) => index !== assetIndex);
   }
 
   function addNewAsset() {
-    reward.attributes.assets = [
-      ...reward.attributes.assets,
+    resource.attributes.assets = [
+      ...resource.attributes.assets,
       {
         key: '',
         tuples: [
@@ -187,13 +187,13 @@
 
 <div class='item-box'>
 
-  <!-- Show Reward -->
-  <div class:is-hidden={displayEditForm || !reward.id}>
+  <!-- Show Resource -->
+  <div class:is-hidden={displayEditForm || !resource.id}>
     <div class="columns is-mobile">
       <div class="column">
-        <h1 id="reward-name" class="title is-5 has-vcentered-text">
+        <h1 id="resource-name" class="title is-5 has-vcentered-text">
           <span class:is-hidden={displayEditForm}>
-            {reward.attributes.name}
+            {resource.attributes.name}
           </span>
           <svg class="fa name-edit fill-primary no-hover" class:is-hidden={displayEditForm}
             on:click={toggleFormDisplay}>
@@ -210,19 +210,19 @@
             Source Type :
           </td>
           <td class="is-value">
-            {sourcePrettify(reward.attributes.source)}
+            {sourcePrettify(resource.attributes.source)}
           </td>
         </tr>
       </tbody>
     </table>
 
-    {#if reward.attributes.assets.length}
+    {#if resource.attributes.assets.length}
       <h1 class="title is-6">
         Assets :
       </h1>
     {/if}
 
-    {#each reward.attributes.assets as {key, tuples}}
+    {#each resource.attributes.assets as {key, tuples}}
       <div class="asset-wrapper">
         <div class="columns is-vcentered">
           <div class="column is-4 right">
@@ -275,7 +275,7 @@
 
     <p class="help">
       Need help? See 
-      <a href="https://doc/place2be.io/rewards" target="_blank">
+      <a href="https://doc/place2be.io/resources" target="_blank">
         <span>Doc</span>
         <svg class="fa fill-primary no-hover">
           <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
@@ -292,22 +292,22 @@
 
 
 
-<!-- FORM REWARD -->
-  <div class:is-hidden={!displayEditForm && reward.id}>
-    <form id="{reward.id || 'new'}-reward-form"
-      on:submit|preventDefault={saveReward}>
+<!-- Edit Resource -->
+  <div class:is-hidden={!displayEditForm && resource.id}>
+    <form id="{resource.id || 'new'}-resource-form"
+      on:submit|preventDefault={saveResource}>
 
       <div class="columns is-mobile">
         <div class="column">
-          <h1 id="reward-name" class="title is-5 has-vcentered-text">
-            <input class="input reasonable-width" type="text" name="reward[name]"
-              bind:value={reward.attributes.name} placeholder="Reward name">
+          <h1 id="resource-name" class="title is-5 has-vcentered-text">
+            <input class="input reasonable-width" type="text" name="resource[name]"
+              bind:value={resource.attributes.name} placeholder="Resource name">
           </h1>
         </div>
 
-        {#if reward.id}
+        {#if resource.id}
           <div class="column is-narrow">
-              <svg class="fa destroy" on:click={destroyReward}>
+              <svg class="fa destroy" on:click={destroyResource}>
                 <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
               </svg>
           </div>
@@ -317,7 +317,7 @@
       <div class="notification is-danger" class:is-hidden={!error} >
         <button class="delete" on:click|preventDefault={() => flushError()} ></button>
         <h1 class='title is-5'>
-          Unable to Update Reward :
+          Unable to Update Resource :
         </h1>
         <ul>
           {#if error}
@@ -336,7 +336,7 @@
             </td>
             <td class="is-value">
               <div class="select">
-                <select name="reward[source]" bind:value={reward.attributes.source}>
+                <select name="resource[source]" bind:value={resource.attributes.source}>
                   <option value='virtual'>Virtual money</option>
                   <option value='list' disabled='disabled'>CSV List</option>
                   <option value='uri' disabled='disabled'>External URI</option>
@@ -352,9 +352,9 @@
         Assets :
       </h1>
       <p class="help">
-        Assets are key-value entries you can associate with a Reward.
-        Everytime a Reward will be involved, its associated assets will be returned as well.
-        You can have multiple assets per Reward, carrying any information you want.
+        Assets are key-value entries you can associate with a Resource.
+        Everytime a Resource will be involved, its associated assets will be returned as well.
+        You can have multiple assets per Resource, carrying any information you want.
         <br />
         See assets
           <a href="https://doc/place2be.io/assets" target="_blank">
@@ -367,9 +367,9 @@
       </p>
 
       <!-- Dummy value when no assets submitted -->
-      <input class="input" type="hidden" name="reward[assets][0][key]" value="">
+      <input class="input" type="hidden" name="resource[assets][0][key]" value="">
 
-      {#each reward.attributes.assets as {key, tuples}, assetIndex}
+      {#each resource.attributes.assets as {key, tuples}, assetIndex}
         <div class="asset-wrapper">
           <div class="columns is-vcentered">
             <div class="column is-4 right">
@@ -377,7 +377,7 @@
             </div>
             <div class="column asset-value">
               <input class="input is-family-monospace" type="text"
-                name="reward[assets][{assetIndex}][key]"
+                name="resource[assets][{assetIndex}][key]"
                 bind:value={key} placeholder="asset key">
             </div>
           </div>
@@ -394,7 +394,7 @@
                     <span class="tag is-link">
                       {namespace}
                       <input class="input" type="hidden"
-                        name="reward[assets][{assetIndex}][tuples][{tupleIndex}][namespaces][]"
+                        name="resource[assets][{assetIndex}][tuples][{tupleIndex}][namespaces][]"
                         value={namespace}>
                       {#if namespace !== 'default'}
                         {#if namespaces.includes('default')}
@@ -413,7 +413,7 @@
               </div>
               <div class="column asset-value is-family-monospace">
                 <textarea class="input is-family-monospace"
-                  name="reward[assets][{assetIndex}][tuples][{tupleIndex}][value]"
+                  name="resource[assets][{assetIndex}][tuples][{tupleIndex}][value]"
                   bind:value={value} placeholder="asset value" />
               </div>
             </div>
@@ -445,7 +445,7 @@
             <td>
               <p class="help">
                 Need help? See 
-                <a href="https://doc/place2be.io/rewards" target="_blank">
+                <a href="https://doc/place2be.io/resources" target="_blank">
                   <span>Doc</span>
                   <svg class="fa fill-primary no-hover">
                     <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
@@ -455,13 +455,13 @@
             </td>
             <td>
                 <button class="button is-primary">
-                {#if !reward.id}
+                {#if !resource.id}
                   Create
                 {:else}
                   Update
                 {/if}
                 </button>
-                {#if reward.id}
+                {#if resource.id}
                   <button class="button is-primary is-light"
                     on:click|preventDefault={resetFormDisplay}>
                     Cancel
@@ -477,7 +477,7 @@
 
 
 <style lang='scss'>
-  #reward-name {
+  #resource-name {
     margin-top: 0.5em;
     margin-left: 0.5em;
   }

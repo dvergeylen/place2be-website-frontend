@@ -6,7 +6,7 @@
   import Overview from './Tabs/Overview.svelte';
   import Actions from './Tabs/Actions.svelte';
   import Achievements from './Tabs/Achievements.svelte';
-  import Rewards from './Tabs/Rewards.svelte';
+  import Resources from './Tabs/Resources.svelte';
   import Stats from './Tabs/Stats.svelte';
   import Dev from './Tabs/Dev.svelte';
   import Settings from './Tabs/Settings.svelte';
@@ -18,7 +18,7 @@
     overview: Overview,
     actions: Actions,
     achievements: Achievements,
-    rewards: Rewards,
+    resources: Resources,
     stats: Stats,
     dev: Dev,
     settings: Settings,

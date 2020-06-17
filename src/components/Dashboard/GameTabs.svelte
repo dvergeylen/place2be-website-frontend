@@ -45,13 +45,13 @@
           <span class="left-spaced">Achievements</span>
         </a>
       </li>
-      <li class:is-active={selectedTab === 'rewards'}>
+      <li class:is-active={selectedTab === 'resources'}>
         <a href="javascript:void(0)"
-          on:click|preventDefault={() => updateSelectedTab('rewards')}>
+          on:click|preventDefault={() => updateSelectedTab('resources')}>
           <svg class="twemoji">
             <use href="../images/twemoji-sprite.svg#wrapped_present" />
           </svg>
-          <span class="left-spaced">Rewards</span>
+          <span class="left-spaced">Resources</span>
         </a>
       </li>
       <li class:is-active={selectedTab === 'stats'}>

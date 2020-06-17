@@ -53,7 +53,7 @@
     <svg class="twemoji">
       <use href="../images/twemoji-sprite.svg#trophy" />
     </svg>,
-    Rewards
+    Resources
     <svg class="twemoji">
       <use href="../images/twemoji-sprite.svg#wrapped_present" />
     </svg>
