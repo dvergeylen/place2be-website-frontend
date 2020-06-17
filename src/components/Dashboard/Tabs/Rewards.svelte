@@ -20,6 +20,8 @@
   function updateRewards(event) {
     rewards = event.detail.rewards;
   }
+
+  $: if ($game) fetchRewards($game);
 </script>
 
 {#if !$game}
