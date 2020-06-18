@@ -120,8 +120,8 @@
       case 'string':
         result = 'String';
         break;
-      case 'date':
-        result = 'Date';
+      case 'shortlist':
+        result = 'shortlist';
     }
     return result;
   }
@@ -271,7 +271,7 @@
                     <option value='int'>Integer</option>
                     <option value='float'>Float</option>
                     <option value='string'>String</option>
-                    <option value='date'>Date</option>
+                    <option value='shortlist'>Shortlist</option>
                   </select>
                 </div>
               </td>
