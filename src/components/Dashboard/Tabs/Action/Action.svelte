@@ -81,6 +81,29 @@
     }
   }
 
+  function removeTag(tag) {
+    action = {
+      ...action,
+      attributes: {
+        ...action.attributes,
+        tags: action.attributes.tags.filter((t) => t !== tag),
+      },
+    };
+  }
+
+  function addTag() {
+    const tag = document.getElementById('new-tag').value;
+    if (tag.length && !action.attributes.tags.includes(tag)) {
+      action = {
+        ...action,
+        attributes: {
+          ...action.attributes,
+          tags: [...action.attributes.tags, tag],
+        },
+      };
+    }
+  }
+
   function valueTypePrettify(val) {
     let result = 'Unknown';
 
@@ -235,7 +258,7 @@
           </ul>
         </div>
 
-        <table class="table">
+        <table class="table edit">
           <tbody>
             <tr>
               <td class="right">
@@ -271,8 +294,27 @@
                 Tags :
               </td>
               <td>
-                <input class="input" type="text" name="act[tags]"
-                bind:value={action.attributes.tags} placeholder="comma separated, max. 5">
+                <div class="field is-grouped is-grouped-multiline has-vcentered-content">
+                  {#each action.attributes.tags as tag, i (i)}
+                    <div class="control">
+                      <input name="act[tags][]" class="input" type="hidden"
+                        value={tag}>
+                      <div class="tags has-addons">
+                        <span class="tag is-info">
+                          {tag}
+                        </span>
+                        <span class="tag is-delete" on:click={() => removeTag(tag)}>
+                        </span>
+                      </div>
+                    </div>
+                  {/each}
+                    <input id="new-tag" class="input is-small" type="text"
+                      placeholder="New tag">
+                    <button class="button is-primary is-outlined is-small"
+                      on:click|preventDefault={addTag}>
+                      Add
+                    </button>
+                </div>
               </td>
             </tr>
             <tr>
@@ -314,6 +356,17 @@
   #action-name {
     margin-top: 0.5em;
     margin-left: 0.5em;
+  }
+  input#new-tag {
+    max-width: 200px;
+    margin-right: 1em;
+  }
+  table.edit {
+    width: 100%;
+    div.field {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
   }
   td {
     vertical-align: middle;

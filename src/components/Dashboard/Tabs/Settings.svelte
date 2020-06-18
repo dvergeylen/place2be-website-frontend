@@ -157,14 +157,10 @@
             <input name="game[namespaces][]" class="input" type="hidden"
               value={namespace}>
             <div class="tags has-addons">
-              {#if namespace == 'default'}
-                <span class="tag is-light">
-                  {namespace}
-                </span>
-              {:else}
-                <span class="tag is-info">
-                  {namespace}
-                </span>
+              <span class="tag is-info">
+                {namespace}
+              </span>
+              {#if namespace !== 'default'}
                 <span class="tag is-delete" on:click={removeNamespace(namespace)}>
                 </span>
               {/if}
