@@ -7,8 +7,8 @@
   export let action = {
     attributes: {
       name: '',
-      value_type: 'boolean',
-      tags: '',
+      action_type: 'boolean',
+      tags: [],
     }
   };
 
@@ -91,8 +91,8 @@
     };
   }
 
-  function addTag() {
-    const tag = document.getElementById('new-tag').value;
+  function addTag(evt) {
+    const tag = evt.target.parentElement.querySelector('input.new-tag').value;
     if (tag.length && !action.attributes.tags.includes(tag)) {
       action = {
         ...action,
@@ -177,7 +177,7 @@
             Value Type :
           </td>
           <td class="is-value">
-            {valueTypePrettify(action.attributes.value_type)}
+            {valueTypePrettify(action.attributes.action_type)}
           </td>
         </tr>
         <tr>
@@ -266,7 +266,7 @@
               </td>
               <td>
                 <div class="select">
-                  <select name="act[value_type]" bind:value={action.attributes.value_type}>
+                  <select name="act[action_type]" bind:value={action.attributes.action_type}>
                     <option value='boolean'>Boolean (Yes | No)</option>
                     <option value='int'>Integer</option>
                     <option value='float'>Float</option>
@@ -308,7 +308,7 @@
                       </div>
                     </div>
                   {/each}
-                    <input id="new-tag" class="input is-small" type="text"
+                    <input class="input is-small new-tag" type="text"
                       placeholder="New tag">
                     <button class="button is-primary is-outlined is-small"
                       on:click|preventDefault={addTag}>
@@ -357,7 +357,7 @@
     margin-top: 0.5em;
     margin-left: 0.5em;
   }
-  input#new-tag {
+  input.new-tag {
     max-width: 200px;
     margin-right: 1em;
   }
