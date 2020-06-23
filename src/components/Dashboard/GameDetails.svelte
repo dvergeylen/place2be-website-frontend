@@ -4,9 +4,7 @@
   import { savingStatus, lastSaveDate } from '../../javascripts/stores/savingStore';
   import GameTabs from './GameTabs.svelte';
   import Overview from './Tabs/Overview.svelte';
-  import Actions from './Tabs/Actions.svelte';
-  import Achievements from './Tabs/Achievements.svelte';
-  import Resources from './Tabs/Resources.svelte';
+  import Collection from './Tabs/Collection.svelte';
   import Stats from './Tabs/Stats.svelte';
   import Dev from './Tabs/Dev.svelte';
   import Settings from './Tabs/Settings.svelte';
@@ -16,13 +14,45 @@
   let selectedTab = 'actions';
   const tabs = {
     overview: Overview,
-    actions: Actions,
-    achievements: Achievements,
-    resources: Resources,
+    actions: Collection,
+    achievements: Collection,
+    resources: Collection,
     stats: Stats,
     dev: Dev,
     settings: Settings,
   }
+  const attributes = {
+    actions: {
+      name: {
+        singular: 'action',
+        plural: 'actions',
+      },
+      model: {
+        singular: 'Action',
+        plural: 'Actions',
+      }
+    },
+    achievements: {
+      name: {
+        singular: 'achievement',
+        plural: 'achievements',
+      },
+      model: {
+        singular: 'Achievement',
+        plural: 'Achievements',
+      }
+    },
+    resources: {
+      name: {
+        singular: 'resource',
+        plural: 'resources',
+      },
+      model: {
+        singular: 'Resource',
+        plural: 'Resources',
+      }
+    },
+  };
 
   async function getGame(url) {
     const res = await fetchData(url);
@@ -68,7 +98,8 @@
   {/if}
 
   <GameTabs game={$game} {selectedTab} on:message={handleNewSelectedTab} />
-  <svelte:component this={tabs[selectedTab]} on:message/>
+  <svelte:component this={tabs[selectedTab]}
+    attributes={attributes[selectedTab]} on:message/>
 {:else}
   <div class="notification is-warning" class:is-hidden={!error}>
     <p>Could not load the game you are looking for...</p>
