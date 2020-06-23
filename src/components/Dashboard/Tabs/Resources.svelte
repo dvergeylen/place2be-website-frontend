@@ -3,7 +3,7 @@
   import { fetchData } from '../../../javascripts/utils/helpers';
   import { game } from '../../../javascripts/stores/gameStore';
 
-  let resources = [];
+  let resourcesPromise;
 
   async function fetchResources(game) {
     const url = game.relationships.resources.links.related;
@@ -11,27 +11,27 @@
 
     if (res.ok) {
       const resJson = await res.json();
-      resources = resJson.data;
+      return resJson.data;
     } else {
-      error = 'Could not fetch Resources for this game';
+      throw new Error('Could not fetch Resources for this game');
     }
   };
 
   function updateResources(event) {
-    resources = event.detail.resources;
+    resourcesPromise = event.detail.resources;
   }
 
-  $: if ($game) fetchResources($game);
+  $: resourcesPromise = fetchResources($game);
 </script>
 
-{#if !$game}
+{#await resourcesPromise}
   <div class="has-vcentered-content">
     <svg class="fa rotating">
       <use href="../images/fontawesome-sprite.svg#regular-sync-alt" />
     </svg>
     <p class="left-spaced">Loading Game Resources</p>
   </div>
-{:else}
+{:then resources}
   {#if resources.length}
     {#each resources as resource (resource.id)}
       <Resource {resource} on:message={updateResources}/>
@@ -40,11 +40,11 @@
     <p>You don't have Resources yet! Start by creating one below ↓</p>
   {/if}
 
-
-
   <hr>
   <h1 class="title is-4">
     Create new Resource :
   </h1>
   <Resource on:message={updateResources}/>
-{/if}
+{:catch error}
+  <p>{error}</p>
+{/await}

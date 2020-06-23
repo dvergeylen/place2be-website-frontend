@@ -3,7 +3,7 @@
   import { fetchData } from '../../../javascripts/utils/helpers';
   import { game } from '../../../javascripts/stores/gameStore';
 
-  let actions = [];
+  let actionsPromise;
 
   async function fetchActions(game) {
     const url = game.relationships.actions.links.related;
@@ -11,27 +11,27 @@
 
     if (res.ok) {
       const resJson = await res.json();
-      actions = resJson.data;
+      return resJson.data;
     } else {
-      error = 'Could not fetch Actions for this game';
+      throw new Error('Could not fetch Actions for this game');
     }
   };
 
   function updateActions(event) {
-    actions = event.detail.actions;
+    actionsPromise = event.detail.actions;
   }
 
-  $: if ($game) fetchActions($game);
+  $: actionsPromise = fetchActions($game);
 </script>
 
-{#if !$game}
+{#await actionsPromise}
   <div class="has-vcentered-content">
     <svg class="fa rotating">
       <use href="../images/fontawesome-sprite.svg#regular-sync-alt" />
     </svg>
     <p class="left-spaced">Loading Game Actions</p>
   </div>
-{:else}
+{:then actions}
   {#if actions.length}
     {#each actions as action (action.id)}
       <Action {action} on:message={updateActions}/>
@@ -40,11 +40,11 @@
     <p>You don't have Actions  yet! Start by creating one below ↓</p>
   {/if}
 
-
-
   <hr>
   <h1 class="title is-4">
     Create new Action :
   </h1>
   <Action on:message={updateActions}/>
-{/if}
+{:catch error}
+  <p>{error}</p>
+{/await}
