@@ -349,7 +349,7 @@
       </table>
 
       <h1 class="title is-6">
-        Assets :
+        Assets <span class="note">(optional)</span> :
       </h1>
       <p class="help">
         Assets are key-value entries you can associate with a Resource.

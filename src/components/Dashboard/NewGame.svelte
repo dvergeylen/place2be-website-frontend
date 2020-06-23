@@ -121,10 +121,4 @@
   .mandatory {
     color: red;
   }
-  .note {
-    min-height: 17px;
-    margin: 4px 0 2px;
-    font-size: 12px;
-    color: #586069;
-  }
 </style>
