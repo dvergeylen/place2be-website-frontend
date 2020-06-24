@@ -27,7 +27,7 @@
 
       /* Update Game Store with new content */
       const newGame = await res.json();
-      game.set(newGame.data);
+      game.set(newGame);
 
       /* Update Dashboard's game List */
       dispatch('message', {
@@ -38,7 +38,7 @@
   }
 
   function handleUpdate() {
-    handleSubmit(['users', userId, 'games', $game.id], 'settings-form');
+    handleSubmit(['users', userId, 'games', $game.data.id], 'settings-form');
   }
 
   function handleDanger() {
@@ -46,7 +46,7 @@
     if (!conf)
       return;
 
-    handleSubmit(['users', userId, 'games', $game.id], 'danger-form');
+    handleSubmit(['users', userId, 'games', $game.data.id], 'danger-form');
   }
 
   async function handleDestroy() {
@@ -55,7 +55,7 @@
     if (!conf)
       return;
 
-    const path = ['users', userId, 'games', $game.id];
+    const path = ['users', userId, 'games', $game.data.id];
     const url = createUrl(apiProtocol, apiHost, ...path);
     const res = await postFormData(url, {}, 'DELETE');
 
@@ -76,12 +76,15 @@
 
   function addNamespace() {
     const ns = document.getElementById('new-namespace');
-    if (!$game['attributes']['namespaces'].includes(ns.value)) {
+    if (!$game.data.attributes.namespaces.includes(ns.value)) {
       game.update(g => ({
         ...g,
-        attributes: {
-          ...g['attributes'],
-          namespaces: [...g['attributes']['namespaces'], ns.value],
+        data: {
+          ...g.data,
+          attributes: {
+            ...g.data.attributes,
+            namespaces: [...g.data.attributes.namespaces, ns.value],
+          },
         },
       }));
     }
@@ -91,9 +94,12 @@
   function removeNamespace(namespace) {
     game.update(g => ({
       ...g,
-      attributes: {
-        ...g['attributes'],
-        namespaces: g['attributes']['namespaces'].filter((e) => e !== namespace),
+      data: {
+        ...g.data,
+        attributes: {
+          ...g.data.attributes,
+          namespaces: g.data.attributes.namespaces.filter((e) => e !== namespace),
+        },
       },
     }));
   }
@@ -103,104 +109,96 @@
   }
 </script>
 
-{#if !$game}
-  <div class="has-vcentered-content">
-      <svg class="fa rotating">
-        <use href="../images/fontawesome-sprite.svg#regular-sync-alt" />
-      </svg>
-      <p class="left-spaced">Loading Game Settings</p>
-    </div>
-{:else}
-  <form id="settings-form" on:submit|preventDefault={handleUpdate}>
-    <div class="notification is-danger" class:is-hidden={!error} >
-      <button class="delete" on:click|preventDefault={() => flushError()} ></button>
-      <h1 class='title is-5'>
-        Unable to Update Game :
-      </h1>
-      <ul>
-        {#if error}
-          {#each Object.entries(error) as [ key, ar ]}
-            <li>{key} : {ar}</li>
-          {/each}
-        {/if}
-      </ul>
-    </div>
 
-    <div class="field">
-      <label class="label">
-        Game Name
-      </label>
-      <div class="control">
-        <input name="game[name]" class="input reasonable-width" type="text"
-          value={$game['attributes']['name']}>
-      </div>
-    </div>
-
-    <div class="field">
-      <label class="label">
-        Description
-      </label>
-      <div class="control">
-        <input name="game[description]" class="input" type="text"
-          value={$game['attributes']['description']}>
-      </div>
-      <p class="help">Game and description won't be visible to your players.</p>
-    </div>
-
-    <div class="field">
-      <label class="label">
-        Namespaces
-      </label>
-      <div class="field is-grouped is-grouped-multiline has-vcentered-content">
-        {#each $game['attributes']['namespaces'] as namespace, i (i)}
-          <div class="control">
-            <input name="game[namespaces][]" class="input" type="hidden"
-              value={namespace}>
-            <div class="tags has-addons">
-              <span class="tag is-info">
-                {namespace}
-              </span>
-              {#if namespace !== 'default'}
-                <span class="tag is-delete" on:click={removeNamespace(namespace)}>
-                </span>
-              {/if}
-            </div>
-          </div>
+<form id="settings-form" on:submit|preventDefault={handleUpdate}>
+  <div class="notification is-danger" class:is-hidden={!error} >
+    <button class="delete" on:click|preventDefault={() => flushError()} ></button>
+    <h1 class='title is-5'>
+      Unable to Update Game :
+    </h1>
+    <ul>
+      {#if error}
+        {#each Object.entries(error) as [ key, ar ]}
+          <li>{key} : {ar}</li>
         {/each}
-          <input id="new-namespace" class="input is-small" type="text"
-            placeholder="New">
-          <button class="button is-primary is-outlined is-small"
-            on:click|preventDefault={addNamespace}>
-            Add
-          </button>
-      </div>
-    </div>
-
-    <button class="button is-link save">Update Settings</button>
-  </form>
-
-  <hr>
-
-  <h1 class="title is-4">Danger Zone :</h1>
-  <form id="danger-form" on:submit|preventDefault={handleDanger}>
-    <div class="field">
-      <input name="game[archived]" class="input" type="hidden"
-          value={!$game['attributes']['archived']}>
-      <button class="button is-danger is-outlined"
-        class:is-hidden={$game.attributes.archived}>Archive this Game</button>
-      <button class="button is-danger is-outlined"
-        class:is-hidden={!$game.attributes.archived}>Reactivate this Game</button>
-      <p class="help">Once you archive a game, no player will be able to access it anymore. Please be certain!</p>
-    </div>
-  </form>
+      {/if}
+    </ul>
+  </div>
 
   <div class="field">
-    <button class="button is-danger is-outlined" on:click|preventDefault={handleDestroy}>
-      Delete this Game
-    </button>
-    <p class="help">Once you delete a game, there is no going back. Please be certain!</p>
+    <label class="label">
+      Game Name
+    </label>
+    <div class="control">
+      <input name="game[name]" class="input reasonable-width" type="text"
+        value={$game.data.attributes.name}>
+    </div>
   </div>
-{/if}
+
+  <div class="field">
+    <label class="label">
+      Description
+    </label>
+    <div class="control">
+      <input name="game[description]" class="input" type="text"
+        value={$game.data.attributes.description}>
+    </div>
+    <p class="help">Game and description won't be visible to your players.</p>
+  </div>
+
+  <div class="field">
+    <label class="label">
+      Namespaces
+    </label>
+    <div class="field is-grouped is-grouped-multiline has-vcentered-content">
+      {#each $game.data.attributes.namespaces as namespace, i (i)}
+        <div class="control">
+          <input name="game[namespaces][]" class="input" type="hidden"
+            value={namespace}>
+          <div class="tags has-addons">
+            <span class="tag is-info">
+              {namespace}
+            </span>
+            {#if namespace !== 'default'}
+              <span class="tag is-delete" on:click={removeNamespace(namespace)}>
+              </span>
+            {/if}
+          </div>
+        </div>
+      {/each}
+        <input id="new-namespace" class="input is-small" type="text"
+          placeholder="New">
+        <button class="button is-primary is-outlined is-small"
+          on:click|preventDefault={addNamespace}>
+          Add
+        </button>
+    </div>
+  </div>
+
+  <button class="button is-link save">Update Settings</button>
+</form>
+
+<hr>
+
+<h1 class="title is-4">Danger Zone :</h1>
+<form id="danger-form" on:submit|preventDefault={handleDanger}>
+  <div class="field">
+    <input name="game[archived]" class="input" type="hidden"
+        value={!$game.data.attributes['archived']}>
+    <button class="button is-danger is-outlined"
+      class:is-hidden={$game.data.attributes.archived}>Archive this Game</button>
+    <button class="button is-danger is-outlined"
+      class:is-hidden={!$game.data.attributes.archived}>Reactivate this Game</button>
+    <p class="help">Once you archive a game, no player will be able to access it anymore. Please be certain!</p>
+  </div>
+</form>
+
+<div class="field">
+  <button class="button is-danger is-outlined" on:click|preventDefault={handleDestroy}>
+    Delete this Game
+  </button>
+  <p class="help">Once you delete a game, there is no going back. Please be certain!</p>
+</div>
 
 <style lang=scss>
   button.is-danger {

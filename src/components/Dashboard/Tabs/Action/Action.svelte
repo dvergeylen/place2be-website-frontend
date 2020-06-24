@@ -25,10 +25,10 @@
     let path, method;
 
     if (action.id) {
-      path = ['users', userId, 'games', $game.id, 'actions', action.id];
+      path = ['users', userId, 'games', $game.data.id, 'actions', action.id];
       method = 'PUT';
     } else {
-      path = ['users', userId, 'games', $game.id, 'actions'];
+      path = ['users', userId, 'games', $game.data.id, 'actions'];
       method = 'POST';
     }
     const url = createUrl(apiProtocol, apiHost, ...path);
@@ -62,7 +62,7 @@
       return;
 
     savingStatus.set('saving');
-    const path = ['users', userId, 'games', $game.id, 'actions', action.id];
+    const path = ['users', userId, 'games', $game.data.id, 'actions', action.id];
     const url = createUrl(apiProtocol, apiHost, ...path);
     const res = await postFormData(url, {}, 'DELETE');
 

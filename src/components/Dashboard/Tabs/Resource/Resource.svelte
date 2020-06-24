@@ -13,7 +13,7 @@
           key: '',
           tuples: [
             {
-              namespaces: $game['attributes']['namespaces'],
+              namespaces: $game.data.attributes.namespaces,
               value: '',
             },
           ],
@@ -35,10 +35,10 @@
     let path, method;
 
     if (resource.id) {
-      path = ['users', userId, 'games', $game.id, 'resources', resource.id];
+      path = ['users', userId, 'games', $game.data.id, 'resources', resource.id];
       method = 'PUT';
     } else {
-      path = ['users', userId, 'games', $game.id, 'resources'];
+      path = ['users', userId, 'games', $game.data.id, 'resources'];
       method = 'POST';
     }
     const url = createUrl(apiProtocol, apiHost, ...path);
@@ -67,7 +67,7 @@
 
   async function destroyResource() {
     savingStatus.set('saving');
-    const path = ['users', userId, 'games', $game.id, 'resources', resource.id];
+    const path = ['users', userId, 'games', $game.data.id, 'resources', resource.id];
     const url = createUrl(apiProtocol, apiHost, ...path);
     const res = await postFormData(url, {}, 'DELETE');
 
@@ -144,7 +144,7 @@
         key: '',
         tuples: [
           {
-            namespaces: $game['attributes']['namespaces'],
+            namespaces: $game.data.attributes.namespaces,
             value: '',
           },
         ],

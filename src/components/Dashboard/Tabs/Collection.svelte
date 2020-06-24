@@ -15,7 +15,7 @@
   };
 
   async function fetchCollection(game, attrs) {
-    const url = game.relationships[attrs.name.plural].links.related;
+    const url = game.data.relationships[attrs.name.plural].links.related;
     const res = await fetchData(url);
 
     if (res.ok) {
@@ -58,5 +58,7 @@
   <svelte:component this={collections[attributes.name.plural]}
     on:message={updateCollection}/>
 {:catch error}
-  <p>{error}</p>
+  <div class="notification is-warning" >
+    <p>{error}</p>
+  </div>
 {/await}

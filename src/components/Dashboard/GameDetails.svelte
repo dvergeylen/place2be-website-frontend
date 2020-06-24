@@ -58,7 +58,7 @@
     const res = await fetchData(url);
     if (res.ok) {
       const resJson = await res.json();
-      game.set(resJson.data);
+      game.set(resJson);
     } else {
       error = 'Could not find the game you are looking for...';
     }
@@ -92,14 +92,14 @@
           </svg>
         </abbr>
       </span>
-      {$game['attributes']['name']}
+      {$game.data.attributes.name}
     </h1>
-    <h1 id="game-description" class="subtitle is-6">{$game['attributes']['description']}</h1>
-  {/if}
+    <h1 id="game-description" class="subtitle is-6">{$game.data.attributes.description}</h1>
 
-  <GameTabs game={$game} {selectedTab} on:message={handleNewSelectedTab} />
-  <svelte:component this={tabs[selectedTab]}
-    attributes={attributes[selectedTab]} on:message/>
+    <GameTabs {selectedTab} on:message={handleNewSelectedTab} />
+    <svelte:component this={tabs[selectedTab]}
+      attributes={attributes[selectedTab]} on:message/>
+  {/if}
 {:else}
   <div class="notification is-warning" class:is-hidden={!error}>
     <p>Could not load the game you are looking for...</p>
