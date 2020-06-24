@@ -46,6 +46,9 @@
         const updatedAction = await res.json();
         action = updatedAction.data;
         resetFormDisplay();
+        dispatch('message', {
+          action,
+        });
       } else {
         const actions = await res.json();
         dispatch('message', {

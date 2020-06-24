@@ -28,6 +28,29 @@
 
   function updateCollection(event) {
     promise = event.detail[attributes.name.plural];
+
+    if (event.detail[attributes.name.plural]) {
+      game.update((g) => ({
+        ...g,
+        included: [
+          ...g.included.filter((e) => e.type !== attributes.name.singular),
+          ...event.detail[attributes.name.plural],
+        ].sort((a, b) => parseInt(a.id) - parseInt(b.id)),
+      }));
+
+    // event.detail[attributes.name.singular] is present
+    } else {
+      game.update((g) => ({
+        ...g,
+        included: [
+          ...g.included.filter((e) => (
+            !(e.type === attributes.name.singular &&
+                e.id === event.detail[attributes.name.singular].id)
+          )),
+          event.detail[attributes.name.singular],
+        ].sort((a, b) => parseInt(a.id) - parseInt(b.id)),
+      }));
+    }
   }
 
   $: promise = fetchCollection($game, attributes);

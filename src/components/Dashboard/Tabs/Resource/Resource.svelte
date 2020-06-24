@@ -56,6 +56,9 @@
         const updatedResource = await res.json();
         resource = updatedResource.data;
         resetFormDisplay();
+        dispatch('message', {
+          resource,
+        });
       } else {
         const resources = await res.json();
         dispatch('message', {
