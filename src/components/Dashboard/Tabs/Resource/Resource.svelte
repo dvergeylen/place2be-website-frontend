@@ -351,23 +351,32 @@
         </tbody>
       </table>
 
-      <h1 class="title is-6">
+      <h1 class="title is-6 byproduct-title">
         Assets <span class="note">(optional)</span> :
       </h1>
-      <p class="help">
-        Assets are key-value entries you can associate with a Resource.
-        Everytime a Resource will be involved, its associated assets will be returned as well.
-        You can have multiple assets per Resource, carrying any information you want.
-        <br />
-        See assets
-          <a href="https://doc/place2be.io/assets" target="_blank">
-            <span>Doc</span>
-            <svg class="fa fill-primary no-hover">
-              <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
-            </svg>
-          </a>
-        for common use cases and examples.
-      </p>
+      <div class="content">
+        <ul class="help">
+          <li>
+            Assets are key-value entries you can associate with a Resource.
+          </li>
+          <li>
+            Everytime a Resource will be involved, its associated assets will be returned as well.
+          </li>
+          <li>
+            You can have multiple assets per Resource, carrying any information you want.
+          </li>
+          <li>
+            See assets
+            <a href="https://doc/place2be.io/assets" target="_blank">
+              <span>Doc</span>
+              <svg class="fa fill-primary no-hover">
+                <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
+              </svg>
+            </a>
+            for common use cases and examples.
+          </li>
+        </ul>
+      </div>
 
       <!-- Dummy value when no assets submitted -->
       <input class="input" type="hidden" name="resource[assets][0][key]" value="">

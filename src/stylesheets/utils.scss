@@ -80,13 +80,23 @@ html body {
 .left-spaced {
   margin-left: 1em;
 }
+.left-spaced-text {
+  margin-left: 0.5em;
+}
 
 .right-spaced {
   margin-right: 1em;
 }
+.right-spaced-text {
+  margin-right: 0.5em;
+}
 
 p.error {
   color: red;
+}
+
+.byproduct-title {
+  margin-bottom: 0.5em !important;
 }
 
 /* Grayed for optional note */
@@ -102,6 +112,17 @@ span.note {
 /* ******************** */
 input.reasonable-width {
   max-width: 400px;
+}
+input.small-width {
+  max-width: 5em;
+}
+input.count {
+  width: 3em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: right;
 }
 
 .item-box {
