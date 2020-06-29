@@ -310,7 +310,7 @@
 
         {#if resource.id}
           <div class="column is-narrow">
-              <svg class="fa destroy" on:click={destroyResource}>
+              <svg class="fa fill-destroy" on:click={destroyResource}>
                 <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
               </svg>
           </div>

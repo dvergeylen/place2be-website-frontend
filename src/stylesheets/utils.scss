@@ -148,6 +148,7 @@ input.count {
 .fa {
   width: 1em;
   height: 1em;
+  cursor: pointer;
 }
 .twemoji {
   width: 1em;
@@ -180,4 +181,7 @@ input.count {
 }
 .fill-anthracite {
   fill: $anthracite;
+}
+.fill-destroy {
+  fill: #b91111;
 }

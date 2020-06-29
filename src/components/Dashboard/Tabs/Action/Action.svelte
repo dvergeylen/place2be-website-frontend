@@ -59,11 +59,6 @@
   }
 
   async function destroyAction() {
-    const conf = confirm("Are you sure? \
-    Once you delete an Action, there is no going back. Please be certain!");
-    if (!conf)
-      return;
-
     savingStatus.set('saving');
     const path = ['users', userId, 'games', $game.data.id, 'actions', action.id];
     const url = createUrl(apiProtocol, apiHost, ...path);
@@ -112,7 +107,7 @@
 
     switch(val) {
       case 'boolean':
-        result = 'Boolean (Yes | No)';
+        result = 'Boolean (Pass | Fail)';
         break;
       case 'int':
         result = 'Integer';
@@ -122,9 +117,6 @@
         break;
       case 'string':
         result = 'String';
-        break;
-      case 'shortlist':
-        result = 'shortlist';
     }
     return result;
   }
@@ -177,10 +169,10 @@
       <tbody>
         <tr>
           <td class="right">
-            Value Type :
+            Score Type :
           </td>
           <td class="is-value">
-            {valueTypePrettify(action.attributes.action_type)}
+            {valueTypePrettify(action.attributes.actionType)}
           </td>
         </tr>
         <tr>
@@ -240,7 +232,7 @@
           </div>
           {#if action.id}
             <div class="column is-narrow">
-                <svg class="fa destroy" on:click={destroyAction}>
+                <svg class="fa fill-destroy" on:click={destroyAction}>
                   <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
                 </svg>
             </div>
@@ -265,16 +257,15 @@
           <tbody>
             <tr>
               <td class="right">
-                Value Type :
+                Score Type :
               </td>
               <td>
                 <div class="select">
-                  <select name="act[action_type]" bind:value={action.attributes.action_type}>
-                    <option value='boolean'>Boolean (Yes | No)</option>
+                  <select name="act[action_type]" bind:value={action.attributes.actionType}>
+                    <option value='boolean'>Boolean (Pass | Fail)</option>
                     <option value='int'>Integer</option>
                     <option value='float'>Float</option>
                     <option value='string'>String</option>
-                    <option value='shortlist'>Shortlist</option>
                   </select>
                 </div>
               </td>
@@ -384,11 +375,5 @@
   .name-edit {
     height: 0.7em;
     margin-left: 0.2em;
-  }
-  .fa {
-    cursor: pointer;
-  }
-  svg.destroy {
-    fill: brown;
   }
 </style>
