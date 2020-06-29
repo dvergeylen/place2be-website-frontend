@@ -1,6 +1,8 @@
 <script>
   import ActionTriggerShow from './ConditionsShows/ActionTrigger.svelte';
   import ActionTriggerForm from './ConditionsForms/ActionTrigger.svelte';
+  import UnlockedAchievementShow from './ConditionsShows/UnlockedAchievement.svelte';
+  import UnlockedAchievementForm from './ConditionsForms/UnlockedAchievement.svelte';
   import { game } from '../../../../javascripts/stores/gameStore';
   import { createEventDispatcher } from 'svelte';
 
@@ -12,9 +14,11 @@
 
   const conditionsShowsComponents = {
     action_trigger: ActionTriggerShow,
+    unlocked_achievement: UnlockedAchievementShow,
   };
   const conditionsFormsComponents = {
     action_trigger: ActionTriggerForm,
+    unlocked_achievement: UnlockedAchievementForm,
   }
 
   function addCondition(evt){
@@ -59,7 +63,7 @@
         <select bind:value={newConditionType}>
           <option value="">--</option>
           <option value="action_trigger">Action trigger</option>
-          <option value="achievement">Achievement</option>
+          <option value="unlocked_achievement">Unlocked Achievement</option>
           <option value="time_frame">Time frame</option>
           <option value="scarcity" disabled>Scarcity</option>
           <option value="lottery" disabled>Lottery</option>
@@ -71,7 +75,7 @@
 
 
   <svelte:component
-    actions={$game.included.filter((e) => e.type === 'action')}
+    underlyings={$game.included}
     this={conditionsFormsComponents[newConditionType]}
     on:addCondition={addCondition}/>
 </div>

@@ -2,7 +2,8 @@
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
-  export let actions;
+  export let underlyings;
+  let actions;
   let action;
   let count = 1;
   let period = 0;
@@ -93,6 +94,7 @@ is ${action.attributes.actionType}`,
     error = null;
   }
 
+  $: actions= underlyings.filter((e) => e.type === 'action');
   $: action = actions.find((a) => a.id === underlyingId);
 </script>
 
@@ -100,7 +102,9 @@ is ${action.attributes.actionType}`,
 <div class="columns">
   <div class="column">
     <div class="field is-horizontal">
-      <div class="field-label is-normal">
+      <div class="field-label"
+        class:has-hvcentered-content={!actions.length}
+        class:is-normal={actions.length}>
         <label class="label">Action :</label>
       </div>
       <div class="field-body">
@@ -263,5 +267,10 @@ is ${action.attributes.actionType}`,
     font-style: italic;
     color: gray;
     margin: 1em 1em 1em 0.5em; /* top right bottom left */
+
+    /* Mobile */
+    @media screen and (max-width: 768px) {
+      text-align: center;
+    }
   }
 </style>

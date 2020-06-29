@@ -1,11 +1,7 @@
 <script>
+  import { capitalizeFirstLetter } from '../../../../../javascripts/utils/helpers';
   export let formPrefix;
-  export let condition = {
-    criteria: {
-      count: 3,
-      period: 0,
-    }
-  };
+  export let condition;
   export let underlyings;
   let underlying;
 
@@ -25,10 +21,6 @@
     gteq: '≥ greater than or equal to',
     lteq: '≤ less than or equal to',
     shortlist: '[↓] within',
-  }
-
-  function capitalizeFirstLetter(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   function destroyCondition() {
