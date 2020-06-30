@@ -117,23 +117,6 @@
   <form id="{achievement.id || 'new'}-achievement-form"
       on:submit|preventDefault={saveAchievement}>
 
-    <div class="columns is-mobile">
-      <div class="column">
-        <h1 class="title is-5 has-vcentered-text">
-          <input class="input reasonable-width" type="text" name="achievement[name]"
-            bind:value={achievement.attributes.name} placeholder="Achievement name">
-        </h1>
-      </div>
-
-      {#if achievement.id}
-        <div class="column is-narrow">
-            <svg class="fa fill-destroy" on:click={destroyAchievement}>
-              <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
-            </svg>
-        </div>
-      {/if}
-    </div>
-
     <div class="notification is-danger" class:is-hidden={!error} >
       <button class="delete" on:click|preventDefault={() => flushError()} ></button>
       <h1 class='title is-5'>
@@ -148,8 +131,31 @@
       </ul>
     </div>
 
-    <h1 class="title is-6 byproduct-title">
-      1. Conditions :
+
+    <h1 class="title is-5 byproduct-title">
+      <svg class="twemoji">
+        <use href="../images/twemoji-sprite.svg#card_file_box" />
+      </svg>
+      Properties :
+    </h1>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Name :</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <input class="input reasonable-width" type="text" name="achievement[name]"
+            bind:value={achievement.attributes.name} placeholder="Achievement name">
+        </div>
+      </div>
+    </div>
+
+    <h1 class="title is-5 byproduct-title">
+      <svg class="twemoji">
+        <use href="../images/twemoji-sprite.svg#twisted_rightwards_arrows" />
+      </svg>
+      Conditions :
     </h1>
     <p class="help expert-mode" class:is-hidden={expertMode}>
       Need fined grained conditions ? Set
@@ -207,45 +213,56 @@
           on:message={updateRelation}/>
     {/if}
 
-    <h1 class="title is-6">
-      2. Rewards <span class="note">(optional)</span> :
+    <h1 class="title is-5 byproduct-title">
+      <svg class="twemoji">
+        <use href="../images/twemoji-sprite.svg#wrapped_present" />
+      </svg>
+      Rewards <span class="note">(optional)</span> :
     </h1>
-    <h1 class="title is-6">
-      3. Assets <span class="note">(optional)</span> :
+    <h1 class="title is-5 byproduct-title">
+      <svg class="twemoji">
+        <use href="../images/twemoji-sprite.svg#package" />
+      </svg>
+      Assets <span class="note">(optional)</span> :
     </h1>
 
-    <table class="table">
-      <tbody>
-        <tr class="has-vcentered-content">
-          <td>
-            <p class="help">
-              Need help? See 
-              <a href="https://doc/place2be.io/achievements" target="_blank">
-                <span>Doc</span>
-                <svg class="fa fill-primary no-hover">
-                  <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
-                </svg>
-              </a>
-            </p>
-          </td>
-          <td>
-              <button class="button is-primary">
-              {#if !achievement.id}
-                Create
-              {:else}
-                Update
-              {/if}
-              </button>
-              {#if achievement.id}
-                <button class="button is-primary is-light"
-                  on:click|preventDefault={() => { /* NO OP for now */} }>
-                  Cancel
-                </button>
-              {/if}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+    <div class="columns is-vcentered">
+      <div class="column is-narrow">
+        <p class="help">
+          Need help? See 
+          <a href="https://doc/place2be.io/achievements" target="_blank">
+            <span>Doc</span>
+            <svg class="fa fill-primary no-hover">
+              <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
+            </svg>
+          </a>
+        </p>
+      </div>
+      <div class="column">
+        <div class="buttons">
+          <button class="button is-primary">
+          {#if !achievement.id}
+            Create
+          {:else}
+            Update
+          {/if}
+          </button>
+          {#if achievement.id}
+            <button class="button is-primary is-light"
+              on:click|preventDefault={resetFormDisplay}>
+              Cancel
+            </button>
+            <button class="button is-danger"
+              on:click|preventDefault={destroyAchievement}>
+              Delete
+            </button>
+          {/if}
+        </div>
+      </div>
+    </div>
+
+
   </form>
 </div>
 
@@ -258,5 +275,15 @@
     .expert-mode {
       margin-bottom: 1em;
     }
+  }
+  .byproduct-title {
+    .twemoji {
+      vertical-align: bottom;
+    }
+  }
+  button.is-danger {
+    color: #cb2431 !important;
+    background: white !important;
+    border: 1px solid #cb2431 !important;
   }
 </style>

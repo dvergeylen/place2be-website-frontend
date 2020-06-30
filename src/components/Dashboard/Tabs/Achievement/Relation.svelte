@@ -94,7 +94,7 @@
       margin-top: 1em;
 
       div.column {
-        padding: 0;
+        padding: 0.15em;
       }
     }
   }

@@ -201,7 +201,7 @@ is ${action.attributes.actionType}`,
                     <!-- string's shortlist -->
                     <div class="select">
                       <select bind:value={comparison}>
-                        <option value="shortlist">[↓] within</option>
+                        <option value="shortlist">[⟷] within</option>
                       </select>
                     </div>
                   {/if}
@@ -236,7 +236,7 @@ is ${action.attributes.actionType}`,
 
       <div class="field is-horizontal">
         <div class="field-label is-normal">
-          <label class="label">Inverted? :</label>
+          <label class="label">Inverted ?</label>
         </div>
         <div class="field-body">
           <div class="field">

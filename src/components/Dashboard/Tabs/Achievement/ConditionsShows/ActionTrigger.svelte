@@ -20,7 +20,7 @@
     eq: '= equal to',
     gteq: '≥ greater than or equal to',
     lteq: '≤ less than or equal to',
-    shortlist: '[↓] within',
+    shortlist: '[⟷] within',
   }
 
   function destroyCondition() {

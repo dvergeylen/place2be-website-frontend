@@ -148,7 +148,7 @@
   <div class:is-hidden={displayEditForm || !action.id}>
     <div class="columns is-mobile">
       <div class="column">
-        <h1 id="action-name" class="title is-5 has-vcentered-text">
+        <h1 id="action-name" class="title is-4 has-vcentered-text">
           <span class:is-hidden={displayEditForm}>
             {action.attributes.name}
           </span>
@@ -218,22 +218,6 @@
     <form id="{action.id || 'new'}-action-form"
       on:submit|preventDefault={saveAction}>
 
-        <div class="columns is-mobile">
-          <div class="column">
-            <h1 id="action-name" class="title is-5 has-vcentered-text">
-              <input class="input reasonable-width" type="text" name="act[name]"
-                bind:value={action.attributes.name} placeholder="Action name">
-            </h1>
-          </div>
-          {#if action.id}
-            <div class="column is-narrow">
-                <svg class="fa fill-destroy" on:click={destroyAction}>
-                  <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
-                </svg>
-            </div>
-          {/if}
-        </div>
-
         <div class="notification is-danger" class:is-hidden={!error} >
           <button class="delete" on:click|preventDefault={() => flushError()} ></button>
           <h1 class='title is-5'>
@@ -248,94 +232,124 @@
           </ul>
         </div>
 
-        <table class="table edit">
-          <tbody>
-            <tr>
-              <td class="right">
-                Score Type :
-              </td>
-              <td>
-                <div class="select">
-                  <select name="act[action_type]" bind:value={action.attributes.actionType}>
-                    <option value='boolean'>Boolean (Pass | Fail)</option>
-                    <option value='int'>Integer</option>
-                    <option value='float'>Float</option>
-                    <option value='string'>String</option>
-                  </select>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="right">
-                Team Id field :
-              </td>
-              <td>
-                <div class="select">
-                  <select name="act[team_required]" bind:value={action.attributes.team_required}>
-                    <option value="false">No, optional</option>
-                    <option value="true">Yes, required</option>
-                  </select>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="right">
-                Tags :
-              </td>
-              <td>
-                <div class="field is-grouped is-grouped-multiline has-vcentered-content">
-                  {#each action.attributes.tags as tag, i (i)}
-                    <div class="control">
-                      <input name="act[tags][]" class="input" type="hidden"
-                        value={tag}>
-                      <div class="tags has-addons">
-                        <span class="tag is-info">
-                          {tag}
-                        </span>
-                        <span class="tag is-delete" on:click={() => removeTag(tag)}>
-                        </span>
-                      </div>
+        <h1 class="title is-5 byproduct-title">
+          <svg class="twemoji">
+            <use href="../images/twemoji-sprite.svg#card_file_box" />
+          </svg>
+          Properties :
+        </h1>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Name :</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <input class="input reasonable-width" type="text" name="act[name]"
+                bind:value={action.attributes.name} placeholder="Action name">
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Score Type :</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="select">
+                <select name="act[action_type]" bind:value={action.attributes.actionType}>
+                  <option value='boolean'>Boolean (Pass | Fail)</option>
+                  <option value='int'>Integer</option>
+                  <option value='float'>Float</option>
+                  <option value='string'>String</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Team Id field :</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="select">
+                <select name="act[team_required]" bind:value={action.attributes.team_required}>
+                  <option value="false">No, optional</option>
+                  <option value="true">Yes, required</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Tags :</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="field is-grouped is-grouped-multiline has-vcentered-content">
+                {#each action.attributes.tags as tag, i (i)}
+                  <div class="control">
+                    <input name="act[tags][]" class="input" type="hidden"
+                      value={tag}>
+                    <div class="tags has-addons">
+                      <span class="tag is-info">
+                        {tag}
+                      </span>
+                      <span class="tag is-delete" on:click={() => removeTag(tag)}>
+                      </span>
                     </div>
-                  {/each}
-                    <input class="input is-small new-tag" type="text"
-                      placeholder="New tag">
-                    <button class="button is-primary is-outlined is-small"
-                      on:click|preventDefault={addTag}>
-                      Add
-                    </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p class="help">
-                  Need help? See 
-                  <a href="https://doc/place2be.io/actions" target="_blank">
-                    <span>Doc</span>
-                    <svg class="fa fill-primary no-hover">
-                      <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
-                    </svg>
-                  </a>
-                </p>
-              </td>
-              <td>
-                  <button class="button is-primary">
-                  {#if !action.id}
-                    Create
-                  {:else}
-                    Update
-                  {/if}
+                  </div>
+                {/each}
+                  <input class="input is-small new-tag" type="text"
+                    placeholder="New tag">
+                  <button class="button is-primary is-outlined is-small"
+                    on:click|preventDefault={addTag}>
+                    Add
                   </button>
-                  {#if action.id}
-                    <button class="button is-primary is-light"
-                     on:click|preventDefault={resetFormDisplay}>
-                      Cancel
-                    </button>
-                  {/if}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="columns is-vcentered">
+        <div class="column is-narrow">
+          <p class="help">
+            Need help? See 
+            <a href="https://doc/place2be.io/actions" target="_blank">
+              <span>Doc</span>
+              <svg class="fa fill-primary no-hover">
+                <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
+              </svg>
+            </a>
+          </p>
+        </div>
+        <div class="column">
+          <div class="buttons">
+            <button class="button is-primary">
+            {#if !action.id}
+              Create
+            {:else}
+              Update
+            {/if}
+            </button>
+            {#if action.id}
+              <button class="button is-primary is-light"
+                on:click|preventDefault={resetFormDisplay}>
+                Cancel
+              </button>
+              <button class="button is-danger"
+                on:click|preventDefault={destroyAction}>
+                Delete
+              </button>
+            {/if}
+          </div>
+        </div>
+      </div>
     </form>
   </div>
 </div>
@@ -350,13 +364,6 @@
     max-width: 200px;
     margin-right: 1em;
   }
-  table.edit {
-    width: 100%;
-    div.field {
-      margin-top: 0.5em;
-      margin-bottom: 0.5em;
-    }
-  }
   td {
     vertical-align: middle;
   }
@@ -370,5 +377,10 @@
   .name-edit {
     height: 0.7em;
     margin-left: 0.2em;
+  }
+  button.is-danger {
+    color: #cb2431 !important;
+    background: white !important;
+    border: 1px solid #cb2431 !important;
   }
 </style>

@@ -40,7 +40,7 @@ html body {
 
 /* Div containing v centered text only */
 .has-vcentered-text {
-  display:flex;
+  display:flex !important;
   align-items:center;
 }
 
@@ -96,7 +96,10 @@ p.error {
 }
 
 .byproduct-title {
-  margin-bottom: 0.5em !important;
+  margin-top: 0.75em !important;
+  margin-bottom: 0.75em !important;
+  background: $smoke;
+  padding: 1em;
 }
 
 /* Grayed for optional note */
@@ -132,7 +135,7 @@ input.count {
 
   /* Desktop */
   @media screen and (min-width: 768px) {
-    max-width: 65%;
+    max-width: 70%;
     margin: 1em;
   }
 

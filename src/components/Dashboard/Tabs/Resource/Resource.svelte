@@ -189,7 +189,7 @@
   <div class:is-hidden={displayEditForm || !resource.id}>
     <div class="columns is-mobile">
       <div class="column">
-        <h1 id="resource-name" class="title is-5 has-vcentered-text">
+        <h1 id="resource-name" class="title is-4 has-vcentered-text">
           <span class:is-hidden={displayEditForm}>
             {resource.attributes.name}
           </span>
@@ -215,8 +215,12 @@
     </table>
 
     {#if resource.attributes.assets.length}
-      <h1 class="title is-6">
-        Assets :
+      <h1 class="title is-5 byproduct-title">
+        <svg class="twemoji">
+          <use href="../images/twemoji-sprite.svg#package" />
+        </svg>
+        Assets
+        <span class="note">(optional)</span> :
       </h1>
     {/if}
 
@@ -295,23 +299,6 @@
     <form id="{resource.id || 'new'}-resource-form"
       on:submit|preventDefault={saveResource}>
 
-      <div class="columns is-mobile">
-        <div class="column">
-          <h1 id="resource-name" class="title is-5 has-vcentered-text">
-            <input class="input reasonable-width" type="text" name="resource[name]"
-              bind:value={resource.attributes.name} placeholder="Resource name">
-          </h1>
-        </div>
-
-        {#if resource.id}
-          <div class="column is-narrow">
-              <svg class="fa fill-destroy" on:click={destroyResource}>
-                <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
-              </svg>
-          </div>
-        {/if}
-      </div>
-
       <div class="notification is-danger" class:is-hidden={!error} >
         <button class="delete" on:click|preventDefault={() => flushError()} ></button>
         <h1 class='title is-5'>
@@ -326,28 +313,48 @@
         </ul>
       </div>
 
-      <table class="table">
-        <tbody>
-          <tr class="has-vcentered-content">
-            <td class="right">
-              Source Type :
-            </td>
-            <td class="is-value">
-              <div class="select">
-                <select name="resource[source]" bind:value={resource.attributes.source}>
-                  <option value='virtual'>Virtual money</option>
-                  <option value='list' disabled='disabled'>CSV List</option>
-                  <option value='uri' disabled='disabled'>External URI</option>
-                  <option value='scheme' disabled='disabled'>Scheme</option>
-                </select>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <h1 class="title is-5 byproduct-title">
+        <svg class="twemoji">
+          <use href="../images/twemoji-sprite.svg#card_file_box" />
+        </svg>
+        Properties :
+      </h1>
 
-      <h1 class="title is-6 byproduct-title">
-        Assets <span class="note">(optional)</span> :
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Name :</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <input class="input reasonable-width" type="text" name="resource[name]"
+              bind:value={resource.attributes.name} placeholder="Resource name">
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Source Type :</label>
+        </div>
+        <div class="field-body">
+          <div class="select">
+            <select name="resource[source]" bind:value={resource.attributes.source}>
+              <option value='virtual'>Virtual money</option>
+              <option value='list' disabled='disabled'>CSV List</option>
+              <option value='uri' disabled='disabled'>External URI</option>
+              <option value='scheme' disabled='disabled'>Scheme</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+      <h1 class="title is-5 byproduct-title">
+        <svg class="twemoji">
+          <use href="../images/twemoji-sprite.svg#package" />
+        </svg>
+        Assets
+        <span class="note">(optional)</span> :
       </h1>
       <div class="content">
         <ul class="help">
@@ -446,38 +453,41 @@
         </div>
       </div>
 
-      <table class="table">
-        <tbody>
-          <tr class="has-vcentered-content">
-            <td>
-              <p class="help">
-                Need help? See 
-                <a href="https://doc/place2be.io/resources" target="_blank">
-                  <span>Doc</span>
-                  <svg class="fa fill-primary no-hover">
-                    <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
-                  </svg>
-                </a>
-              </p>
-            </td>
-            <td>
-                <button class="button is-primary">
-                {#if !resource.id}
-                  Create
-                {:else}
-                  Update
-                {/if}
-                </button>
-                {#if resource.id}
-                  <button class="button is-primary is-light"
-                    on:click|preventDefault={resetFormDisplay}>
-                    Cancel
-                  </button>
-                {/if}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div class="columns is-vcentered">
+        <div class="column is-narrow">
+          <p class="help">
+            Need help? See 
+            <a href="https://doc/place2be.io/resources" target="_blank">
+              <span>Doc</span>
+              <svg class="fa fill-primary no-hover">
+                <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
+              </svg>
+            </a>
+          </p>
+        </div>
+        <div class="column">
+          <div class="buttons">
+            <button class="button is-primary">
+            {#if !resource.id}
+              Create
+            {:else}
+              Update
+            {/if}
+            </button>
+            {#if resource.id}
+              <button class="button is-primary is-light"
+                on:click|preventDefault={resetFormDisplay}>
+                Cancel
+              </button>
+              <button class="button is-danger"
+                on:click|preventDefault={destroyResource}>
+                Delete
+              </button>
+            {/if}
+          </div>
+        </div>
+      </div>
     </form>
   </div>
 </div>
@@ -535,8 +545,9 @@
     height: 0.7em;
     margin-left: 0.2em;
   }
-  .fa {
-    cursor: pointer;
+  button.is-danger {
+    color: #cb2431 !important;
+    background: white !important;
+    border: 1px solid #cb2431 !important;
   }
-
 </style>

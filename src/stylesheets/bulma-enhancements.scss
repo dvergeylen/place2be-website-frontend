@@ -23,6 +23,10 @@
   background-color: transparent !important;
 }
 
+.field-label {
+  flex-basis: 1em !important;
+}
+
 @media screen and (max-width: 768px) {
   .tabs ul {
     flex-direction: column;
