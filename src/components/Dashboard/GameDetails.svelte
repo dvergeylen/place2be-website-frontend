@@ -11,7 +11,8 @@
 
   export let gameUrl;
   let error = null;
-  let selectedTab = 'actions';
+  let selectedTab = 'achievements';
+  let collection;
   const tabs = {
     overview: Overview,
     actions: Collection,
@@ -70,6 +71,10 @@
 
   // Update game Store when gameUrl is updated
   $: getGame(gameUrl);
+  $: collection = $game && attributes[selectedTab] ?
+                  $game.included.filter((e) => e.type === attributes[selectedTab].name.singular)
+                                .sort((a, b) => parseInt(a.id) - parseInt(b.id)) :
+                  [];
 </script>
 
 {#if !error}
@@ -98,7 +103,9 @@
 
     <GameTabs {selectedTab} on:message={handleNewSelectedTab} />
     <svelte:component this={tabs[selectedTab]}
-      attributes={attributes[selectedTab]} on:message/>
+      attributes={attributes[selectedTab]}
+      {collection}
+      on:message/>
   {/if}
 {:else}
   <div class="notification is-warning" class:is-hidden={!error}>

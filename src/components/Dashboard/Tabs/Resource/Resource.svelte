@@ -50,21 +50,14 @@
       error = JSON.parse(t);
       savingStatus.set('failed');
     } else {
-      /* Update resource (update) or Update resources list (new) */
       savingStatus.set('saved');
-      if (resource.id) {
-        const updatedResource = await res.json();
-        resource = updatedResource.data;
-        resetFormDisplay();
-        dispatch('message', {
-          resource,
-        });
-      } else {
-        const resources = await res.json();
-        dispatch('message', {
-          resources: resources.data,
-        });
-      }
+      resetFormDisplay();
+
+      /* Dispatch new/updated action to Collection's list */
+      const updatedResource = await res.json();
+      dispatch('updateCollection', {
+        resource: updatedResource.data,
+      });
     }
   }
 
@@ -74,17 +67,19 @@
     const url = createUrl(apiProtocol, apiHost, ...path);
     const res = await postFormData(url, {}, 'DELETE');
 
-    if (!res.ok) {
+    if (res.status !== 204) {
       const t = await res.text();
       error = JSON.parse(t);
       savingStatus.set('failed');
     } else {
       savingStatus.set('saved');
+      error = null;
 
       /* Update resources list */
-      const resources = await res.json();
-      dispatch('message', {
-        resources: resources.data,
+      dispatch('removeCollectionMember', {
+        resource: {
+          id: resource.id,
+        },
       });
     }
   }

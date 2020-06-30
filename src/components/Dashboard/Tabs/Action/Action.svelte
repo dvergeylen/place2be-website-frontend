@@ -7,7 +7,7 @@
   export let action = {
     attributes: {
       name: '',
-      action_type: 'boolean',
+      actionType: 'boolean',
       tags: [],
     }
   };
@@ -40,21 +40,15 @@
       error = JSON.parse(t);
       savingStatus.set('failed');
     } else {
-      /* Update action (update) or Update actions list (new) */
       savingStatus.set('saved');
-      if (action.id) {
-        const updatedAction = await res.json();
-        action = updatedAction.data;
-        resetFormDisplay();
-        dispatch('message', {
-          action,
-        });
-      } else {
-        const actions = await res.json();
-        dispatch('message', {
-          actions: actions.data,
-        });
-      }
+      error = null;
+      resetFormDisplay();
+
+      /* Dispatch new/updated action to Collection's list */
+      const updatedAction = await res.json();
+      dispatch('updateCollection', {
+        action: updatedAction.data,
+      });
     }
   }
 
@@ -64,7 +58,7 @@
     const url = createUrl(apiProtocol, apiHost, ...path);
     const res = await postFormData(url, {}, 'DELETE');
 
-    if (!res.ok) {
+    if (res.status !== 204) {
       const t = await res.text();
       error = JSON.parse(t);
       savingStatus.set('failed');
@@ -72,9 +66,10 @@
       savingStatus.set('saved');
 
       /* Update actions list */
-      const actions = await res.json();
-      dispatch('message', {
-        actions: actions.data,
+      dispatch('removeCollectionMember', {
+        action: {
+          id: action.id,
+        },
       });
     }
   }

@@ -57,21 +57,14 @@
       error = JSON.parse(t);
       savingStatus.set('failed');
     } else {
-      /* Update achievement (update) or Update achievements list (new) */
       savingStatus.set('saved');
-      if (achievement.id) {
-        const updatedAchievement = await res.json();
-        achievement = updatedAchievement.data;
-        resetFormDisplay();
-        dispatch('message', {
-          achievement,
-        });
-      } else {
-        const achievements = await res.json();
-        dispatch('message', {
-          achievements: achievements.data,
-        });
-      }
+      resetFormDisplay();
+
+      /* Dispatch new/updated achievement to Collection's list */
+      const updatedAchievement = await res.json();
+      dispatch('updateCollection', {
+        achievement: updatedAchievement.data,
+      });
     }
   }
 
@@ -81,17 +74,19 @@
     const url = createUrl(apiProtocol, apiHost, ...path);
     const res = await postFormData(url, {}, 'DELETE');
 
-    if (!res.ok) {
+    if (res.status !== 204) {
       const t = await res.text();
       error = JSON.parse(t);
       savingStatus.set('failed');
     } else {
       savingStatus.set('saved');
+      error = null;
 
-      /* Update achievements list */
-      const achievements = await res.json();
-      dispatch('message', {
-        achievements: achievements.data,
+      /* Update actions list */
+      dispatch('removeCollectionMember', {
+        achievement: {
+          id: achievement.id,
+        },
       });
     }
   }
