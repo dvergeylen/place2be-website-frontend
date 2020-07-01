@@ -94,9 +94,12 @@
   function toggleExpertMode() {
     game.update(g => ({
       ...g,
-      attributes: {
-        ...g.attributes,
-        expertMode: !g.attributes.expertMode,
+      data: {
+        ...g.data,
+        attributes: {
+          ...g.data.attributes,
+          expertMode: !g.data.attributes.expertMode,
+        },
       },
     }));
   }
