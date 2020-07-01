@@ -63,9 +63,6 @@
       const t = await res.text();
       error = JSON.parse(t);
     } else {
-      /* Reset Game Store content */
-      game.set(null);
-
       /* Update Dashboard's game List */
       dispatch('message', {
         gameUrl: undefined,
