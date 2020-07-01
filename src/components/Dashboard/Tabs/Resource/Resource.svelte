@@ -204,7 +204,10 @@
   <div class:is-hidden={displayEditForm || !resource.id}>
     <div class="columns is-mobile">
       <div class="column">
-        <h1 id="resource-name" class="title is-4 has-vcentered-text">
+        <h1 class="title is-4 has-vcentered-text resource-name">
+          <svg class="twemoji">
+            <use href="../images/twemoji-sprite.svg#white_medium_star" />
+          </svg>
           <span class:is-hidden={displayEditForm}>
             {resource.attributes.name}
           </span>
@@ -520,9 +523,12 @@
 
 
 <style lang='scss'>
-  #resource-name {
+  .resource-name {
     margin-top: 0.5em;
     margin-left: 0.5em;
+    svg.twemoji {
+      margin-right: 0.15em;
+    }
   }
 
   .asset-wrapper {

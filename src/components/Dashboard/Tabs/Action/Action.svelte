@@ -163,7 +163,10 @@
   <div class:is-hidden={displayEditForm || !action.id}>
     <div class="columns is-mobile">
       <div class="column">
-        <h1 id="action-name" class="title is-4 has-vcentered-text">
+        <h1 class="title is-4 has-vcentered-text action-name">
+          <svg class="twemoji">
+            <use href="../images/twemoji-sprite.svg#high_voltage_sign" />
+          </svg>
           <span class:is-hidden={displayEditForm}>
             {action.attributes.name}
           </span>
@@ -382,9 +385,12 @@
 
 
 <style lang='scss'>
-  #action-name {
+  .action-name {
     margin-top: 0.5em;
     margin-left: 0.5em;
+    svg.twemoji {
+      margin-right: 0.15em;
+    }
   }
   input.new-tag {
     max-width: 200px;

@@ -46,7 +46,7 @@
       <a href="javascript:void(0)"
         on:click|preventDefault={() => updateSelectedTab('resources')}>
         <svg class="twemoji">
-          <use href="../images/twemoji-sprite.svg#wrapped_present" />
+          <use href="../images/twemoji-sprite.svg#sparkles" />
         </svg>
         <span class="left-spaced">Resources</span>
       </a>
