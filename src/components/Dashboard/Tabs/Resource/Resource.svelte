@@ -1,5 +1,6 @@
 <script>
-  import { getContext, createEventDispatcher } from 'svelte';
+  import { getContext, createEventDispatcher, onDestroy } from 'svelte';
+  import { fade } from 'svelte/transition';
   import { createUrl } from '../../../../javascripts/utils/helpers';
   import { postFormData } from '../../../../javascripts/utils/helpers';
   import { game } from '../../../../javascripts/stores/gameStore';
@@ -29,6 +30,8 @@
 
   let error = null;
   let displayEditForm = false;
+  let displaySavedStatus = false;
+  let displaySavedStatusTimeout;
 
   async function saveResource() {
     savingStatus.set('saving');
@@ -52,6 +55,7 @@
     } else {
       savingStatus.set('saved');
       resetFormDisplay();
+      displaySavedBanner();
 
       /* Dispatch new/updated action to Collection's list */
       const updatedResource = await res.json();
@@ -177,9 +181,20 @@
     displayEditForm = false;
   }
 
+  function displaySavedBanner() {
+    displaySavedStatus = true;
+    displaySavedStatusTimeout = setTimeout(() => {
+      displaySavedStatus = false;
+    }, 1000);
+  }
+
   function flushError() {
     error = null;
   }
+
+  onDestroy(() => {
+    clearTimeout(displaySavedStatusTimeout);
+  });
 </script>
 
 
@@ -200,6 +215,17 @@
         </h1>
       </div>
     </div>
+
+    {#if displaySavedStatus}
+      <div class="columns" out:fade="{{delay: 2000, duration: 200}}">
+        <div class="column is-12 saved-collection">
+          <svg class="fa saved">
+            <use href="../images/fontawesome-sprite.svg#solid-check-circle" />
+          </svg>
+          Updated !
+        </div>
+      </div>
+    {/if}
 
     <table class="table">
       <tbody>

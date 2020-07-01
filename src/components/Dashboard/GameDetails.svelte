@@ -1,4 +1,5 @@
 <script>
+  import { fade } from 'svelte/transition';
   import { fetchData } from '../../javascripts/utils/helpers';
   import { game } from '../../javascripts/stores/gameStore';
   import { savingStatus, lastSaveDate } from '../../javascripts/stores/savingStore';
@@ -86,13 +87,16 @@
     <h1 class="title is-4 has-vcentered-content">
       <span id="saving-status">
         <abbr title="Last save : {$lastSaveDate.toLocaleString()}">
-          <svg class="fa saved" class:is-hidden={$savingStatus != 'saved'}>
+          <svg class="fa saved" class:is-hidden={$savingStatus != 'saved'}
+            transition:fade="{{delay: 250, duration: 300}}">
             <use href="../images/fontawesome-sprite.svg#solid-check-circle" />
           </svg>
-          <svg class="fa saving rotating" class:is-hidden={$savingStatus != 'saving'}>
+          <svg class="fa saving rotating" class:is-hidden={$savingStatus != 'saving'}
+            transition:fade="{{delay: 250, duration: 300}}">
             <use href="../images/fontawesome-sprite.svg#solid-spinner-third" />
           </svg>
-          <svg class="fa failed" class:is-hidden={$savingStatus != 'failed'}>
+          <svg class="fa failed" class:is-hidden={$savingStatus != 'failed'}
+            transition:fade="{{delay: 250, duration: 300}}">
             <use href="../images/fontawesome-sprite.svg#solid-times-circle" />
           </svg>
         </abbr>
