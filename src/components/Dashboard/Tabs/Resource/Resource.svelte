@@ -2,7 +2,7 @@
   import { getContext, createEventDispatcher, onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
   import { createUrl } from '../../../../javascripts/utils/helpers';
-  import { postFormData } from '../../../../javascripts/utils/helpers';
+  import { fetchData, postFormData } from '../../../../javascripts/utils/helpers';
   import { game } from '../../../../javascripts/stores/gameStore';
   import { savingStatus } from '../../../../javascripts/stores/savingStore';
   export let resource = {
@@ -86,6 +86,23 @@
         },
       });
     }
+  }
+
+  /* Reload the original Resource Data if user hits the Cancel button */
+  async function resetResource() {
+    let path, method;
+    path = ['users', userId, 'games', $game.data.id, 'resources', resource.id];
+
+    const url = createUrl(apiProtocol, apiHost, ...path);
+    const res = await fetchData(url);
+
+    if (res.ok) {
+      const updatedResource = await res.json();
+      dispatch('updateCollection', {
+        resource: updatedResource.data,
+      });
+    }
+    resetFormDisplay();
   }
 
   /* When a user removes a namespace from the
@@ -505,7 +522,7 @@
             </button>
             {#if resource.id}
               <button class="button is-primary is-light"
-                on:click|preventDefault={resetFormDisplay}>
+                on:click|preventDefault={resetResource}>
                 Cancel
               </button>
               <button class="button is-danger"

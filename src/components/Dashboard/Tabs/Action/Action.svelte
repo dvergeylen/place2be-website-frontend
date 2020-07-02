@@ -2,7 +2,7 @@
   import { getContext, createEventDispatcher, onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
   import { createUrl } from '../../../../javascripts/utils/helpers';
-  import { postFormData } from '../../../../javascripts/utils/helpers';
+  import { fetchData, postFormData } from '../../../../javascripts/utils/helpers';
   import { game } from '../../../../javascripts/stores/gameStore';
   import { savingStatus } from '../../../../javascripts/stores/savingStore';
   export let action = {
@@ -76,6 +76,23 @@
         },
       });
     }
+  }
+
+  /* Reload the original Action Data if user hits the Cancel button */
+  async function resetAction() {
+    let path, method;
+    path = ['users', userId, 'games', $game.data.id, 'actions', action.id];
+
+    const url = createUrl(apiProtocol, apiHost, ...path);
+    const res = await fetchData(url);
+
+    if (res.ok) {
+      const updatedAction = await res.json();
+      dispatch('updateCollection', {
+        action: updatedAction.data,
+      });
+    }
+    resetFormDisplay();
   }
 
   function removeTag(tag) {
@@ -368,7 +385,7 @@
             </button>
             {#if action.id}
               <button class="button is-primary is-light"
-                on:click|preventDefault={resetFormDisplay}>
+                on:click|preventDefault={resetAction}>
                 Cancel
               </button>
               <button class="button is-danger"
