@@ -414,6 +414,14 @@
 
       {#each resource.attributes.assets as {key, tuples}, assetIndex}
         <div class="asset-wrapper">
+          <div class="columns">
+            <div class="column"></div>
+            <div class="column is-narrow">
+              <svg class="fa fill-destroy" on:click={() => removeAsset(assetIndex)}>
+                <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
+              </svg>
+            </div>
+          </div>
           <div class="columns is-vcentered">
             <div class="column is-4 right">
               <strong>key :</strong>
@@ -461,15 +469,6 @@
               </div>
             </div>
           {/each}
-          <div class="columns is-vcentered">
-            <div class="column has-vcentered-content is-value">
-              <p class="help">
-                <a href="javascript:void(0)" on:click={() => removeAsset(assetIndex)}>
-                  Remove
-                </a>
-              </p>
-            </div>
-          </div>
         </div>
       {/each}
 
@@ -532,11 +531,13 @@
   }
 
   .asset-wrapper {
-    border-radius: 0.2em;
+    border-radius: 0.15em;
     background-color: #f6f8fa;
     margin-bottom: 1em;
     margin-top: 1em;
     padding: 0.5em;
+    border: 1px solid #0096df;
+
     .columns {
       margin-bottom: 0;
     }

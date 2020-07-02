@@ -7,7 +7,19 @@
   import { savingStatus } from '../../../../javascripts/stores/savingStore';
 
   export let achievement = {
-    attributes: [],
+    attributes: {
+      assets: [
+        {
+          key: '',
+          tuples: [
+            {
+              namespaces: $game.data.attributes.namespaces,
+              value: '',
+            },
+          ],
+        },
+      ],
+    },
   };
   let relationPromise;
   let expertMode;
@@ -91,6 +103,72 @@
     }
   }
 
+  /* When a user removes a namespace from the
+   * default value entry */
+  function createCustomEntry(assetIndex, namespace) {
+    /* Remove from where it belongs */
+    achievement.attributes.assets = achievement.attributes.assets.map((asset, index) => {
+      return index !== assetIndex ? asset : {
+        key: asset.key,
+        tuples: asset.tuples.map((tuple) => ({
+          namespaces: tuple.namespaces.filter((ns) => ns !== namespace),
+          value: tuple.value,
+        })),
+      };
+    });
+
+    /* Add a new custom entry */
+    achievement.attributes.assets = achievement.attributes.assets.map((asset, index) => {
+      return index !== assetIndex ? asset : {
+        key: asset.key,
+        tuples: [
+          ...asset.tuples,
+          {
+            namespaces: [namespace],
+            value: '',
+          }
+        ],
+      };
+    });
+  }
+
+  /* When the user removes a namespace from
+   * a custom entry */
+  function removeCustomEntry(assetIndex, namespace) {
+    /* Remove Custom Entry */
+    achievement.attributes.assets = achievement.attributes.assets.map((asset, index) => {
+      return index !== assetIndex ? asset : {
+        key: asset.key,
+        tuples: asset.tuples.filter((tuple) => !tuple.namespaces.includes(namespace)),
+      }
+    });
+
+    /* Add namespace to default Entry */
+    achievement.attributes.assets[0].tuples[0].namespaces = [
+      ...achievement.attributes.assets[0].tuples[0].namespaces,
+      namespace,
+    ]
+  }
+
+  function removeAsset(assetIndex) {
+    achievement.attributes.assets = achievement.attributes.assets.filter((asset, index) => index !== assetIndex);
+  }
+
+  function addNewAsset() {
+    achievement.attributes.assets = [
+      ...achievement.attributes.assets,
+      {
+        key: '',
+        tuples: [
+          {
+            namespaces: $game.data.attributes.namespaces,
+            value: '',
+          },
+        ],
+      },
+    ]
+  }
+
   function toggleExpertMode() {
     game.update(g => ({
       ...g,
@@ -113,7 +191,8 @@
     error = null;
   }
 
-  $: relationPromise = fetchRelation(achievement);
+
+  relationPromise = fetchRelation(achievement);
 </script>
 
 <div class='item-box'>
@@ -216,18 +295,120 @@
           on:message={updateRelation}/>
     {/if}
 
+
+
     <h1 class="title is-5 byproduct-title">
       <svg class="twemoji">
         <use href="../images/twemoji-sprite.svg#wrapped_present" />
       </svg>
       Rewards <span class="note">(optional)</span> :
     </h1>
+    <p>TODO</p>
+
+
+
     <h1 class="title is-5 byproduct-title">
       <svg class="twemoji">
         <use href="../images/twemoji-sprite.svg#package" />
       </svg>
-      Assets <span class="note">(optional)</span> :
+      Assets
+      <span class="note">(optional)</span> :
     </h1>
+    <div class="content">
+      <ul class="help">
+        <li>
+          Assets are key-value entries you can associate with an Achievement.
+        </li>
+        <li>
+          Everytime an Achievement will be involved, its associated assets will be returned as well.
+        </li>
+        <li>
+          You can have multiple assets per Achievement, carrying any information you want.
+        </li>
+        <li>
+          See assets
+          <a href="https://doc/place2be.io/assets" target="_blank">
+            <span>Doc</span>
+            <svg class="fa fill-primary no-hover">
+              <use href="../images/fontawesome-sprite.svg#regular-external-link-square" />
+            </svg>
+          </a>
+          for common use cases and examples.
+        </li>
+      </ul>
+    </div>
+
+    <!-- Dummy value when no assets submitted -->
+    <input class="input" type="hidden" name="achievement[assets][0][key]" value="">
+
+    {#each achievement.attributes.assets as {key, tuples}, assetIndex}
+      <div class="asset-wrapper">
+        <div class="columns">
+          <div class="column"></div>
+          <div class="column is-narrow">
+            <svg class="fa fill-destroy" on:click={() => removeAsset(assetIndex)}>
+              <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
+            </svg>
+          </div>
+        </div>
+        <div class="columns is-vcentered">
+          <div class="column is-4 right">
+            <strong>key :</strong>
+          </div>
+          <div class="column asset-value">
+            <input class="input is-family-monospace" type="text"
+              name="achievement[assets][{assetIndex}][key]"
+              bind:value={key} placeholder="asset key">
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-4 right">
+            <strong>values :</strong>
+          </div>
+        </div>
+        {#each tuples as { namespaces, value }, tupleIndex}
+          <div class="columns is-vcentered">
+            <div class="column is-4 right namespace-container">
+              {#each namespaces as namespace}
+                <p>
+                  <span class="tag is-link">
+                    {namespace}
+                    <input class="input" type="hidden"
+                      name="achievement[assets][{assetIndex}][tuples][{tupleIndex}][namespaces][]"
+                      value={namespace}>
+                    {#if namespace !== 'default'}
+                      {#if namespaces.includes('default')}
+                        <button class="delete is-small"
+                          on:click|preventDefault={createCustomEntry(assetIndex, namespace)}>
+                        </button>
+                      {:else}
+                        <button class="delete is-small"
+                          on:click|preventDefault={removeCustomEntry(assetIndex, namespace)}>
+                        </button>
+                      {/if}
+                    {/if}
+                  </span>
+                </p>
+              {/each}
+            </div>
+            <div class="column asset-value is-family-monospace">
+              <textarea class="input is-family-monospace"
+                name="achievement[assets][{assetIndex}][tuples][{tupleIndex}][value]"
+                bind:value={value} placeholder="asset value" />
+            </div>
+          </div>
+        {/each}
+      </div>
+    {/each}
+
+    <div class="columns">
+      <div class="column right">
+        <button class="button is-primary is-outlined is-small"
+          on:click|preventDefault={() => addNewAsset()}>
+          + New Asset
+        </button>
+      </div>
+    </div>
 
 
     <div class="columns is-vcentered">
@@ -288,5 +469,45 @@
     color: #cb2431 !important;
     background: white !important;
     border: 1px solid #cb2431 !important;
+  }
+
+  /* Assets part */
+  .asset-wrapper {
+    border-radius: 0.15em;
+    background-color: #f6f8fa;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    padding: 0.5em;
+    border: 1px solid #0096df;
+
+    .columns {
+      margin-bottom: 0;
+    }
+  }
+  .asset-value {
+    color: gray;
+    word-break: break-all;
+
+    /* Mobile */
+    @media screen and (max-width: 768px) {
+      padding-top: 0;
+      margin-bottom: 1em;
+    }
+  }
+  .right {
+    /* Desktop */
+    @media screen and (min-width: 768px) {
+      text-align: right;
+    }
+  }
+  .namespace-container {
+    /* Mobile */
+    @media screen and (max-width: 768px) {
+      padding-bottom: 0.2em;
+      display: inline-flex;
+    }
+    p {
+      margin-right: 0.5em;
+    }
   }
 </style>
