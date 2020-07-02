@@ -130,6 +130,9 @@ input.reasonable-width {
 input.small-width {
   max-width: 5em;
 }
+input.date-width {
+  max-width: 10em;
+}
 input.count {
   width: 3em;
   margin-left: 0.5em;
@@ -163,6 +166,7 @@ input.count {
   width: 1em;
   height: 1em;
   cursor: pointer;
+  vertical-align: middle;
 }
 .twemoji {
   width: 1em;

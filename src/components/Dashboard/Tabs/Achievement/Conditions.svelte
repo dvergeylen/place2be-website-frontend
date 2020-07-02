@@ -3,6 +3,8 @@
   import ActionTriggerForm from './ConditionsForms/ActionTrigger.svelte';
   import UnlockedAchievementShow from './ConditionsShows/UnlockedAchievement.svelte';
   import UnlockedAchievementForm from './ConditionsForms/UnlockedAchievement.svelte';
+  import TimeFrameShow from './ConditionsShows/TimeFrame.svelte';
+  import TimeFrameForm from './ConditionsForms/TimeFrame.svelte';
   import { game } from '../../../../javascripts/stores/gameStore';
   import { createEventDispatcher } from 'svelte';
 
@@ -15,10 +17,12 @@
   const conditionsShowsComponents = {
     action_trigger: ActionTriggerShow,
     unlocked_achievement: UnlockedAchievementShow,
+    time_frame: TimeFrameShow,
   };
   const conditionsFormsComponents = {
     action_trigger: ActionTriggerForm,
     unlocked_achievement: UnlockedAchievementForm,
+    time_frame: TimeFrameForm,
   }
 
   function addCondition(evt){
