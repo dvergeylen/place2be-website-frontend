@@ -45,11 +45,13 @@
       {/if}
       Trigged <strong>'{underlying.attributes.name}'</strong>
     </div>
-    <div class="column is-narrow">
-      <svg class="fa fill-destroy" on:click={destroyCondition}>
-        <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
-      </svg>
-    </div>
+    {#if formPrefix}
+      <div class="column is-narrow">
+        <svg class="fa fill-destroy" on:click={destroyCondition}>
+          <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
+        </svg>
+      </div>
+    {/if}
   </div>
   <ul>
     <li>
@@ -58,9 +60,6 @@
         {condition.attributes.criteria.count}
         {parseInt(condition.attributes.criteria.count) === 1 ? 'time' : 'times'}
       </strong>;
-
-      <input type="hidden" name="{formPrefix}[criteria][count]"
-        value="{condition.attributes.criteria.count}">
     </li>
     {#each condition.attributes.criteria.validations as validation, i (i)}
       <li>
@@ -69,35 +68,42 @@
           {validation.value}
         </strong>;
 
-        <input type="hidden" name="{formPrefix}[criteria][validations][{i}][attribute]"
-        value="{validation.attribute}">
-        <input type="hidden" name="{formPrefix}[criteria][validations][{i}][comparison]"
-        value="{validation.comparison}">
-        <input type="hidden" name="{formPrefix}[criteria][validations][{i}][value]"
-        value="{validation.value}">
+        {#if formPrefix}
+          <input type="hidden" name="{formPrefix}[criteria][validations][{i}][attribute]"
+          value="{validation.attribute}">
+          <input type="hidden" name="{formPrefix}[criteria][validations][{i}][comparison]"
+          value="{validation.comparison}">
+          <input type="hidden" name="{formPrefix}[criteria][validations][{i}][value]"
+          value="{validation.value}">
+        {/if}
       </li>
     {/each}
     <li>
       over the <strong>{periodEnum[condition.attributes.criteria.period]}</strong>.
-
-      <input type="hidden" name="{formPrefix}[criteria][period]"
-      value="{condition.attributes.criteria.period}">
     </li>
   </ul>
 
-  <input type="hidden" name="{formPrefix}[inverted]"
-    value="{condition.attributes.inverted}">
+  {#if formPrefix}
+    <input type="hidden" name="{formPrefix}[criteria][count]"
+      value="{condition.attributes.criteria.count}">
 
-  <input type="hidden" name="{formPrefix}[underlying_type]"
-    value="{capitalizeFirstLetter(condition.relationships.underlying.data.type)}">
+    <input type="hidden" name="{formPrefix}[criteria][period]"
+    value="{condition.attributes.criteria.period}">
 
-  <input type="hidden" name="{formPrefix}[underlying_id]"
-    value="{condition.relationships.underlying.data.id}">
+    <input type="hidden" name="{formPrefix}[inverted]"
+      value="{condition.attributes.inverted}">
 
-  <input type="hidden" name="{formPrefix}[condition_type]" value="action_trigger">
+    <input type="hidden" name="{formPrefix}[underlying_type]"
+      value="{capitalizeFirstLetter(condition.relationships.underlying.data.type)}">
 
-  {#if condition.attributes._destroy}
-    <input type="hidden" name="{formPrefix}[_destroy]" value="true">
+    <input type="hidden" name="{formPrefix}[underlying_id]"
+      value="{condition.relationships.underlying.data.id}">
+
+    <input type="hidden" name="{formPrefix}[condition_type]" value="action_trigger">
+
+    {#if condition.attributes._destroy}
+      <input type="hidden" name="{formPrefix}[_destroy]" value="true">
+    {/if}
   {/if}
 </div>
 

@@ -32,6 +32,9 @@
   let displayEditForm = false;
   let displaySavedStatus = false;
   let displaySavedStatusTimeout;
+  let isExpandedSection = {
+    assets: false,
+  };
 
   async function saveResource() {
     savingStatus.set('saving');
@@ -198,6 +201,10 @@
     displayEditForm = false;
   }
 
+  function toggleSection(key, value) {
+    isExpandedSection[key] = value;
+  }
+
   function displaySavedBanner() {
     displaySavedStatus = true;
     displaySavedStatusTimeout = setTimeout(() => {
@@ -221,14 +228,14 @@
   <div class:is-hidden={displayEditForm || !resource.id}>
     <div class="columns is-mobile">
       <div class="column">
-        <h1 class="title is-4 has-vcentered-text resource-name">
+        <h1 class="title is-4 has-vcentered-text item-name">
           <svg class="twemoji">
             <use href="../images/twemoji-sprite.svg#white_medium_star" />
           </svg>
           <span class:is-hidden={displayEditForm}>
             {resource.attributes.name}
           </span>
-          <svg class="fa name-edit fill-primary no-hover" class:is-hidden={displayEditForm}
+          <svg class="fa item-edit fill-primary no-hover" class:is-hidden={displayEditForm}
             on:click={toggleFormDisplay}>
             <use href="../images/fontawesome-sprite.svg#regular-edit" />
           </svg>
@@ -262,63 +269,72 @@
 
     {#if resource.attributes.assets.length}
       <h1 class="title is-5 byproduct-title">
+        <svg class="chevron" on:click={() => toggleSection('assets', true)}
+          class:is-hidden={isExpandedSection.assets}>
+          <use href="../images/fontawesome-sprite.svg#solid-chevron-double-right" />
+        </svg>
+        <svg class="chevron" on:click={() => toggleSection('assets', false)}
+          class:is-hidden={!isExpandedSection.assets}>
+          <use href="../images/fontawesome-sprite.svg#solid-chevron-double-down" />
+        </svg>
         <svg class="twemoji">
           <use href="../images/twemoji-sprite.svg#package" />
         </svg>
-        Assets
-        <span class="note">(optional)</span> :
+        Assets <span class="quantity">({resource.attributes.assets.length})</span>
       </h1>
-    {/if}
 
-    {#each resource.attributes.assets as {key, tuples}}
-      <div class="asset-wrapper">
-        <div class="columns is-vcentered">
-          <div class="column is-4 right">
-            <strong>key :</strong>
-          </div>
-          <div class="column asset-value is-family-monospace">
-            {key}
-          </div>
-        </div>
-        <div class="columns">
-          <div class="column is-4 right">
-            <strong>values :</strong>
-          </div>
-        </div>
-        {#each tuples as { namespaces, value }}
-          <div class="columns is-vcentered">
-            <div class="column is-4 right namespace-container">
-              {#if namespaces.includes('default')}
-                <p>
-                  <span class="tag is-link">
-                    default
-                  </span>
-                </p>
-                {#if namespaces.length > 1}
-                  <p>
-                    <span class="tag is-link">
-                      + {namespaces.length - 1} 
-                      {(namespaces.length - 1) === 1 ? 'other' : 'others'} 
-                    </span>
-                  </p>
-                {/if}
-              {:else}
-                {#each namespaces as namespace}
-                  <p>
-                    <span class="tag is-link">
-                      {namespace}
-                    </span>
-                  </p>
-                {/each}
-              {/if}
+      <div class:is-hidden={!isExpandedSection.assets}>
+        {#each resource.attributes.assets as {key, tuples}}
+          <div class="asset-wrapper">
+            <div class="columns is-vcentered">
+              <div class="column is-4 right">
+                <strong>key :</strong>
+              </div>
+              <div class="column asset-value is-family-monospace">
+                {key}
+              </div>
             </div>
-            <div class="column asset-value is-family-monospace">
-              {value}
+            <div class="columns">
+              <div class="column is-4 right">
+                <strong>values :</strong>
+              </div>
             </div>
+            {#each tuples as { namespaces, value }}
+              <div class="columns is-vcentered">
+                <div class="column is-4 right namespace-container">
+                  {#if namespaces.includes('default')}
+                    <p>
+                      <span class="tag is-link">
+                        default
+                      </span>
+                    </p>
+                    {#if namespaces.length > 1}
+                      <p>
+                        <span class="tag is-link">
+                          + {namespaces.length - 1} 
+                          {(namespaces.length - 1) === 1 ? 'other' : 'others'} 
+                        </span>
+                      </p>
+                    {/if}
+                  {:else}
+                    {#each namespaces as namespace}
+                      <p>
+                        <span class="tag is-link">
+                          {namespace}
+                        </span>
+                      </p>
+                    {/each}
+                  {/if}
+                </div>
+                <div class="column asset-value is-family-monospace">
+                  {value}
+                </div>
+              </div>
+            {/each}
           </div>
         {/each}
       </div>
-    {/each}
+    {/if}
 
 
     <p class="help">
@@ -340,7 +356,7 @@
 
 
 
-<!-- Edit Resource -->
+  <!-- Edit Resource -->
   <div class:is-hidden={!displayEditForm && resource.id}>
     <form id="{resource.id || 'new'}-resource-form"
       on:submit|preventDefault={saveResource}>
@@ -363,7 +379,7 @@
         <svg class="twemoji">
           <use href="../images/twemoji-sprite.svg#card_file_box" />
         </svg>
-        Properties :
+        Properties
       </h1>
 
       <div class="field is-horizontal">
@@ -400,7 +416,7 @@
           <use href="../images/twemoji-sprite.svg#package" />
         </svg>
         Assets
-        <span class="note">(optional)</span> :
+        <span class="note">(optional)</span>
       </h1>
       <div class="content">
         <ul class="help">
@@ -432,15 +448,14 @@
       {#each resource.attributes.assets as {key, tuples}, assetIndex}
         <div class="asset-wrapper">
           <div class="columns">
-            <div class="column"></div>
-            <div class="column is-narrow">
+            <div class="column right">
               <svg class="fa fill-destroy" on:click={() => removeAsset(assetIndex)}>
                 <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
               </svg>
             </div>
           </div>
           <div class="columns is-vcentered">
-            <div class="column is-4 right">
+            <div class="column is-4 right-label">
               <strong>key :</strong>
             </div>
             <div class="column asset-value">
@@ -450,13 +465,13 @@
             </div>
           </div>
           <div class="columns">
-            <div class="column is-4 right">
+            <div class="column is-4 right-label">
               <strong>values :</strong>
             </div>
           </div>
           {#each tuples as { namespaces, value }, tupleIndex}
             <div class="columns is-vcentered">
-              <div class="column is-4 right namespace-container">
+              <div class="column is-4 right-label namespace-container">
                 {#each namespaces as namespace}
                   <p>
                     <span class="tag is-link">
@@ -490,7 +505,7 @@
       {/each}
 
       <div class="columns">
-        <div class="column right">
+        <div class="column right-label">
           <button class="button is-primary is-outlined is-small"
             on:click|preventDefault={() => addNewAsset()}>
             + New Asset
@@ -539,14 +554,6 @@
 
 
 <style lang='scss'>
-  .resource-name {
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    svg.twemoji {
-      margin-right: 0.15em;
-    }
-  }
-
   .asset-wrapper {
     border-radius: 0.15em;
     background-color: #f6f8fa;
@@ -559,8 +566,10 @@
       margin-bottom: 0;
     }
   }
-
   .right {
+    text-align: right;
+  }
+  .right-label {
     /* Desktop */
     @media screen and (min-width: 768px) {
       text-align: right;
@@ -590,10 +599,6 @@
       padding-top: 0;
       margin-bottom: 1em;
     }
-  }
-  .name-edit {
-    height: 0.7em;
-    margin-left: 0.2em;
   }
   button.is-danger {
     color: #cb2431 !important;

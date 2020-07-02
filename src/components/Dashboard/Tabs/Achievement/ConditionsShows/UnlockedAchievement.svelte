@@ -26,25 +26,27 @@
       {/if}
       Unlocked <strong>'{underlying.attributes.name}'</strong>
     </div>
-    <div class="column is-narrow">
-      <svg class="fa fill-destroy" on:click={destroyCondition}>
-        <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
-      </svg>
-    </div>
+    {#if formPrefix}
+      <div class="column is-narrow">
+        <svg class="fa fill-destroy" on:click={destroyCondition}>
+          <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
+        </svg>
+      </div>
 
-    <input type="hidden" name="{formPrefix}[inverted]"
-      value="{condition.attributes.inverted}">
+      <input type="hidden" name="{formPrefix}[inverted]"
+        value="{condition.attributes.inverted}">
 
-    <input type="hidden" name="{formPrefix}[underlying_type]"
-      value="{capitalizeFirstLetter(condition.relationships.underlying.data.type)}">
+      <input type="hidden" name="{formPrefix}[underlying_type]"
+        value="{capitalizeFirstLetter(condition.relationships.underlying.data.type)}">
 
-    <input type="hidden" name="{formPrefix}[underlying_id]"
-      value="{condition.relationships.underlying.data.id}">
+      <input type="hidden" name="{formPrefix}[underlying_id]"
+        value="{condition.relationships.underlying.data.id}">
 
-    <input type="hidden" name="{formPrefix}[condition_type]" value="unlocked_achievement">
+      <input type="hidden" name="{formPrefix}[condition_type]" value="unlocked_achievement">
 
-    {#if condition.attributes._destroy}
-      <input type="hidden" name="{formPrefix}[_destroy]" value="true">
+      {#if condition.attributes._destroy}
+        <input type="hidden" name="{formPrefix}[_destroy]" value="true">
+      {/if}
     {/if}
   </div>
 </div>

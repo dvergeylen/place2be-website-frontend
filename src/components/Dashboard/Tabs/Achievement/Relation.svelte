@@ -19,32 +19,34 @@
 </script>
 
 <div class="relation-wrapper">
-  <input type="hidden" name="{formPrefix}[game_id]"
-    value="{$game.data.id}">
+  {#if formPrefix}
+    <input type="hidden" name="{formPrefix}[game_id]"
+      value="{$game.data.id}">
 
-  <div class="field">
-    <label class="label">
-      Type
-    </label>
-    <!-- Desktop -->
-    <div class="select is-hidden-desktop">
-      <select name="{formPrefix}[relation_type]"
-        bind:value={relation.data.attributes.relationType}>
-        <option value='binomial'>Binomial</option>
-        <option value='xor'>eXclusive OR</option>
-      </select>
+    <div class="field">
+      <label class="label">
+        Type
+      </label>
+      <!-- Desktop -->
+      <div class="select is-hidden-desktop">
+        <select name="{formPrefix}[relation_type]"
+          bind:value={relation.data.attributes.relationType}>
+          <option value='binomial'>Binomial</option>
+          <option value='xor'>eXclusive OR</option>
+        </select>
+      </div>
+
+      <!-- Mobile -->
+      <div class="select is-hidden-touch">
+        <select name="{formPrefix}[relation_type]"
+          bind:value={relation.data.attributes.relationType}>
+          <option value='binomial'>Binomial (meet at least X among Y cond.)</option>
+          <option value='xor'>eXclusive OR (meet exactly 1 among Y cond.)</option>
+        </select>
+      </div>
     </div>
+  {/if}
 
-    <!-- Mobile -->
-    <div class="select is-hidden-touch">
-      <select name="{formPrefix}[relation_type]"
-        bind:value={relation.data.attributes.relationType}>
-        <option value='binomial'>Binomial (meet at least X among Y cond.)</option>
-        <option value='xor'>eXclusive OR (meet exactly 1 among Y cond.)</option>
-      </select>
-    </div>
-
-  </div>
   <div class="field">
     <div class="columns is-variable is-1 compact-mobile"
       class:is-hidden={relation.data.attributes.relationType == 'xor'}>
@@ -54,7 +56,8 @@
       <div class="column is-narrow-desktop has-vcentered-text">
         <em>minimum</em>
         <input type="text" class="input count"
-          name="{formPrefix}[count]" bind:value={relation.data.attributes.count}>
+          name="{formPrefix}[count]" bind:value={relation.data.attributes.count}
+          disabled={formPrefix === undefined}>
         {relation.data.attributes.count === 1 ? 'condition' : 'conditions'}
       </div>
       <div class="column is-narrow-desktop has-vcentered-text">
@@ -81,7 +84,7 @@
 
   <Conditions
     conditions={relation.included.filter((e) => e.type === 'condition')}
-    formPrefix={`${formPrefix}[conditions_attributes]`}
+    formPrefix={ formPrefix ? `${formPrefix}[conditions_attributes]` : undefined}
     on:updateConditions={updateConditions}/>
 
 </div>

@@ -180,14 +180,14 @@
   <div class:is-hidden={displayEditForm || !action.id}>
     <div class="columns is-mobile">
       <div class="column">
-        <h1 class="title is-4 has-vcentered-text action-name">
+        <h1 class="title is-4 has-vcentered-text item-name">
           <svg class="twemoji">
             <use href="../images/twemoji-sprite.svg#high_voltage_sign" />
           </svg>
           <span class:is-hidden={displayEditForm}>
             {action.attributes.name}
           </span>
-          <svg class="fa name-edit fill-primary no-hover" class:is-hidden={displayEditForm}
+          <svg class="fa item-edit fill-primary no-hover" class:is-hidden={displayEditForm}
             on:click={toggleFormDisplay}>
             <use href="../images/fontawesome-sprite.svg#regular-edit" />
           </svg>
@@ -402,13 +402,6 @@
 
 
 <style lang='scss'>
-  .action-name {
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    svg.twemoji {
-      margin-right: 0.15em;
-    }
-  }
   input.new-tag {
     max-width: 200px;
     margin-right: 1em;
@@ -422,10 +415,6 @@
   td.is-value {
     color: gray;
     font-style: italic;
-  }
-  .name-edit {
-    height: 0.7em;
-    margin-left: 0.2em;
   }
   button.is-danger {
     color: #cb2431 !important;
