@@ -18,8 +18,7 @@
   }
 </script>
 
-<fieldset class="fieldset">
-  <legend>Condition Set</legend>
+<div class="relation-wrapper">
   <input type="hidden" name="{formPrefix}[game_id]"
     value="{$game.data.id}">
 
@@ -85,9 +84,14 @@
     formPrefix={`${formPrefix}[conditions_attributes]`}
     on:updateConditions={updateConditions}/>
 
-</fieldset>
+</div>
 
 <style lang="scss">
+  div.relation-wrapper {
+    max-width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+  }
   div.compact-mobile {
     /* Mobile */
     @media screen and (max-width: 768px) {

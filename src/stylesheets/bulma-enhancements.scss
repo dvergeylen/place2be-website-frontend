@@ -36,26 +36,3 @@
     }
   }
 }
-
-/* See: https://github.com/jgthms/bulma/issues/886 */
-.fieldset {
-  background-color: #fff;
-  border-radius: 0.5em;
-  box-shadow: 0 0.2em 0.5em -0.125em rgba(10,10,10,.1), 0 0 0 0.2em rgba(10,10,10,.02);
-  color: $anthracite;
-  display: block;
-  padding: 1.25rem;
-  border: 1px solid #ccc;
-  margin-bottom: 1em;
-
-  legend {
-    color: #363636;
-    display: block;
-    font-size: 1rem;
-    font-weight: 700;
-    background-color: #fff;
-    padding: 0 0.5em;
-    width: max-content;
-    border: 0 none;
-  }
-}
