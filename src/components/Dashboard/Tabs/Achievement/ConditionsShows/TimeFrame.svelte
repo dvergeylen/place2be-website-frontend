@@ -2,7 +2,8 @@
   import { capitalizeFirstLetter } from '../../../../../javascripts/utils/helpers';
   export let formPrefix;
   export let condition;
-  export const underlyings = []; // not used
+  // eslint-disable-next-line unused-export-let
+  export let underlyings = [];
 
   function destroyCondition() {
     condition.attributes._destroy = true;
@@ -34,7 +35,7 @@
     value="{(new Date(condition.attributes.criteria.from)).toLocaleDateString()}">
 
     <input type="hidden" name="{formPrefix}[criteria][to]"
-    value="{(new Date(condition.attributes.criteria.to)).toLocaleDateString()}}">
+    value="{(new Date(condition.attributes.criteria.to)).toLocaleDateString()}">
 
     <input type="hidden" name="{formPrefix}[condition_type]" value="time_frame">
 
