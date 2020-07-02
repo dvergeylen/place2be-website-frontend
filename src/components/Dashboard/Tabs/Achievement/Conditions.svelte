@@ -59,7 +59,7 @@
 
 <div class="new-condition-container">
   <div class="columns">
-    <div class="column is-narrow-desktop has-vcentered-content">
+    <div class="column is-narrow-desktop has-vcentered-content new-condition-label">
       New Condition :
     </div>
     <div class="column is-narrow-desktop">
@@ -100,5 +100,8 @@
     li {
       margin-bottom: 2em;
     }
+  }
+  .new-condition-label {
+    align-self: center;
   }
 </style>
