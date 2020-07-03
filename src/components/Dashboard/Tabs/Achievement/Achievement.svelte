@@ -4,6 +4,8 @@
   import { createUrl } from '../../../../javascripts/utils/helpers';
   import { fetchData, postFormData } from '../../../../javascripts/utils/helpers';
   import Relation from './Relation.svelte';
+  import AssetsIndex from '../Assets/AssetsIndex.svelte';
+  import AssetsForm from '../Assets/AssetsForm.svelte';
   import { game } from '../../../../javascripts/stores/gameStore';
   import { savingStatus } from '../../../../javascripts/stores/savingStore';
 
@@ -129,72 +131,6 @@
     resetFormDisplay();
   }
 
-  /* When a user removes a namespace from the
-   * default value entry */
-  function createCustomEntry(assetIndex, namespace) {
-    /* Remove from where it belongs */
-    achievement.attributes.assets = achievement.attributes.assets.map((asset, index) => {
-      return index !== assetIndex ? asset : {
-        key: asset.key,
-        tuples: asset.tuples.map((tuple) => ({
-          namespaces: tuple.namespaces.filter((ns) => ns !== namespace),
-          value: tuple.value,
-        })),
-      };
-    });
-
-    /* Add a new custom entry */
-    achievement.attributes.assets = achievement.attributes.assets.map((asset, index) => {
-      return index !== assetIndex ? asset : {
-        key: asset.key,
-        tuples: [
-          ...asset.tuples,
-          {
-            namespaces: [namespace],
-            value: '',
-          }
-        ],
-      };
-    });
-  }
-
-  /* When the user removes a namespace from
-   * a custom entry */
-  function removeCustomEntry(assetIndex, namespace) {
-    /* Remove Custom Entry */
-    achievement.attributes.assets = achievement.attributes.assets.map((asset, index) => {
-      return index !== assetIndex ? asset : {
-        key: asset.key,
-        tuples: asset.tuples.filter((tuple) => !tuple.namespaces.includes(namespace)),
-      }
-    });
-
-    /* Add namespace to default Entry */
-    achievement.attributes.assets[0].tuples[0].namespaces = [
-      ...achievement.attributes.assets[0].tuples[0].namespaces,
-      namespace,
-    ]
-  }
-
-  function removeAsset(assetIndex) {
-    achievement.attributes.assets = achievement.attributes.assets.filter((asset, index) => index !== assetIndex);
-  }
-
-  function addNewAsset() {
-    achievement.attributes.assets = [
-      ...achievement.attributes.assets,
-      {
-        key: '',
-        tuples: [
-          {
-            namespaces: $game.data.attributes.namespaces,
-            value: '',
-          },
-        ],
-      },
-    ]
-  }
-
   function toggleExpertMode() {
     game.update(g => ({
       ...g,
@@ -290,7 +226,7 @@
       {#await relationPromise}
         <p>Loading Conditions...</p>
       {:then relation}
-        <Relation {relation}/>
+        <Relation {relation} formPrefix={undefined} />
       {:catch relationError}
         <div class="notification is-warning" >
           <p>{relationError}</p>
@@ -335,57 +271,9 @@
         Assets <span class="quantity">({achievement.attributes.assets.length})</span>
       </h1>
 
-      <div class:is-hidden={!isExpandedSection.assets}>
-        {#each achievement.attributes.assets as {key, tuples}}
-          <div class="asset-wrapper">
-            <div class="columns is-vcentered">
-              <div class="column is-4 right">
-                <strong>key :</strong>
-              </div>
-              <div class="column asset-value is-family-monospace">
-                {key}
-              </div>
-            </div>
-            <div class="columns">
-              <div class="column is-4 right">
-                <strong>values :</strong>
-              </div>
-            </div>
-            {#each tuples as { namespaces, value }}
-              <div class="columns is-vcentered">
-                <div class="column is-4 right namespace-container">
-                  {#if namespaces.includes('default')}
-                    <p>
-                      <span class="tag is-link">
-                        default
-                      </span>
-                    </p>
-                    {#if namespaces.length > 1}
-                      <p>
-                        <span class="tag is-link">
-                          + {namespaces.length - 1} 
-                          {(namespaces.length - 1) === 1 ? 'other' : 'others'} 
-                        </span>
-                      </p>
-                    {/if}
-                  {:else}
-                    {#each namespaces as namespace}
-                      <p>
-                        <span class="tag is-link">
-                          {namespace}
-                        </span>
-                      </p>
-                    {/each}
-                  {/if}
-                </div>
-                <div class="column asset-value is-family-monospace">
-                  {value}
-                </div>
-              </div>
-            {/each}
-          </div>
-        {/each}
-      </div>
+      {#if isExpandedSection.assets}
+        <AssetsIndex assets={achievement.attributes.assets} />
+      {/if}
     {/if}
   {/if}
 
@@ -537,76 +425,7 @@
         </ul>
       </div>
 
-      <!-- Dummy value when no assets submitted -->
-      <input class="input" type="hidden" name="achievement[assets][0][key]" value="">
-
-      {#each achievement.attributes.assets as {key, tuples}, assetIndex}
-        <div class="asset-wrapper">
-          <div class="columns">
-            <div class="column right">
-              <svg class="fa fill-destroy" on:click={() => removeAsset(assetIndex)}>
-                <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
-              </svg>
-            </div>
-          </div>
-          <div class="columns is-vcentered">
-            <div class="column is-4 right-desktop">
-              <strong>key :</strong>
-            </div>
-            <div class="column asset-value">
-              <input class="input is-family-monospace" type="text"
-                name="achievement[assets][{assetIndex}][key]"
-                bind:value={key} placeholder="asset key">
-            </div>
-          </div>
-          <div class="columns">
-            <div class="column is-4 right-desktop">
-              <strong>values :</strong>
-            </div>
-          </div>
-          {#each tuples as { namespaces, value }, tupleIndex}
-            <div class="columns is-vcentered">
-              <div class="column is-4 right-desktop namespace-container">
-                {#each namespaces as namespace}
-                  <p>
-                    <span class="tag is-link">
-                      {namespace}
-                      <input class="input" type="hidden"
-                        name="achievement[assets][{assetIndex}][tuples][{tupleIndex}][namespaces][]"
-                        value={namespace}>
-                      {#if namespace !== 'default'}
-                        {#if namespaces.includes('default')}
-                          <button class="delete is-small"
-                            on:click|preventDefault={createCustomEntry(assetIndex, namespace)}>
-                          </button>
-                        {:else}
-                          <button class="delete is-small"
-                            on:click|preventDefault={removeCustomEntry(assetIndex, namespace)}>
-                          </button>
-                        {/if}
-                      {/if}
-                    </span>
-                  </p>
-                {/each}
-              </div>
-              <div class="column asset-value is-family-monospace">
-                <textarea class="input is-family-monospace"
-                  name="achievement[assets][{assetIndex}][tuples][{tupleIndex}][value]"
-                  bind:value={value} placeholder="asset value" />
-              </div>
-            </div>
-          {/each}
-        </div>
-      {/each}
-
-      <div class="columns">
-        <div class="column right-desktop">
-          <button class="button is-primary is-outlined is-small"
-            on:click|preventDefault={() => addNewAsset()}>
-            + New Asset
-          </button>
-        </div>
-      </div>
+      <AssetsForm assets={achievement.attributes.assets} formPrefix="achievement"/>
 
       <div class="columns is-vcentered">
         <div class="column is-narrow">

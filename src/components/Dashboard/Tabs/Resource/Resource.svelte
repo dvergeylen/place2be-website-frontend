@@ -3,6 +3,8 @@
   import { fade } from 'svelte/transition';
   import { createUrl } from '../../../../javascripts/utils/helpers';
   import { fetchData, postFormData } from '../../../../javascripts/utils/helpers';
+  import AssetsIndex from '../Assets/AssetsIndex.svelte';
+  import AssetsForm from '../Assets/AssetsForm.svelte';
   import { game } from '../../../../javascripts/stores/gameStore';
   import { savingStatus } from '../../../../javascripts/stores/savingStore';
   export let resource = {
@@ -106,72 +108,6 @@
       });
     }
     resetFormDisplay();
-  }
-
-  /* When a user removes a namespace from the
-   * default value entry */
-  function createCustomEntry(assetIndex, namespace) {
-    /* Remove from where it belongs */
-    resource.attributes.assets = resource.attributes.assets.map((asset, index) => {
-      return index !== assetIndex ? asset : {
-        key: asset.key,
-        tuples: asset.tuples.map((tuple) => ({
-          namespaces: tuple.namespaces.filter((ns) => ns !== namespace),
-          value: tuple.value,
-        })),
-      };
-    });
-
-    /* Add a new custom entry */
-    resource.attributes.assets = resource.attributes.assets.map((asset, index) => {
-      return index !== assetIndex ? asset : {
-        key: asset.key,
-        tuples: [
-          ...asset.tuples,
-          {
-            namespaces: [namespace],
-            value: '',
-          }
-        ],
-      };
-    });
-  }
-
-  /* When the user removes a namespace from
-   * a custom entry */
-  function removeCustomEntry(assetIndex, namespace) {
-    /* Remove Custom Entry */
-    resource.attributes.assets = resource.attributes.assets.map((asset, index) => {
-      return index !== assetIndex ? asset : {
-        key: asset.key,
-        tuples: asset.tuples.filter((tuple) => !tuple.namespaces.includes(namespace)),
-      }
-    });
-
-    /* Add namespace to default Entry */
-    resource.attributes.assets[0].tuples[0].namespaces = [
-      ...resource.attributes.assets[0].tuples[0].namespaces,
-      namespace,
-    ]
-  }
-
-  function removeAsset(assetIndex) {
-    resource.attributes.assets = resource.attributes.assets.filter((asset, index) => index !== assetIndex);
-  }
-
-  function addNewAsset() {
-    resource.attributes.assets = [
-      ...resource.attributes.assets,
-      {
-        key: '',
-        tuples: [
-          {
-            namespaces: $game.data.attributes.namespaces,
-            value: '',
-          },
-        ],
-      },
-    ]
   }
 
   function sourcePrettify(val) {
@@ -283,57 +219,9 @@
         Assets <span class="quantity">({resource.attributes.assets.length})</span>
       </h1>
 
-      <div class:is-hidden={!isExpandedSection.assets}>
-        {#each resource.attributes.assets as {key, tuples}}
-          <div class="asset-wrapper">
-            <div class="columns is-vcentered">
-              <div class="column is-4 right">
-                <strong>key :</strong>
-              </div>
-              <div class="column asset-value is-family-monospace">
-                {key}
-              </div>
-            </div>
-            <div class="columns">
-              <div class="column is-4 right">
-                <strong>values :</strong>
-              </div>
-            </div>
-            {#each tuples as { namespaces, value }}
-              <div class="columns is-vcentered">
-                <div class="column is-4 right namespace-container">
-                  {#if namespaces.includes('default')}
-                    <p>
-                      <span class="tag is-link">
-                        default
-                      </span>
-                    </p>
-                    {#if namespaces.length > 1}
-                      <p>
-                        <span class="tag is-link">
-                          + {namespaces.length - 1} 
-                          {(namespaces.length - 1) === 1 ? 'other' : 'others'} 
-                        </span>
-                      </p>
-                    {/if}
-                  {:else}
-                    {#each namespaces as namespace}
-                      <p>
-                        <span class="tag is-link">
-                          {namespace}
-                        </span>
-                      </p>
-                    {/each}
-                  {/if}
-                </div>
-                <div class="column asset-value is-family-monospace">
-                  {value}
-                </div>
-              </div>
-            {/each}
-          </div>
-        {/each}
-      </div>
+      {#if isExpandedSection.assets}
+        <AssetsIndex assets={resource.attributes.assets} />
+      {/if}
     {/if}
 
 
@@ -442,77 +330,7 @@
         </ul>
       </div>
 
-      <!-- Dummy value when no assets submitted -->
-      <input class="input" type="hidden" name="resource[assets][0][key]" value="">
-
-      {#each resource.attributes.assets as {key, tuples}, assetIndex}
-        <div class="asset-wrapper">
-          <div class="columns">
-            <div class="column right">
-              <svg class="fa fill-destroy" on:click={() => removeAsset(assetIndex)}>
-                <use href="../images/fontawesome-sprite.svg#regular-times-circle" />
-              </svg>
-            </div>
-          </div>
-          <div class="columns is-vcentered">
-            <div class="column is-4 right-label">
-              <strong>key :</strong>
-            </div>
-            <div class="column asset-value">
-              <input class="input is-family-monospace" type="text"
-                name="resource[assets][{assetIndex}][key]"
-                bind:value={key} placeholder="asset key">
-            </div>
-          </div>
-          <div class="columns">
-            <div class="column is-4 right-label">
-              <strong>values :</strong>
-            </div>
-          </div>
-          {#each tuples as { namespaces, value }, tupleIndex}
-            <div class="columns is-vcentered">
-              <div class="column is-4 right-label namespace-container">
-                {#each namespaces as namespace}
-                  <p>
-                    <span class="tag is-link">
-                      {namespace}
-                      <input class="input" type="hidden"
-                        name="resource[assets][{assetIndex}][tuples][{tupleIndex}][namespaces][]"
-                        value={namespace}>
-                      {#if namespace !== 'default'}
-                        {#if namespaces.includes('default')}
-                          <button class="delete is-small"
-                            on:click|preventDefault={createCustomEntry(assetIndex, namespace)}>
-                          </button>
-                        {:else}
-                          <button class="delete is-small"
-                            on:click|preventDefault={removeCustomEntry(assetIndex, namespace)}>
-                          </button>
-                        {/if}
-                      {/if}
-                    </span>
-                  </p>
-                {/each}
-              </div>
-              <div class="column asset-value is-family-monospace">
-                <textarea class="input is-family-monospace"
-                  name="resource[assets][{assetIndex}][tuples][{tupleIndex}][value]"
-                  bind:value={value} placeholder="asset value" />
-              </div>
-            </div>
-          {/each}
-        </div>
-      {/each}
-
-      <div class="columns">
-        <div class="column right-label">
-          <button class="button is-primary is-outlined is-small"
-            on:click|preventDefault={() => addNewAsset()}>
-            + New Asset
-          </button>
-        </div>
-      </div>
-
+      <AssetsForm assets={resource.attributes.assets} formPrefix="resource"/>
 
       <div class="columns is-vcentered">
         <div class="column is-narrow">
@@ -554,51 +372,13 @@
 
 
 <style lang='scss'>
-  .asset-wrapper {
-    border-radius: 0.15em;
-    background-color: #f6f8fa;
-    margin-bottom: 1em;
-    margin-top: 1em;
-    padding: 0.5em;
-    border: 1px solid #0096df;
-
-    .columns {
-      margin-bottom: 0;
-    }
-  }
   .right {
     text-align: right;
-  }
-  .right-label {
-    /* Desktop */
-    @media screen and (min-width: 768px) {
-      text-align: right;
-    }
   }
   .is-value {
     color: gray;
     font-style: italic;
     word-break: break-all;
-  }
-  .namespace-container {
-    /* Mobile */
-    @media screen and (max-width: 768px) {
-      padding-bottom: 0.2em;
-      display: inline-flex;
-    }
-    p {
-      margin-right: 0.5em;
-    }
-  }
-  .asset-value {
-    color: gray;
-    word-break: break-all;
-
-    /* Mobile */
-    @media screen and (max-width: 768px) {
-      padding-top: 0;
-      margin-bottom: 1em;
-    }
   }
   button.is-danger {
     color: #cb2431 !important;
