@@ -1,7 +1,7 @@
 <script>
   import Conditions from './Conditions.svelte';
-  import { fetchData } from '../../../../javascripts/utils/helpers';
-  import { game } from '../../../../javascripts/stores/gameStore';
+  import { fetchData } from '../../../../../javascripts/utils/helpers';
+  import { game } from '../../../../../javascripts/stores/gameStore';
   export let relation = {
     data: {
       attributes: {

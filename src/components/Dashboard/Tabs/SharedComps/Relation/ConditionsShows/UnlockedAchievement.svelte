@@ -1,13 +1,18 @@
 <script>
-  import { capitalizeFirstLetter } from '../../../../../javascripts/utils/helpers';
+  import { capitalizeFirstLetter } from '../../../../../../javascripts/utils/helpers';
   export let formPrefix;
   export let condition;
-  // eslint-disable-next-line unused-export-let
-  export let underlyings = [];
+  export let underlyings;
+  let underlying;
 
   function destroyCondition() {
     condition.attributes._destroy = true;
   }
+
+  $: underlying = underlyings.find((u) => 
+    u.id === condition.relationships.underlying.data.id &&
+    u.type === condition.relationships.underlying.data.type
+  );
 </script>
 
 <div class="content" class:is-hidden={condition.attributes._destroy}>
@@ -19,8 +24,7 @@
       {#if condition.attributes.inverted}
         <span class="not">NOT</span>
       {/if}
-      Between <strong>{condition.attributes.criteria.from}</strong> and
-      <strong>{condition.attributes.criteria.to}</strong> (both included)
+      Unlocked <strong>'{underlying.attributes.name}'</strong>
     </div>
     {#if formPrefix}
       <div class="column is-narrow">
@@ -32,13 +36,13 @@
       <input type="hidden" name="{formPrefix}[inverted]"
         value="{condition.attributes.inverted}">
 
-      <input type="hidden" name="{formPrefix}[criteria][from]"
-      value="{(new Date(condition.attributes.criteria.from)).toLocaleDateString()}">
+      <input type="hidden" name="{formPrefix}[underlying_type]"
+        value="{capitalizeFirstLetter(condition.relationships.underlying.data.type)}">
 
-      <input type="hidden" name="{formPrefix}[criteria][to]"
-      value="{(new Date(condition.attributes.criteria.to)).toLocaleDateString()}">
+      <input type="hidden" name="{formPrefix}[underlying_id]"
+        value="{condition.relationships.underlying.data.id}">
 
-      <input type="hidden" name="{formPrefix}[condition_type]" value="time_frame">
+      <input type="hidden" name="{formPrefix}[condition_type]" value="unlocked_achievement">
 
       {#if condition.attributes._destroy}
         <input type="hidden" name="{formPrefix}[_destroy]" value="true">

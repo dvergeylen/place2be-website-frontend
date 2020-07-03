@@ -1,5 +1,5 @@
 <script>
-  import { game } from '../../../../javascripts/stores/gameStore';
+  import { game } from '../../../../../javascripts/stores/gameStore';
   export let assets;
   export let formPrefix;
 

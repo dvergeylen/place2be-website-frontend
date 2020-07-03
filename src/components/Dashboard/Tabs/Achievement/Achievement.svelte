@@ -3,9 +3,9 @@
   import { fade } from 'svelte/transition';
   import { createUrl } from '../../../../javascripts/utils/helpers';
   import { fetchData, postFormData } from '../../../../javascripts/utils/helpers';
-  import Relation from './Relation.svelte';
-  import AssetsIndex from '../Assets/AssetsIndex.svelte';
-  import AssetsForm from '../Assets/AssetsForm.svelte';
+  import Relation from '../SharedComps/Relation/Relation.svelte';
+  import AssetsIndex from '../SharedComps/Assets/AssetsIndex.svelte';
+  import AssetsForm from '../SharedComps/Assets/AssetsForm.svelte';
   import { game } from '../../../../javascripts/stores/gameStore';
   import { savingStatus } from '../../../../javascripts/stores/savingStore';
 

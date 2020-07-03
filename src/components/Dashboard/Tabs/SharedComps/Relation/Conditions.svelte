@@ -5,7 +5,7 @@
   import UnlockedAchievementForm from './ConditionsForms/UnlockedAchievement.svelte';
   import TimeFrameShow from './ConditionsShows/TimeFrame.svelte';
   import TimeFrameForm from './ConditionsForms/TimeFrame.svelte';
-  import { game } from '../../../../javascripts/stores/gameStore';
+  import { game } from '../../../../../javascripts/stores/gameStore';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();

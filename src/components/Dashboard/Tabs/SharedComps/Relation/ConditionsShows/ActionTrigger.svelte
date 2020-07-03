@@ -1,5 +1,5 @@
 <script>
-  import { capitalizeFirstLetter } from '../../../../../javascripts/utils/helpers';
+  import { capitalizeFirstLetter } from '../../../../../../javascripts/utils/helpers';
   export let formPrefix;
   export let condition;
   export let underlyings;
