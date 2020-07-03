@@ -3,19 +3,30 @@
   import { fetchData } from '../../../../../javascripts/utils/helpers';
   import { game } from '../../../../../javascripts/stores/gameStore';
   export let relation = {
-    data: {
-      attributes: {
-        count: 1,
-      },
+    attributes: {
+      count: 1,
     },
-    included: [],
   };
+  export let conditions;
   export let formPrefix;
   let error = null;
 
   function updateConditions(evt) {
-    relation.included = evt.detail.conditions;
+    conditions = evt.detail.conditions;
   }
+
+  function filterConditions(relation, game) {
+    if (!relation.relationships)
+      return [];
+
+    const conditionIds = relation.relationships.conditions.data.map((c) => c.id);
+
+    return game.included.filter((e) => (
+      conditionIds.includes(e.id) && e.type === 'condition'
+    ));
+  }
+
+  conditions = filterConditions(relation, $game);
 </script>
 
 <div class="relation-wrapper">
@@ -30,7 +41,7 @@
       <!-- Desktop -->
       <div class="select is-hidden-desktop">
         <select name="{formPrefix}[relation_type]"
-          bind:value={relation.data.attributes.relationType}>
+          bind:value={relation.attributes.relationType}>
           <option value='binomial'>Binomial</option>
           <option value='xor'>eXclusive OR</option>
         </select>
@@ -39,7 +50,7 @@
       <!-- Mobile -->
       <div class="select is-hidden-touch">
         <select name="{formPrefix}[relation_type]"
-          bind:value={relation.data.attributes.relationType}>
+          bind:value={relation.attributes.relationType}>
           <option value='binomial'>Binomial (meet at least X among Y cond.)</option>
           <option value='xor'>eXclusive OR (meet exactly 1 among Y cond.)</option>
         </select>
@@ -49,16 +60,16 @@
 
   <div class="field">
     <div class="columns is-variable is-1 compact-mobile"
-      class:is-hidden={relation.data.attributes.relationType == 'xor'}>
+      class:is-hidden={relation.attributes.relationType == 'xor'}>
       <div class="column is-narrow-desktop is-gapless-desktop has-vcentered-text">
         Player must validate 
       </div>
       <div class="column is-narrow-desktop has-vcentered-text">
         <em>minimum</em>
         <input type="text" class="input count"
-          name="{formPrefix}[count]" bind:value={relation.data.attributes.count}
+          name="{formPrefix}[count]" bind:value={relation.attributes.count}
           disabled={formPrefix === undefined}>
-        {relation.data.attributes.count === 1 ? 'condition' : 'conditions'}
+        {relation.attributes.count === 1 ? 'condition' : 'conditions'}
       </div>
       <div class="column is-narrow-desktop has-vcentered-text">
          among the following ↴ :
@@ -66,7 +77,7 @@
     </div>
 
     <div class="columns is-variable is-1 compact-mobile"
-      class:is-hidden={relation.data.attributes.relationType == 'binomial'}>
+      class:is-hidden={relation.attributes.relationType == 'binomial'}>
       <div class="column is-narrow-desktop is-gapless-desktop has-vcentered-text">
         Player must validate 
       </div>
@@ -83,7 +94,7 @@
   </div>
 
   <Conditions
-    conditions={relation.included.filter((e) => e.type === 'condition')}
+    {conditions}
     formPrefix={ formPrefix ? `${formPrefix}[conditions_attributes]` : undefined}
     on:updateConditions={updateConditions}/>
 

@@ -36,7 +36,7 @@
 
 <div>
   <hr>
-  {#if !conditions.length}
+  {#if !conditions || !conditions.length}
     <p class="no-conditions">
       No conditions yet
     </p>

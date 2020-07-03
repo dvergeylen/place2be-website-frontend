@@ -2,7 +2,7 @@
   import { getContext, createEventDispatcher, onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
   import { createUrl } from '../../../../javascripts/utils/helpers';
-  import { fetchData, postFormData } from '../../../../javascripts/utils/helpers';
+  import { postFormData } from '../../../../javascripts/utils/helpers';
   import Relation from '../SharedComps/Relation/Relation.svelte';
   import AssetsIndex from '../SharedComps/Assets/AssetsIndex.svelte';
   import AssetsForm from '../SharedComps/Assets/AssetsForm.svelte';
@@ -24,7 +24,8 @@
       ],
     },
   };
-  let relationPromise;
+  let relation;
+  let conditions;
   let expertMode;
   let isExpandedSection = {
     conditions: false,
@@ -41,23 +42,8 @@
   const apiHost = getContext('apiHost');
   const userId = getContext('userId');
 
-  async function fetchRelation(achievement) {
-    if (!achievement.relationships)
-      return undefined;
-
-    const url = achievement.relationships.relation.links.related;
-    const res = await fetchData(url);
-
-    if (res.ok) {
-      const resJson = await res.json();
-      return resJson;
-    } else {
-      throw new Error('Could not fetch Condition Set');
-    }
-  };
-
   function updateRelation(event) {
-    relationPromise = event.detail.relation;
+    relation = event.detail.relation;
   }
 
   async function saveAchievement() {
@@ -172,7 +158,10 @@
     clearTimeout(displaySavedStatusTimeout);
   });
 
-  relationPromise = fetchRelation(achievement);
+  relation = achievement.relationships && $game.included.find((e) => (
+    e.id === achievement.relationships.relation.data.id &&
+    e.type === achievement.relationships.relation.data.type
+  ));
 </script>
 
 
@@ -223,15 +212,9 @@
       Conditions
     </h1>
     <div class:is-hidden={!isExpandedSection.conditions}>
-      {#await relationPromise}
-        <p>Loading Conditions...</p>
-      {:then relation}
-        <Relation {relation} formPrefix={undefined} />
-      {:catch relationError}
-        <div class="notification is-warning" >
-          <p>{relationError}</p>
-        </div>
-      {/await}
+       <Relation
+        {relation}
+        formPrefix={undefined} />
     </div>
 
 
@@ -361,21 +344,15 @@
       </div>
 
       {#if achievement.id}
-        {#await relationPromise}
-          <p>Loading Conditions...</p>
-        {:then relation}
-          {#if relation.data !== null}
-            <Relation {relation} formPrefix="achievement[relation_attributes]"
-              on:message={updateRelation}/>
-          {:else}
-            <Relation formPrefix="achievement[relation_attributes]"
-              on:message={updateRelation}/>
-          {/if}
-        {:catch relationError}
-          <div class="notification is-warning" >
-            <p>{relationError}</p>
-          </div>
-        {/await}
+        {#if relation !== null}
+          <Relation
+            {relation}
+            formPrefix="achievement[relation_attributes]"
+            on:message={updateRelation}/>
+        {:else}
+          <Relation formPrefix="achievement[relation_attributes]"
+            on:message={updateRelation}/>
+        {/if}
       {:else}
         <Relation formPrefix="achievement[relation_attributes]"
             on:message={updateRelation}/>
