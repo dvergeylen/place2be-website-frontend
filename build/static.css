@@ -1,39 +1,5 @@
 /* Bulma variables are defined in bulma.scss directly */
 /* Other variables come here */
-#landing-title {
-  /* Desktop */
-  /* Mobile */ }
-  @media screen and (min-width: 768px) {
-    #landing-title {
-      font-size: 4em; } }
-  @media screen and (max-width: 769px) {
-    #landing-title {
-      font-size: 3em; } }
-
-#landing-subtitle {
-  /* Desktop */
-  /* Mobile */ }
-  @media screen and (min-width: 768px) {
-    #landing-subtitle {
-      font-size: 2.5em; } }
-  @media screen and (max-width: 769px) {
-    #landing-subtitle {
-      font-size: 2em; } }
-  #landing-subtitle i, #landing-subtitle svg {
-    vertical-align: middle; }
-
-#motivation {
-  background: #f6f8fa;
-  border-radius: 0.5em;
-  margin-bottom: 1em; }
-  #motivation p.citation {
-    margin-bottom: 2em;
-    margin-top: 2em; }
-  #motivation svg {
-    vertical-align: middle; }
-
-/* Bulma variables are defined in bulma.scss directly */
-/* Other variables come here */
 /* ********* */
 /* NAVBAR    */
 /* ********* */
@@ -67,3 +33,37 @@
     fill: #0096df;
     width: 30px;
     height: 30px; }
+
+/* Bulma variables are defined in bulma.scss directly */
+/* Other variables come here */
+#landing-title {
+  /* Desktop */
+  /* Mobile */ }
+  @media screen and (min-width: 768px) {
+    #landing-title {
+      font-size: 4em; } }
+  @media screen and (max-width: 769px) {
+    #landing-title {
+      font-size: 3em; } }
+
+#landing-subtitle {
+  /* Desktop */
+  /* Mobile */ }
+  @media screen and (min-width: 768px) {
+    #landing-subtitle {
+      font-size: 2.5em; } }
+  @media screen and (max-width: 769px) {
+    #landing-subtitle {
+      font-size: 2em; } }
+  #landing-subtitle i, #landing-subtitle svg {
+    vertical-align: middle; }
+
+#motivation {
+  background: #f6f8fa;
+  border-radius: 0.5em;
+  margin-bottom: 1em; }
+  #motivation p.citation {
+    margin-bottom: 2em;
+    margin-top: 2em; }
+  #motivation svg {
+    vertical-align: middle; }
