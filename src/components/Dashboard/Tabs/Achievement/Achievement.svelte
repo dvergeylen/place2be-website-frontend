@@ -26,7 +26,6 @@
   };
   let relation;
   let conditions;
-  let expertMode;
   let isExpandedSection = {
     conditions: false,
     rewards: false,
@@ -116,20 +115,6 @@
     }
     resetFormDisplay();
   }
-
-  function toggleExpertMode() {
-    game.update(g => ({
-      ...g,
-      data: {
-        ...g.data,
-        attributes: {
-          ...g.data.attributes,
-          expertMode: !g.data.attributes.expertMode,
-        },
-      },
-    }));
-  }
-  $: expertMode = $game.data.attributes.expertMode;
 
   function resetFormDisplay() {
     displayEditForm = false;
@@ -308,21 +293,6 @@
         </svg>
         Conditions
       </h1>
-      <p class="help expert-mode" class:is-hidden={expertMode}>
-        Need fined grained conditions ? Set
-        <a href="#/"
-          on:click|preventDefault={() => toggleExpertMode()}>
-          Expert Mode
-        </a>.
-      </p>
-      <p class="help expert-mode" class:is-hidden={!expertMode}>
-        You are in <strong>Expert Mode</strong>. Too complex? Go back to
-        <a href="#/"
-          on:click|preventDefault={() => toggleExpertMode()}>
-          Normal Mode
-        </a>.
-      </p>
-
       <div class="content">
         <ul class="help">
           <li>
