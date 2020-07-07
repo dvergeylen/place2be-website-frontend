@@ -342,16 +342,11 @@
         </ul>
       </div>
 
-      {#if achievement.id}
-        {#if relation !== null}
-          <Relation 
-            {relation}
-            formPrefix="achievement[relation_attributes]"
-            on:message={updateRelation}/>
-        {:else}
-          <Relation formPrefix="achievement[relation_attributes]"
-            on:message={updateRelation}/>
-        {/if}
+      {#if achievement.id && relation !== null}
+        <Relation 
+          {relation}
+          formPrefix="achievement[relation_attributes]"
+          on:message={updateRelation}/>
       {:else}
         <Relation formPrefix="achievement[relation_attributes]"
             on:message={updateRelation}/>
@@ -442,12 +437,6 @@
 </div>
 
 <style lang="scss">
-  .item-box {
-    /* Desktop */
-    @media screen and (min-width: 768px) {
-      max-width: 90%;
-    }
-  }
   button.is-danger {
     color: #cb2431 !important;
     background: white !important;

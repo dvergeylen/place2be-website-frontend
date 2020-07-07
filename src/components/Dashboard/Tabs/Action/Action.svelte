@@ -28,6 +28,10 @@
   let displaySavedStatus = false;
   let displaySavedStatusTimeout;
 
+  function updateRelation(event) {
+    relation = event.detail.relation;
+  }
+
   async function saveAction() {
     savingStatus.set('saving');
     let path, method;
@@ -315,105 +319,137 @@
     <form id="{action.id || 'new'}-action-form"
       on:submit|preventDefault={saveAction}>
 
-        <div class="notification is-danger" class:is-hidden={!error} >
-          <button class="delete" on:click|preventDefault={() => flushError()} ></button>
-          <h1 class='title is-5'>
-            Unable to Update Action :
-          </h1>
-          <ul>
-            {#if error}
-              {#each Object.entries(error) as [ key, ar ]}
-                <li>{key} : {ar}</li>
-              {/each}
-            {/if}
-          </ul>
-        </div>
-
-        <h1 class="title is-5 byproduct-title">
-          <svg class="twemoji">
-            <use href="../images/twemoji-sprite.svg#card_file_box" />
-          </svg>
-          Properties :
+      <div class="notification is-danger" class:is-hidden={!error} >
+        <button class="delete" on:click|preventDefault={() => flushError()} ></button>
+        <h1 class='title is-5'>
+          Unable to Update Action :
         </h1>
+        <ul>
+          {#if error}
+            {#each Object.entries(error) as [ key, ar ]}
+              <li>{key} : {ar}</li>
+            {/each}
+          {/if}
+        </ul>
+      </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Name :</label>
+      <h1 class="title is-5 byproduct-title">
+        <svg class="twemoji">
+          <use href="../images/twemoji-sprite.svg#card_file_box" />
+        </svg>
+        Properties :
+      </h1>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Name :</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <input class="input reasonable-width" type="text" name="act[name]"
+              bind:value={action.attributes.name} placeholder="Action name">
           </div>
-          <div class="field-body">
-            <div class="field">
-              <input class="input reasonable-width" type="text" name="act[name]"
-                bind:value={action.attributes.name} placeholder="Action name">
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Score Type :</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="select">
+              <select name="act[action_type]" bind:value={action.attributes.actionType}>
+                <option value='boolean'>Boolean (Pass | Fail)</option>
+                <option value='int'>Integer</option>
+                <option value='float'>Float</option>
+                <option value='string'>String</option>
+              </select>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Score Type :</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="select">
-                <select name="act[action_type]" bind:value={action.attributes.actionType}>
-                  <option value='boolean'>Boolean (Pass | Fail)</option>
-                  <option value='int'>Integer</option>
-                  <option value='float'>Float</option>
-                  <option value='string'>String</option>
-                </select>
-              </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Team Id field :</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="select">
+              <select name="act[team_required]" bind:value={action.attributes.team_required}>
+                <option value="false">No, optional</option>
+                <option value="true">Yes, required</option>
+              </select>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Team Id field :</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="select">
-                <select name="act[team_required]" bind:value={action.attributes.team_required}>
-                  <option value="false">No, optional</option>
-                  <option value="true">Yes, required</option>
-                </select>
-              </div>
-            </div>
-          </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Tags :</label>
         </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Tags :</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="field is-grouped is-grouped-multiline has-vcentered-content">
-                {#each action.attributes.tags as tag, i (i)}
-                  <div class="control">
-                    <input name="act[tags][]" class="input" type="hidden"
-                      value={tag}>
-                    <div class="tags has-addons">
-                      <span class="tag is-info">
-                        {tag}
-                      </span>
-                      <span class="tag is-delete" on:click={() => removeTag(tag)}>
-                      </span>
-                    </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="field is-grouped is-grouped-multiline has-vcentered-content">
+              {#each action.attributes.tags as tag, i (i)}
+                <div class="control">
+                  <input name="act[tags][]" class="input" type="hidden"
+                    value={tag}>
+                  <div class="tags has-addons">
+                    <span class="tag is-info">
+                      {tag}
+                    </span>
+                    <span class="tag is-delete" on:click={() => removeTag(tag)}>
+                    </span>
                   </div>
-                {/each}
-                  <input class="input is-small new-tag" type="text"
-                    placeholder="New tag">
-                  <button class="button is-primary is-outlined is-small"
-                    on:click|preventDefault={addTag}>
-                    Add
-                  </button>
-              </div>
+                </div>
+              {/each}
+                <input class="input is-small new-tag" type="text"
+                  placeholder="New tag">
+                <button class="button is-primary is-outlined is-small"
+                  on:click|preventDefault={addTag}>
+                  Add
+                </button>
             </div>
           </div>
         </div>
+      </div>
 
-      <div class="columns is-vcentered">
+      <h1 class="title is-5 byproduct-title">
+        <svg class="twemoji">
+          <use href="../images/twemoji-sprite.svg#twisted_rightwards_arrows" />
+        </svg>
+        Conditions
+      </h1>
+      <div class="content">
+        <ul class="help">
+          <li>
+            An Action can only be triggered multiple times per Player.
+          </li>
+          <li>
+            Set below the conditions Players need to succeed triggering the Action.
+          </li>
+          <li>
+            Depending on what you configure below, not ALL the conditions have to be met
+            for the Achievement to be granted.<br />
+            At least one condition has to be met and maximum all the conditions.
+          </li>
+        </ul>
+      </div>
+
+      {#if action.id && relation !== null}
+        <Relation 
+          {relation}
+          formPrefix="act[relation_attributes]"
+          on:message={updateRelation}/>
+      {:else}
+        <Relation formPrefix="act[relation_attributes]"
+            on:message={updateRelation}/>
+      {/if}
+
+      <div class="columns is-vcentered mt-3">
         <div class="column is-narrow">
           <p class="help">
             Need help? See 
