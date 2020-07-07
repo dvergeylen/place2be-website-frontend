@@ -12,7 +12,7 @@
 
   export let gameUrl;
   let error = null;
-  let selectedTab = 'achievements';
+  let selectedTab = 'overview';
   let collection;
   const tabs = {
     overview: Overview,
