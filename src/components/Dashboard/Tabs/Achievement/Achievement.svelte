@@ -310,14 +310,14 @@
       </h1>
       <p class="help expert-mode" class:is-hidden={expertMode}>
         Need fined grained conditions ? Set
-        <a href="javascript:void(0)"
+        <a href="#/"
           on:click|preventDefault={() => toggleExpertMode()}>
           Expert Mode
         </a>.
       </p>
       <p class="help expert-mode" class:is-hidden={!expertMode}>
         You are in <strong>Expert Mode</strong>. Too complex? Go back to
-        <a href="javascript:void(0)"
+        <a href="#/"
           on:click|preventDefault={() => toggleExpertMode()}>
           Normal Mode
         </a>.

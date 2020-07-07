@@ -8,27 +8,27 @@
     "deploy": "cp production-config.json public-config.json && npm run build && ./node_modules/gh-pages/bin/gh-pages.js -d public/"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-pro": "^5.13.0",
-    "@rollup/plugin-commonjs": "^11.0.0",
-    "@rollup/plugin-json": "^4.0.3",
-    "@rollup/plugin-node-resolve": "^7.0.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-promise": "^4.2.1",
-    "rollup": "^2.12.0",
-    "rollup-plugin-livereload": "^1.0.0",
-    "rollup-plugin-svelte": "^5.0.3",
-    "rollup-plugin-terser": "^5.1.2",
-    "bulma": "^0.8.2",
-    "gh-pages": "^2.2.0",
-    "node-sass": "^4.13.1",
-    "rollup-plugin-scss": "^2.4.0",
-    "sass": "^1.26.3",
-    "sirv-cli": "^0.4.4",
-    "svelte-preprocess": "^3.7.1"
+    "@fortawesome/fontawesome-pro": "^5",
+    "@rollup/plugin-commonjs": "^11",
+    "@rollup/plugin-json": "^4",
+    "@rollup/plugin-node-resolve": "^7",
+    "bulma": "^0",
+    "eslint": "^6",
+    "eslint-config-airbnb-base": "^14",
+    "eslint-plugin-import": "^2",
+    "eslint-plugin-promise": "^4",
+    "gh-pages": "^2",
+    "node-sass": "^4",
+    "rollup": "^2",
+    "rollup-plugin-livereload": "^1",
+    "rollup-plugin-scss": "^2",
+    "rollup-plugin-svelte": "^5",
+    "rollup-plugin-terser": "^5",
+    "sass": "^1",
+    "sirv-cli": "^0",
+    "svelte-preprocess": "^3"
   },
   "dependencies": {
-    "svelte": "^3.0.0"
+    "svelte": "^3"
   }
 }

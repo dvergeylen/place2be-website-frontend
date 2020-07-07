@@ -25,7 +25,7 @@
       <p class="panel-heading">
         Your Games :
       </p>
-      <a href="javascript:void(0)" class="panel-block fill-primary"
+      <label class="panel-block fill-primary"
         on:click|preventDefault={async () => updateGameUrl('new')}>
         <span class="panel-icon">
           <svg class="twemoji">
@@ -35,9 +35,9 @@
         <span>
           New Game
         </span>
-      </a>
+      </label>
       {#each games as game}
-        <a href={game.links.self} on:click|preventDefault={() => updateGameUrl(game.links.self)}
+        <label on:click|preventDefault={() => updateGameUrl(game.links.self)}
           class="panel-block">
           <span class="panel-icon" class:fill-primary={gameUrl === game.links.self}>
             <svg class="twemoji">
@@ -45,7 +45,7 @@
             </svg>
           </span>
           {game.attributes.name}
-        </a>
+        </label>
       {/each}
     </article>
   {:catch error}

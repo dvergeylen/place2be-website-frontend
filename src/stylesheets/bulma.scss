@@ -17,7 +17,6 @@ $yellow: #fffae2;
 
 @import './node_modules/bulma/sass/base/_all.sass';
 // @import './node_modules/bulma/sass/base/generic.sass';
-// @import './node_modules/bulma/sass/base/helpers.sass';
 // @import './node_modules/bulma/sass/base/minireset.sass';
 
 // @import './node_modules/bulma/sass/components/_all.sass';
@@ -25,7 +24,6 @@ $yellow: #fffae2;
 // @import './node_modules/bulma/sass/components/card.sass';
 // @import './node_modules/bulma/sass/components/dropdown.sass';
 // @import './node_modules/bulma/sass/components/level.sass';
-// @import './node_modules/bulma/sass/components/list.sass';
 // @import './node_modules/bulma/sass/components/media.sass';
 // @import './node_modules/bulma/sass/components/menu.sass';
 // @import './node_modules/bulma/sass/components/message.sass';
@@ -61,6 +59,16 @@ $yellow: #fffae2;
 // @import './node_modules/bulma/sass/grid/_all.sass';
 @import './node_modules/bulma/sass/grid/columns.sass';
 // @import './node_modules/bulma/sass/grid/tiles.sass';
+
+// @import './node_modules/bulma/sass/helpers/_all.sass';
+// @import './node_modules/bulma/sass/helpers/color.sass';
+// @import './node_modules/bulma/sass/helpers/float.sass';
+// @import './node_modules/bulma/sass/helpers/other.sass';
+// @import './node_modules/bulma/sass/helpers/overflow.sass';
+// @import './node_modules/bulma/sass/helpers/position.sass';
+// @import './node_modules/bulma/sass/helpers/spacing.sass';
+// @import './node_modules/bulma/sass/helpers/typography.sass';
+@import './node_modules/bulma/sass/helpers/visibility.sass';
 
 // @import './node_modules/bulma/sass/layout/_all.sass';
 // @import './node_modules/bulma/sass/layout/footer.sass';
