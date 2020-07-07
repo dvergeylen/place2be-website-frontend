@@ -427,47 +427,4 @@
     background: white !important;
     border: 1px solid #cb2431 !important;
   }
-
-  /* Assets part */
-  .asset-wrapper {
-    border-radius: 0.15em;
-    background-color: #f6f8fa;
-    margin-bottom: 1em;
-    margin-top: 1em;
-    padding: 0.5em;
-    border: 1px solid #0096df;
-
-    .columns {
-      margin-bottom: 0;
-    }
-  }
-  .asset-value {
-    color: gray;
-    word-break: break-all;
-
-    /* Mobile */
-    @media screen and (max-width: 768px) {
-      padding-top: 0;
-      margin-bottom: 1em;
-    }
-  }
-  .right-desktop {
-    /* Desktop */
-    @media screen and (min-width: 768px) {
-      text-align: right;
-    }
-  }
-  .right {
-    text-align: right;
-  }
-  .namespace-container {
-    /* Mobile */
-    @media screen and (max-width: 768px) {
-      padding-bottom: 0.2em;
-      display: inline-flex;
-    }
-    p {
-      margin-right: 0.5em;
-    }
-  }
 </style>
