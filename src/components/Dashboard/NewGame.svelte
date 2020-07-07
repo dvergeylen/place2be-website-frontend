@@ -55,7 +55,7 @@
     </svg>,
     Resources
     <svg class="twemoji">
-      <use href="../images/twemoji-sprite.svg#wrapped_present" />
+      <use href="../images/twemoji-sprite.svg#sparkles" />
     </svg>
     and Assets
     <svg class="twemoji">
