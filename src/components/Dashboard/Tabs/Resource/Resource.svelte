@@ -207,24 +207,32 @@
       </tbody>
     </table>
 
-    {#if resource.attributes.assets.length}
-      <h1 class="title is-5 byproduct-title">
-        <svg class="chevron" on:click={() => toggleSection('assets', true)}
-          class:is-hidden={isExpandedSection.assets}>
-          <use href="../images/fontawesome-sprite.svg#solid-chevron-double-right" />
-        </svg>
-        <svg class="chevron" on:click={() => toggleSection('assets', false)}
-          class:is-hidden={!isExpandedSection.assets}>
-          <use href="../images/fontawesome-sprite.svg#solid-chevron-double-down" />
-        </svg>
-        <svg class="twemoji">
-          <use href="../images/twemoji-sprite.svg#package" />
-        </svg>
-        Assets <span class="quantity">({resource.attributes.assets.length})</span>
-      </h1>
+    <h1 class="title is-5 byproduct-title"
+      class:is-disabled={!resource.attributes.assets.length}>
+      <svg class="chevron" on:click={() => toggleSection('assets', true)}
+        class:is-hidden={isExpandedSection.assets}>
+        <use href="../images/fontawesome-sprite.svg#solid-chevron-double-right" />
+      </svg>
+      <svg class="chevron" on:click={() => toggleSection('assets', false)}
+        class:is-hidden={!isExpandedSection.assets}>
+        <use href="../images/fontawesome-sprite.svg#solid-chevron-double-down" />
+      </svg>
+      <svg class="twemoji">
+        <use href="../images/twemoji-sprite.svg#package" />
+      </svg>
+      Assets
+      {#if resource.attributes.assets.length}
+        <span class="quantity">({resource.attributes.assets.length})</span>
+      {/if}
+    </h1>
 
-      {#if isExpandedSection.assets}
+    {#if isExpandedSection.assets}
+      {#if resource.attributes.assets.length}
         <AssetsIndex assets={resource.attributes.assets} />
+      {:else}
+        <p class="no-conditions">
+          No assets yet
+        </p>
       {/if}
     {/if}
 
