@@ -19,10 +19,10 @@
       ...g,
       included: [
         ...g.included.filter((e) => (
-          !(e.type === attributes.name.singular &&
-              e.id === event.detail[attributes.name.singular].id)
+          !event.detail.deprecatedIncludedIds.includes(`${e.type}#${e.id}`)
         )),
         event.detail[attributes.name.singular],
+        ...event.detail.included,
       ],
     }));
   }

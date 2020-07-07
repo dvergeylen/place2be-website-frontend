@@ -66,6 +66,8 @@
       const updatedResource = await res.json();
       dispatch('updateCollection', {
         resource: updatedResource.data,
+        included: [],
+        deprecatedIncludedIds: [`resource#${updatedResource.data.id}`],
       });
     }
   }
@@ -105,6 +107,8 @@
       const updatedResource = await res.json();
       dispatch('updateCollection', {
         resource: updatedResource.data,
+        included: [],
+        deprecatedIncludedIds: [`resource#${updatedResource.data.id}`],
       });
     }
     resetFormDisplay();

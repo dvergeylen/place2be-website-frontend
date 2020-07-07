@@ -89,11 +89,6 @@
 
 
 <style lang="scss">
-  .no-conditions {
-    font-style: italic;
-    color: gray;
-    margin: 1em 1em 1em 0.5em; /* top right bottom left */
-  }
   .new-condition-container {
     background-color: #f6f8fa;
     padding: 1em;

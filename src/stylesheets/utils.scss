@@ -120,6 +120,14 @@ div.saved-collection {
   }
 }
 
+.byproduct-title.is-disabled {
+  color: $disabled;
+
+  .chevron {
+    fill: $disabled;
+  }
+}
+
 /* Grayed for optional note */
 span.note {
   min-height: 17px;
@@ -175,6 +183,12 @@ input.count {
   .item-edit {
     height: 0.7em;
     margin-left: 0.2em;
+  }
+
+  .no-conditions {
+    font-style: italic;
+    color: gray;
+    margin: 1em 1em 1em 0.5em; /* top right bottom left */
   }
 }
 

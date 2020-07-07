@@ -3,6 +3,7 @@
   import { fade } from 'svelte/transition';
   import { createUrl } from '../../../../javascripts/utils/helpers';
   import { fetchData, postFormData } from '../../../../javascripts/utils/helpers';
+  import Relation from '../SharedComps/Relation/Relation.svelte';
   import { game } from '../../../../javascripts/stores/gameStore';
   import { savingStatus } from '../../../../javascripts/stores/savingStore';
   export let action = {
@@ -12,6 +13,10 @@
       tags: [],
     }
   };
+  let relation;
+  let isExpandedSection = {
+    conditions: false,
+  }
 
   const dispatch = createEventDispatcher();
   const apiProtocol = getContext('apiProtocol');
@@ -52,6 +57,10 @@
       const updatedAction = await res.json();
       dispatch('updateCollection', {
         action: updatedAction.data,
+        included: updatedAction.included,
+        deprecatedIncludedIds:
+          updatedAction.included.map((o) => `${o.type}#${o.id}`)
+            .concat([`action#${updatedAction.data.id}`]),
       });
     }
   }
@@ -90,6 +99,8 @@
       const updatedAction = await res.json();
       dispatch('updateCollection', {
         action: updatedAction.data,
+        included: [],
+        deprecatedIncludedIds: [`action#${updatedAction.data.id}`],
       });
     }
     resetFormDisplay();
@@ -158,6 +169,10 @@
     displayEditForm = false;
   }
 
+  function toggleSection(key, value) {
+    isExpandedSection[key] = value;
+  }
+
   function displaySavedBanner() {
     displaySavedStatus = true;
     displaySavedStatusTimeout = setTimeout(() => {
@@ -172,6 +187,16 @@
   onDestroy(() => {
     clearTimeout(displaySavedStatusTimeout);
   });
+
+  // TODO: replace with conditional chaining support:
+  // https://github.com/sveltejs/svelte/commit/2450dd1ff08491739f124bcdf5131a2e7af52bcb
+  // not released on svelte at this time of writing.
+  $: relation = action.relationships &&
+             action.relationships.relation.data &&
+             $game.included.find((e) => (
+    e.id === action.relationships.relation.data.id &&
+    e.type === action.relationships.relation.data.type
+  ));
 </script>
 
 <div class='item-box'>
@@ -257,6 +282,32 @@
         </tr>
       </tbody>
     </table>
+
+    <h1 class="title is-5 byproduct-title">
+      <svg class="chevron" on:click={() => toggleSection('conditions', true)}
+        class:is-hidden={isExpandedSection.conditions}>
+        <use href="../images/fontawesome-sprite.svg#solid-chevron-double-right" />
+      </svg>
+      <svg class="chevron" on:click={() => toggleSection('conditions', false)}
+        class:is-hidden={!isExpandedSection.conditions}>
+        <use href="../images/fontawesome-sprite.svg#solid-chevron-double-down" />
+      </svg>
+      <svg class="twemoji">
+        <use href="../images/twemoji-sprite.svg#twisted_rightwards_arrows" />
+      </svg>
+      Conditions
+    </h1>
+    {#if isExpandedSection.conditions}
+      {#if relation !== null}
+       <Relation
+        {relation}
+        formPrefix={undefined} />
+      {:else}
+        <p class="no-conditions">
+          No conditions yet
+        </p>
+      {/if}
+    {/if}
   </div>
 
   <!-- Edit Action -->

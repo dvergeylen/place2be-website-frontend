@@ -2,7 +2,7 @@
   import { getContext, createEventDispatcher, onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
   import { createUrl } from '../../../../javascripts/utils/helpers';
-  import { postFormData } from '../../../../javascripts/utils/helpers';
+  import { fetchData, postFormData } from '../../../../javascripts/utils/helpers';
   import Relation from '../SharedComps/Relation/Relation.svelte';
   import AssetsIndex from '../SharedComps/Assets/AssetsIndex.svelte';
   import AssetsForm from '../SharedComps/Assets/AssetsForm.svelte';
@@ -25,7 +25,6 @@
     },
   };
   let relation;
-  let conditions;
   let isExpandedSection = {
     conditions: false,
     rewards: false,
@@ -73,6 +72,10 @@
       const updatedAchievement = await res.json();
       dispatch('updateCollection', {
         achievement: updatedAchievement.data,
+        included: updatedAchievement.included,
+        deprecatedIncludedIds:
+          updatedAchievement.included.map((o) => `${o.type}#${o.id}`)
+            .concat([`achievement#${updatedAchievement.data.id}`]),
       });
     }
   }
@@ -111,6 +114,8 @@
       const updatedAchievement = await res.json();
       dispatch('updateCollection', {
         achievement: updatedAchievement.data,
+        included: [],
+        deprecatedIncludedIds: [`achievement#${updatedAchievement.data.id}`],
       });
     }
     resetFormDisplay();
@@ -143,7 +148,12 @@
     clearTimeout(displaySavedStatusTimeout);
   });
 
-  relation = achievement.relationships && $game.included.find((e) => (
+  // TODO: replace with conditional chaining support:
+  // https://github.com/sveltejs/svelte/commit/2450dd1ff08491739f124bcdf5131a2e7af52bcb
+  // not released on svelte at this time of writing.
+  $: relation = achievement.relationships &&
+             achievement.relationships.relation.data &&
+             $game.included.find((e) => (
     e.id === achievement.relationships.relation.data.id &&
     e.type === achievement.relationships.relation.data.type
   ));
@@ -182,7 +192,8 @@
     {/if}
 
 
-    <h1 class="title is-5 byproduct-title">
+    <h1 class="title is-5 byproduct-title"
+      class:is-disabled={!relation}>
       <svg class="chevron" on:click={() => toggleSection('conditions', true)}
         class:is-hidden={isExpandedSection.conditions}>
         <use href="../images/fontawesome-sprite.svg#solid-chevron-double-right" />
@@ -195,12 +206,21 @@
         <use href="../images/twemoji-sprite.svg#twisted_rightwards_arrows" />
       </svg>
       Conditions
+      {#if relation}
+        <span class="quantity">({relation.relationships.conditions.data.length})</span>
+      {/if}
     </h1>
-    <div class:is-hidden={!isExpandedSection.conditions}>
+    {#if isExpandedSection.conditions}
+      {#if relation !== null}
        <Relation
         {relation}
         formPrefix={undefined} />
-    </div>
+      {:else}
+        <p class="no-conditions">
+          No conditions yet
+        </p>
+      {/if}
+    {/if}
 
 
     <h1 class="title is-5 byproduct-title">
@@ -223,24 +243,33 @@
 
 
 
-    {#if achievement.attributes.assets.length}
-      <h1 class="title is-5 byproduct-title">
-        <svg class="chevron" on:click={() => toggleSection('assets', true)}
-          class:is-hidden={isExpandedSection.assets}>
-          <use href="../images/fontawesome-sprite.svg#solid-chevron-double-right" />
-        </svg>
-        <svg class="chevron" on:click={() => toggleSection('assets', false)}
-          class:is-hidden={!isExpandedSection.assets}>
-          <use href="../images/fontawesome-sprite.svg#solid-chevron-double-down" />
-        </svg>
-        <svg class="twemoji">
-          <use href="../images/twemoji-sprite.svg#package" />
-        </svg>
-        Assets <span class="quantity">({achievement.attributes.assets.length})</span>
-      </h1>
 
-      {#if isExpandedSection.assets}
+    <h1 class="title is-5 byproduct-title"
+      class:is-disabled={!achievement.attributes.assets.length}>
+      <svg class="chevron" on:click={() => toggleSection('assets', true)}
+        class:is-hidden={isExpandedSection.assets}>
+        <use href="../images/fontawesome-sprite.svg#solid-chevron-double-right" />
+      </svg>
+      <svg class="chevron" on:click={() => toggleSection('assets', false)}
+        class:is-hidden={!isExpandedSection.assets}>
+        <use href="../images/fontawesome-sprite.svg#solid-chevron-double-down" />
+      </svg>
+      <svg class="twemoji">
+        <use href="../images/twemoji-sprite.svg#package" />
+      </svg>
+      Assets
+      {#if achievement.attributes.assets.length}
+        <span class="quantity">({achievement.attributes.assets.length})</span>
+      {/if}
+    </h1>
+
+    {#if isExpandedSection.assets}
+      {#if achievement.attributes.assets.length}
         <AssetsIndex assets={achievement.attributes.assets} />
+      {:else}
+        <p class="no-conditions">
+          No assets yet
+        </p>
       {/if}
     {/if}
   {/if}
@@ -315,7 +344,7 @@
 
       {#if achievement.id}
         {#if relation !== null}
-          <Relation
+          <Relation 
             {relation}
             formPrefix="achievement[relation_attributes]"
             on:message={updateRelation}/>
@@ -417,9 +446,6 @@
     /* Desktop */
     @media screen and (min-width: 768px) {
       max-width: 90%;
-    }
-    .expert-mode {
-      margin-bottom: 1em;
     }
   }
   button.is-danger {

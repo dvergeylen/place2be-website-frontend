@@ -26,7 +26,7 @@
     ));
   }
 
-  conditions = filterConditions(relation, $game);
+  $: conditions = filterConditions(relation, $game);
 </script>
 
 <div class="relation-wrapper">
