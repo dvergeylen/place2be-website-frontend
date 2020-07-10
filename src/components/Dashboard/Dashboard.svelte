@@ -9,6 +9,7 @@
   export let userId = undefined;
   let gameList;
   let gameUrl;
+  let displayFeedback = true;
 
   async function getUserGamesList(id) {
     const url = createUrl(apiProtocol, apiHost, 'users', id, 'games');
@@ -24,6 +25,10 @@
     gameUrl = event.detail.gameUrl;
   }
 
+  function hideFeedbackMsg() {
+    displayFeedback = false;
+  }
+
   $: gameList = getUserGamesList(userId);
   $: setContext('apiProtocol', apiProtocol);
   $: setContext('apiHost', apiHost);
@@ -36,16 +41,19 @@
     <GameList {gameList} {gameUrl} on:message={handleNewGameUrl} />
   </div>
   <div class="column">
-    <div id="feedback" class="box">
-      <p>
-        Place2Be.io is still at an early stage of development, with a very minimal set of features as we are mainly collecting feedback at this stage.<br />
-        We would
-        <svg class="twemoji">
-          <use href="../images/twemoji-sprite.svg#heart" />
-        </svg>
-        to hear your thoughts on this! <a href="/feedback.html">Give Feedback</a>
-      </p>
-    </div>
+    {#if displayFeedback}
+      <div id="feedback" class="box">
+        <button class="delete" on:click|preventDefault={() => hideFeedbackMsg()} ></button>
+        <p>
+          Place2Be.io is still at an early stage of development, with a very minimal set of features as we are mainly collecting feedback at this stage.<br />
+          We would
+          <svg class="twemoji">
+            <use href="../images/twemoji-sprite.svg#heart" />
+          </svg>
+          to hear your thoughts on this! <a href="/feedback.html">Give Feedback</a>
+        </p>
+      </div>
+    {/if}
     <div id="game-content" class="box">
       {#if !gameUrl}
         <p><span class="is-hidden-touch">←</span><span class="is-hidden-desktop">↑</span> Start by hitting the 'New Game' button !
@@ -76,6 +84,10 @@
 
   .twemoji {
     vertical-align: middle;
+  }
+
+  button.delete {
+    float:right;
   }
 }
 </style>
