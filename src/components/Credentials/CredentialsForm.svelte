@@ -91,7 +91,9 @@
           <button class="button is-link">Sign In</button>
         </div>
         <div class="control">
-          <a href='javascript:void(0)' class="button is-link is-outlined" on:click={toggleShowSignIn}>Sign Up</a>
+          <button class="button is-link is-outlined" on:click={toggleShowSignIn}>
+            Sign Up
+          </button>
         </div>
         <div class="control">
           <a href="/index.html" class="button is-link is-light">Cancel</a>
@@ -172,7 +174,7 @@
           <button class="button is-link">Sign Up</button>
         </div>
         <div class="control">
-          <a href='javascript:void(0)' class="button is-link is-outlined" on:click={toggleShowSignIn}>Sign In</a>
+          <button href='javascript:void(0)' class="button is-link is-outlined" on:click={toggleShowSignIn}>Sign In</button>
         </div>
         <div class="control">
           <a href="/index.html" class="button is-link is-light">Cancel</a>

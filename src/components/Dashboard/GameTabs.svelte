@@ -16,7 +16,8 @@
 <div id="game-tabs-container" class="tabs">
   <ul>
     <li class:is-active={selectedTab === 'overview'}>
-      <a href="javascript:void(0)"
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         on:click|preventDefault={() => updateSelectedTab('overview')}>
         <svg class="twemoji">
           <use href="../images/twemoji-sprite.svg#compass" />
@@ -25,7 +26,8 @@
       </a>
     </li>
     <li class:is-active={selectedTab === 'actions'}>
-      <a href="javascript:void(0)"
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         on:click|preventDefault={() => updateSelectedTab('actions')}>
         <svg class="twemoji">
           <use href="../images/twemoji-sprite.svg#high_voltage_sign" />
@@ -34,7 +36,8 @@
       </a>
     </li>
     <li class:is-active={selectedTab === 'achievements'}>
-      <a href="javascript:void(0)"
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         on:click|preventDefault={() => updateSelectedTab('achievements')}>
         <svg class="twemoji">
           <use href="../images/twemoji-sprite.svg#trophy" />
@@ -43,7 +46,8 @@
       </a>
     </li>
     <li class:is-active={selectedTab === 'resources'}>
-      <a href="javascript:void(0)"
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         on:click|preventDefault={() => updateSelectedTab('resources')}>
         <svg class="twemoji">
           <use href="../images/twemoji-sprite.svg#sparkles" />
@@ -52,7 +56,8 @@
       </a>
     </li>
     <li class:is-active={selectedTab === 'stats'}>
-      <a href="javascript:void(0)"
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         on:click|preventDefault={() => updateSelectedTab('stats')}>
         <svg class="twemoji">
           <use href="../images/twemoji-sprite.svg#bar_chart" />
@@ -61,7 +66,8 @@
       </a>
     </li>
     <li class:is-active={selectedTab === 'dev'}>
-      <a href="javascript:void(0)"
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         on:click|preventDefault={() => updateSelectedTab('dev')}>
         <svg class="twemoji">
           <use href="../images/twemoji-sprite.svg#woman_technologist" />
@@ -70,7 +76,8 @@
       </a>
     </li>
     <li class:is-active={selectedTab === 'settings'}>
-      <a href="javascript:void(0)"
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
         on:click|preventDefault={() => updateSelectedTab('settings')}>
         <svg class="twemoji">
           <use href="../images/twemoji-sprite.svg#gear" />
