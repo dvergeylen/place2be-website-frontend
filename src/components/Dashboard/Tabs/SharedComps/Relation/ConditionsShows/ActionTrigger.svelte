@@ -44,6 +44,35 @@
         <span class="not">NOT</span>
       {/if}
       Trigged <strong>'{underlying.attributes.name}'</strong>
+      <ul>
+        <li>
+          mininum
+          <strong>
+            {condition.attributes.criteria.count}
+            {parseInt(condition.attributes.criteria.count) === 1 ? 'time' : 'times'}
+          </strong>;
+        </li>
+        {#each condition.attributes.criteria.validations as validation, i (i)}
+          <li>
+            with a <strong>{validation.attribute}</strong> {comparisonEnum[validation.comparison]}
+            <strong>
+              {validation.value}
+            </strong>;
+
+            {#if formPrefix}
+              <input type="hidden" name="{formPrefix}[criteria][validations][{i}][attribute]"
+              value="{validation.attribute}">
+              <input type="hidden" name="{formPrefix}[criteria][validations][{i}][comparison]"
+              value="{validation.comparison}">
+              <input type="hidden" name="{formPrefix}[criteria][validations][{i}][value]"
+              value="{validation.value}">
+            {/if}
+          </li>
+        {/each}
+        <li>
+          over the <strong>{periodEnum[condition.attributes.criteria.period]}</strong>.
+        </li>
+      </ul>
     </div>
     {#if formPrefix}
       <div class="column is-narrow">
@@ -53,35 +82,6 @@
       </div>
     {/if}
   </div>
-  <ul>
-    <li>
-      mininum
-      <strong>
-        {condition.attributes.criteria.count}
-        {parseInt(condition.attributes.criteria.count) === 1 ? 'time' : 'times'}
-      </strong>;
-    </li>
-    {#each condition.attributes.criteria.validations as validation, i (i)}
-      <li>
-        with a <strong>{validation.attribute}</strong> {comparisonEnum[validation.comparison]}
-        <strong>
-          {validation.value}
-        </strong>;
-
-        {#if formPrefix}
-          <input type="hidden" name="{formPrefix}[criteria][validations][{i}][attribute]"
-          value="{validation.attribute}">
-          <input type="hidden" name="{formPrefix}[criteria][validations][{i}][comparison]"
-          value="{validation.comparison}">
-          <input type="hidden" name="{formPrefix}[criteria][validations][{i}][value]"
-          value="{validation.value}">
-        {/if}
-      </li>
-    {/each}
-    <li>
-      over the <strong>{periodEnum[condition.attributes.criteria.period]}</strong>.
-    </li>
-  </ul>
 
   {#if formPrefix}
     <input type="hidden" name="{formPrefix}[criteria][count]"
@@ -115,6 +115,7 @@
   ul {
     font-size: 0.8em;
     font-style: italic;
+    margin-top: 0.5em;
   }
   .not {
     color: #c40000;

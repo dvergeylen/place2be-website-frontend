@@ -34,8 +34,7 @@
 </script>
 
 
-<div>
-  <hr>
+<div class="conditions-container">
   {#if !conditions || !conditions.length}
     <p class="no-conditions">
       No conditions yet
@@ -54,7 +53,6 @@
       {/each}
     </ul>
   {/if}
-  <hr>
 </div>
 
 {#if formPrefix}
@@ -93,9 +91,18 @@
     background-color: #f6f8fa;
     padding: 1em;
   }
+  .conditions-container {
+    max-width: 94%;
+    margin: auto;
+  }
   .conditions-list {
     li {
-      margin-bottom: 2em;
+      border-top: 2px solid whitesmoke;
+      padding-top: 1em;
+      padding-bottom: 1em;
+      &:last-child {
+        border-bottom: 2px solid whitesmoke;
+      }
     }
   }
   .new-condition-label {
